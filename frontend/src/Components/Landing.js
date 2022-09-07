@@ -66,15 +66,16 @@ const Landing = () =>{
                             <video className="videoStyle" autoPlay muted loop>
                                 <source src="assets/doctorapp.mp4" type="video/mp4" />
                             </video>
-                            <div className="middleLayer bg-1"></div>
+                            <div className="middleLayer bg-1" style={{"marginTop":"0px"}}></div>
+                            <button className="btn btn-link btn-lg btn-outline-light button1 text-light text-uppercase text-decoration-none mx-3" onClick={() => navigate("/signup")}>SignUp</button>
+                                <button className="btn btn-link btn-lg btn-outline-light button1 text-light text-uppercase text-decoration-none mx-3" onClick={() => navigate("/login")}>Login</button>
                             <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 position-fixed slideContent">
                                 <h4 className="text-light font-weight-bolder text-uppercase">Book Appointments</h4>
                                 <div className="container w-50">
                                     <p className="display-6 text-light text-center">Book appointments on the go with best specialist doctors in your city.</p>
                                 </div>
                                 <div>
-                                <button className="btn btn-link btn-lg btn-outline-light button1 text-light text-uppercase text-decoration-none mx-3" onClick={() => navigate("/signup")}>SignUp</button>
-                                <button className="btn btn-link btn-lg btn-light button2 text-dark text-uppercase text-decoration-none mx-3" onClick={() => navigate("/login")}>Login</button>
+                               
                                 </div>
                             </div>
                         </div>

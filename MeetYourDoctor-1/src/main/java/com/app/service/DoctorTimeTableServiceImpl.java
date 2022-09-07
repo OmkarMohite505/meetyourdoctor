@@ -34,10 +34,28 @@ public class DoctorTimeTableServiceImpl implements IDoctorTimeTable {
 		Doctor doctor = doctorRepository.findById(doctorDTO.getDoctorId()).orElseThrow(()->new Exception("Doctor Not Found"));
 		
 		for (DoctorTimeTable doctorTimeTable : persistentTimetable) {
-			temp.add(doctorTimeTable);
+//			temp.add(doctorTimeTable);
+			doctor.getTimetable().add(doctorTimeTable);
 		}
-		doctor.setTimetable(temp);
+//		doctor.setTimetable(temp);
 		return "Saved TImetable";
+	}
+
+	@Override
+	public void updateDoctorTimeTable(DoctorDTO doctorDTO) {
+		Set<DoctorTimeTable> timetable = doctorDTO.getTimetable();
+		
+		for (DoctorTimeTable doctorTimeTable : timetable) {
+			DoctorTimeTable persistTimeTable = timetableRepo.findById(doctorTimeTable.getTimeTableId()).orElseThrow();
+			
+			persistTimeTable.setBreakTime(doctorTimeTable.getBreakTime());
+			persistTimeTable.setStartTime(doctorTimeTable.getStartTime());
+			persistTimeTable.setSlotDuration(doctorTimeTable.getSlotDuration());
+			persistTimeTable.setEndTime(doctorTimeTable.getEndTime());
+			persistTimeTable.setStatus(doctorTimeTable.getStatus());
+			persistTimeTable.setWeekday(doctorTimeTable.getWeekday());
+		}
+//		timetableRepo.findById()
 	}
 	
 }

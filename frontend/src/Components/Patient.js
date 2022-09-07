@@ -5,14 +5,15 @@ function Patient(){
     const [state,setState]=useState({
         firstName:"",
         lastName:"",
-        patientId:""
+        patientId:"",
+        profilePicture:""
     });
     const navigate=useNavigate();
 
       // Similar to componentDidMount and componentDidUpdate:  
       useEffect(() => {    
             let patient= JSON.parse(sessionStorage.getItem("patient"));
-            setState({firstName:patient.firstName,lastName:patient.lastName, patientId:patient.id})
+            setState({firstName:patient.firstName,lastName:patient.lastName, patientId:patient.patientId, profilePicture:patient.profilePicture})
         },[]);
         
     const logout=()=>{
@@ -41,7 +42,7 @@ function Patient(){
                     <div className="col-sm-3"><h2 className="">Hello, {state.firstName} {state.lastName}</h2></div>
                     <div className="col-sm-3"> <img src={`http://localhost:8080/api/image/ROLE_PATIENT/${state.patientId}`} style={{'height':'100px','width':'100px'}}></img></div>
                     <div className="col-sm-6">
-                        <button onClick={logout} className="btn btn-link btn-danger text-light offset-10 text-uppercase text-decoration-none ">Logout</button>
+                        <button onClick={logout} style={{"float":"right"}} className="btn btn-danger">Logout </button>
                     </div>
                 </div>
 

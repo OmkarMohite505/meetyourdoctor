@@ -31,7 +31,8 @@ function UpdateDoctor(){
         speciality:"",
         fees:"",
         areaId:{},
-        loginId:{}
+        loginId:{},
+        profilePicture:""
     });
 
     const [Error,setError] = useState({
@@ -95,9 +96,9 @@ function UpdateDoctor(){
  
     useEffect(() => {
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
-        setData({doctorId:doc.doctor_id,firstName:doc.firstName,lastName:doc.lastName,
+        setData({doctorId:doc.doctorId,firstName:doc.firstName,lastName:doc.lastName,
             gender:doc.gender,dob:doc.dob,graduation:doc.qualification[0].educationType,postGraduation:doc.postGraduation,
-            speciality:doc.speciality[0].specialityType,fees:doc.fees,mobileNumber:doc.mobileNumber,})
+            speciality:doc.speciality[0].specialityType,fees:doc.fees,mobileNumber:doc.mobileNumber,profilePicture:doc.profilePicture})
              setState(doc.address.state);
              setCity(doc.address.city);
              setArea(doc.address.town);
@@ -218,7 +219,7 @@ const validateFees=(e)=>{
          axios.post(`http://localhost:8080/api/doctor/profile_picture/${data.doctorId}`,formData,
         {headers:{'Content-type':'multipart/form-data;boundary=<calculated when request is sent>'}},
        // {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("user"))}`}
-        ).then(res=>alert("success"));
+        ).then(res=>alert("success")).catch(err=>console.log(err));
         return;
 
 

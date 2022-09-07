@@ -41,6 +41,7 @@ import languages from './Language/language'
 import GlobeIcon from './Icon/GlobeIcon'
 import { useEffect, useState } from 'react';
 import swal from 'sweetalert';
+import SetTimeTable from './Components/SetTimeTable';
 
 
 function App() {
@@ -146,6 +147,7 @@ function App() {
             <Route path="/forgotpassword" element={<ForgotPassword/>}></Route>
             <Route path="/changepassworddoctor" element={<ChangePasswordDoctor/>}></Route>
             <Route path="/changepasswordpatient" element={<ChangePasswordPatient/>}></Route>
+            <Route path="/set_time_table" element={<SetTimeTable/>}></Route>
           </Routes>
           <Footer/>
   

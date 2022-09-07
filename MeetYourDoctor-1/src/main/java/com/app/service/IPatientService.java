@@ -13,7 +13,7 @@ public interface IPatientService {
 	
 	String uploadProfilePicture(long empId, MultipartFile imageFile) throws IOException;
 	
-	byte[] restoreImage(String imagePath) throws Exception;
+	byte[] restoreImage(long id) throws Exception;
 	
 	PatientDTO getPatientDetails(String email)throws Exception;
 }

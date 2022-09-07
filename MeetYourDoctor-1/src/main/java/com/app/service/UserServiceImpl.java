@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,8 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +40,8 @@ import com.app.entities.UserRoles;
 @Service
 @Transactional
 public class UserServiceImpl implements IUserService {
+	@Autowired
+	private JavaMailSender sender;
 	@Autowired
 	private LoginRepository loginRepo;
 	@Autowired
@@ -146,6 +151,29 @@ public class UserServiceImpl implements IUserService {
 		return loginRepo.findbyEmail(request.getEmail()).orElseThrow(()->new Exception("User Not Found"));
 //		return loginRepo.findByEmailAndPassword(request.getEmail(), encoder.encode(request.getPassword()))
 //				.orElseThrow(()->new Exception("User Not Found"));
+	}
+
+	@Override
+	public void sendOTPForForgotPassword(String email) throws Exception {
+		Login login = loginRepo.findbyEmail(email).orElseThrow(()-> new Exception("User Not Found"));
+		
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(login.getEmail());
+		mesg.setSubject("OTP for verification");
+		Random ramdom = new Random();
+		Integer otp =   ramdom.nextInt(999999);
+//		StringBuilder otpString = new StringBuilder(otp);
+//		if(otpString.length()!=6)
+//			otpString.append(1);
+		mesg.setText("Enter this OTP for verification : "+otp+"            Do not share it with anyone !!!!!");
+		sender.send(mesg);
+		login.setOtp(otp);
+	}
+
+	@Override
+	public void updateUserPassword(String email, String newPassword, int otp) throws Exception {
+		Login login = loginRepo.findByEmailAndOtp(email, otp).orElseThrow(()-> new Exception("User Not Found"));
+		login.setPassword(encoder.encode(newPassword));
 	}
 
 	

@@ -16,6 +16,7 @@ function UpdatePatient(){
         dob:"",
         blood_group:"",
         login_id:"",
+        profilePicture:""
     });
 
     const [Error,setError] = useState({
@@ -102,8 +103,8 @@ function UpdatePatient(){
  
     useEffect(() => {
         let patient= JSON.parse(sessionStorage.getItem("patient"));
-        setData({patientId:patient.id,firstName:patient.firstName,lastName:patient.lastName,
-            gender:patient.gender,dob:patient.dob,mobileNumber:patient.mobileNumber,blood_group:patient.bloodGroup,login_id:patient.login_id})
+        setData({patientId:patient.patientId,firstName:patient.firstName,lastName:patient.lastName,
+            gender:patient.gender,dob:patient.dob,mobileNumber:patient.mobileNumber,blood_group:patient.bloodGroup,login_id:patient.loginId, profilePicture:patient.profilePicture})
     },[]);
 
 

@@ -77,4 +77,9 @@ public class DoctorController {
 		doctorTimeTable.saveDoctorTimetable(doctorDTO);
 		return ResponseEntity.status(HttpStatus.OK).body("Saved TImetable");
 	}
+	
+	@PostMapping("/update_timetable")
+	public ResponseEntity<?> updateTimeTable(@RequestBody DoctorDTO doctorDTO){
+		return ResponseEntity.status(HttpStatus.OK).body("Timetable Updated");
+	}
 }

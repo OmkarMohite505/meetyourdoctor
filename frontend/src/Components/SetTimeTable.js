@@ -1,8 +1,8 @@
+import axios from "axios";
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
-function UpdateTimeTableByDay(){
+function SetTimeTable(){
     const [timetable,setTimetable]=useState({
         ttId: "",
         doctor_id: {},
@@ -14,9 +14,8 @@ function UpdateTimeTableByDay(){
         status:""
     })
     useEffect(() => {
-        const tt= JSON.parse(sessionStorage.getItem("daytimetable"));
-        const doc = JSON.parse(sessionStorage.getItem("doctor"));
-        setTimetable({ttId:tt.timeTableId,doctor_id:doc.doctorId,weekday:tt.weekday,startTime:tt.startTime,endTime:tt.endTime,slotDuration:tt.slotDuration,breakTime:tt.breakTime,status:tt.status})
+        const doctor= JSON.parse(sessionStorage.getItem("doctor"));
+        setTimetable({doctor_id:doctor.doctorId})
         
     },[]);
     const navigate=useNavigate();
@@ -36,27 +35,10 @@ function UpdateTimeTableByDay(){
         window.location.reload();
       };
 
-      
+
       const submitData=(e)=>{
         e.preventDefault();
-
-        const obj = {
-            "doctorId": timetable.doctor_id,
-            "timetable":[{"timeTableId": timetable.ttId,
-            "weekday": timetable.weekday,
-            "startTime": timetable.startTime,
-            "endTime": timetable.endTime,
-            "slotDuration": timetable.slotDuration,
-            "breakTime": timetable.breakTime,
-            "status": timetable.status}]}
-
-        
-        axios.post(`http://localhost:8080/api/doctor/update_timetable`, obj).then(navigate(`/updatetimetable`)).catch(err=>alert("Error"));
-        return;
-
-
-
-        const reqOptions ={
+        /* const reqOptions ={
             method : 'POST',
             headers: {
                 'Content-Type':'application/json'
@@ -87,7 +69,16 @@ function UpdateTimeTableByDay(){
                
             }
         })
+ */
+        const obj = {"doctorId":timetable.doctor_id,
+                     "timetable":[{"weekday":timetable.weekday,"startTime":timetable.startTime,"endTime":timetable.endTime,
+                     "breakTime":timetable.breakTime,"slotDuration":timetable.slotDuration}]}
 
+                    console.log(obj);
+
+                     axios.post(`http://localhost:8080/api/doctor/save_timetable`, obj)
+                     .then(res=>{alert("success"); navigate(`/doctor`)})
+                     .catch(err=>alert("Error"));
     }
 
 
@@ -103,22 +94,22 @@ function UpdateTimeTableByDay(){
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Weekday: </b></label>
                     <p>{timetable.weekday}</p>
-                    <input type="text" placeholder={timetable.weekday}  name="weekday" className="form-control" 
-                        value={timetable.weekday} disabled/>
+                    <input type="text"   name="weekday" className="form-control" 
+                        value={timetable.weekday} onChange={changeHandler}/>
                 </div>
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Start Time: </b></label>
-                    <input type="time" placeholder={timetable.startTime} name="startTime" className="form-control" 
+                    <input type="time"  name="startTime" className="form-control" 
                         value={timetable.startTime} onChange={changeHandler}/>
                 </div >
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  End Time: </b></label>
-                    <input type="time" placeholder={timetable.endTime} name="endTime" className="form-control" 
+                    <input type="time"  name="endTime" className="form-control" 
                         value={timetable.endTime} onChange={changeHandler}/>
                 </div >
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Slot Duration: </b></label>
-                    <input type="text" placeholder={timetable.slotDuration} name="slotDuration" className="form-control" 
+                    <input type="text"  name="slotDuration" className="form-control" 
                         value={timetable.slotDuration} onChange={changeHandler}/>
                 </div >
                 <div style={{ marginTop: '10px' }} className = "form-group">
@@ -141,4 +132,4 @@ function UpdateTimeTableByDay(){
         </div>
     );
 }
-export default UpdateTimeTableByDay;
+export default SetTimeTable;

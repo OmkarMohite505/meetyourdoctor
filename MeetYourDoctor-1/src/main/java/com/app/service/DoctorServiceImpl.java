@@ -47,10 +47,10 @@ public class DoctorServiceImpl implements IDoctorService {
 	}
 	
 	@Override
-	public byte[] restoreImage(String imagePath) throws Exception {
-//		Doctor persistentDoctor = doctorRepository.findById(loginId).orElseThrow(()->new Exception("Patient Not Found"));
-//		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
-		return Files.readAllBytes(Paths.get(imagePath));
+	public byte[] restoreImage(long id) throws Exception {
+		Doctor persistentDoctor = doctorRepository.findById(id).orElseThrow(()->new Exception("Patient Not Found"));
+		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
+//		return Files.readAllBytes(Paths.get(imagePath));
 	}
 
 	@Override

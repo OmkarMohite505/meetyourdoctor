@@ -1,12 +1,14 @@
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
+import axios from "axios";
 
 function UpdateTimeTable(){
 
     const [doctorId,setDoctorId]=useState("");
     const [TimeTable,setTimeTable]=useState([]);
     const [data,setData]=useState({
+        email:"",
         doctorttId:"",
         doctorId:{},
         weekday:"",
@@ -24,13 +26,32 @@ function UpdateTimeTable(){
     useEffect(() => {
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
         setDoctorId(doc.doctorId);
+        setData({email:doc.email});
+        setTimeTable(doc.timetable);
         
     },[]);
 
     const getTimeTable=()=>{
-        fetch("http://localhost:8080/gettimetablebydoctorid/"+doctorId)
-        .then(r => r.json())
-        .then(d => {/*console.log(d);*/setTimeTable(d)});
+        // fetch("http://localhost:8080/gettimetablebydoctorid/"+doctorId)
+        // .then(r => r.json())
+        // .then(d => {/*console.log(d);*/setTimeTable(d)});
+        const obj = {"email":data.email};
+        axios.post("http://localhost:8080/api/signwo", obj)
+        .then(response=>{
+            if(response.data.roles.includes("ROLE_PATIENT")){
+                sessionStorage.setItem("patient", JSON.stringify(response.data));
+                navigate(`/patient`);
+            }
+            if(response.data.roles.includes("ROLE_DOCTOR")){
+                sessionStorage.setItem("doctor", JSON.stringify(response.data));
+                setTimeTable(response.data.timetable);
+            }
+        })
+
+        
+
+
+
     }
     const update=(ev)=>{
         sessionStorage.setItem("daytimetable",JSON.stringify(ev))
@@ -154,7 +175,7 @@ function UpdateTimeTable(){
         <button className="btn btn-danger" onClick={logout} style={{float:"right",marginTop:"10px",marginRight:"10px"}}>Logout</button>
         <button  className='btn btn-secondary' style={{float:"right",marginTop:"10px",marginRight:"10px"}} onClick={() => navigate("/doctor")}>Go Back</button> 
     <br/><br/>                <div>
-                    <button className="btn btn-primary" onClick={getTimeTable}>Get TimeTable</button>
+                    <button className="btn btn-primary" onClick={getTimeTable}>Get Latest TimeTable</button>
                     <h3>Doctor List</h3>
                     <table className="table table-bordered">
                         <thead className="bg-dark text-light">
@@ -170,6 +191,7 @@ function UpdateTimeTable(){
                         </tr>
                         </thead>
                         <tbody>
+                            {console.log(TimeTable)}
                             {TimeTable.map((v) => {
                                 return (
                                     <tr>

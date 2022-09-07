@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.AuthenticationRequest;
@@ -21,6 +22,7 @@ import com.app.dto.AuthenticationResponse;
 import com.app.dto.DoctorDTO;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
+import com.app.dto.UpdatePasswordDTO;
 import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.Role;
@@ -116,6 +118,19 @@ public class UserSignupSignInController {
 		}
 			
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Enter Correct Details");
+	}
+	
+	@PostMapping("/send_otp")
+	public ResponseEntity<?> sendOTP(@RequestBody UpdatePasswordDTO updatePasswordDTO) throws Exception{
+		userService.sendOTPForForgotPassword(updatePasswordDTO.getEmail());
+		return ResponseEntity.status(HttpStatus.OK).body("OTP sent to your email");
+		
+	}
+	
+	@PostMapping("/update_password")
+	public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordDTO update) throws Exception{
+		userService.updateUserPassword(update.getEmail(), update.getNewPassword(), update.getOtp());
+		return ResponseEntity.status(HttpStatus.OK).body("Password Updated");
 	}
 	
 	

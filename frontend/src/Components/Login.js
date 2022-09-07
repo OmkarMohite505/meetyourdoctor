@@ -1,6 +1,9 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { loadCaptchaEnginge,validateCaptcha,LoadCanvasTemplate } from "react-simple-captcha";
+import swal from "sweetalert";
 
 function Login(){
     const [data,setData] = useState({
@@ -10,6 +13,9 @@ function Login(){
     });
 
 
+    useEffect(()=>{
+        loadCaptchaEnginge(6,'red','black','upper'); 
+       },[])
 
 
     const changeHandler = (e) => {
@@ -67,18 +73,42 @@ function Login(){
             }
         }) */
 
-        const obj = {"email":data.username,"password":data.password}
-        axios.post("http://localhost:8080/api/signwo", obj)
-        .then(response=>{
-            if(response.data.roles.includes("ROLE_PATIENT")){
-                sessionStorage.setItem("patient", JSON.stringify(response.data));
-                navigate(`/patient`);
-            }
-            if(response.data.roles.includes("ROLE_DOCTOR")){
-                sessionStorage.setItem("doctor", JSON.stringify(response.data));
-                navigate(`/doctor`);
-            }
-        })
+
+
+        let user_captcha = document.getElementById('user_captcha_input').value;
+
+        if (validateCaptcha(user_captcha)===true) {
+            // if(true){
+         //    alert('Captcha Matched');
+         //    loadCaptchaEnginge(6); 
+         const obj = {"email":data.username,"password":data.password}
+         axios.post("http://localhost:8080/api/signwo", obj)
+         .then(response=>{
+             if(response.data.roles.includes("ROLE_PATIENT")){
+                 sessionStorage.setItem("patient", JSON.stringify(response.data));
+                 navigate(`/patient`);
+             }
+             if(response.data.roles.includes("ROLE_DOCTOR")){
+                 sessionStorage.setItem("doctor", JSON.stringify(response.data));
+                 navigate(`/doctor`);
+             }
+         })
+        }
+ 
+        else {
+            swal("Captcha Does Not Match !","Enter Correct Captcha", "error");
+            // document.getElementById('user_captcha_input').value = "";
+        }
+
+
+
+
+
+
+
+
+
+       
 
     }
 
@@ -106,6 +136,21 @@ function Login(){
                             value={data.password} onChange={changeHandler}/>
                             
                     </div >
+
+                    <div className = "form-group" style={{"marginTop":"20px","marginLeft":"30px"}}>
+                        <LoadCanvasTemplate  />
+                    </div >
+                    <div className = "form-group">
+                        <label> Enter Captcha: </label>
+                        <input type="text" placeholder="Enter Captcha" id="user_captcha_input" name="user_captcha_input" className="form-control" 
+                           />
+                    </div >
+
+
+
+
+                   
+
                     <div style={{marginTop: "10px", marginLeft:"200px"}}>
                     <button className="btn btn-success" onClick={submitData}>Login</button>
                     <button className="btn btn-danger" onClick={() => navigate("/")} style={{marginLeft: "10px"}}>Cancel</button> 

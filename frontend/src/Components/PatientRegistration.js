@@ -89,6 +89,26 @@ function PatientRegistration(){
         }));
     }
 
+    const getPosition=()=>{
+        navigator.geolocation.getCurrentPosition(onSuccess, onError)
+        }
+     
+        const onSuccess=(position)=>{
+            const {latitude, longitude} = position.coords;
+            console.log(latitude, longitude);
+            var lat=18;
+            var lng=73;
+            var url = "http://apis.mapmyindia.com/advancedmaps/v1/430d486da44c960e763fbcec9c38d701/rev_geocode?lng="+latitude+"&lat="+longitude;
+            axios.get(url).then(res=>console.log(res.data)).catch(err=>console.log(err));
+        }
+        const onError=()=>{
+    
+        }
+   
+   
+
+
+
 
 
     const setUserRole=(e)=>{
@@ -279,7 +299,7 @@ function PatientRegistration(){
                              "bloodGroup":data.bloodGroup, "dob":data.dob,           "hobbies":arr,
                              "aadharNo":data.aadharNo,      "fees":data.fees,
                              "speciality":[{"specialityType":data.specialityType,"servicesProvided":data.servicesProvided,"specialityDescription":data.specialityDescription,"specialityPhoto":data.specialityPhoto}],
-                             "address":{"town":data.town,"city":data.city,"state":data.state,"country":data.country,"pincode":data.pincode},
+                             "address":[{"town":data.town,"city":data.city,"state":data.state,"country":data.country,"pincode":data.pincode}],
                              "qualification":quali
                             }
                                 console.log(obj);
@@ -296,7 +316,7 @@ function PatientRegistration(){
     <div className = "container" style={{marginBottom : "50px"}}>
     <div className = "row my-4">
         <div className = "card col-md-6 offset-md-3 offset-md-1">
-        <h2 className='text-center'>Patient Registration </h2>
+        <h2 className='text-center'>User Registration </h2>
 
 
         <div className = "form-group">
@@ -509,7 +529,7 @@ function PatientRegistration(){
                 </div>
 
                 <div style={{ marginTop: '10px' }} className = "form-group">
-                    <label><b> Address: </b></label>
+                    <label><b> Address: </b> <button onClick={getPosition}>Use My Current Location</button> </label><br></br>
                     <label><p> Town: </p></label>
                     <input type="text" placeholder="" name="town" className="form-control" 
                     value={data.town} onChange={changeHandler} />

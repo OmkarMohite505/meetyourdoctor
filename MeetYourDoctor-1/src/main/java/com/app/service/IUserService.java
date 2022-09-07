@@ -15,5 +15,9 @@ public interface IUserService {
 	
 	Login temporaryValidateUser(AuthenticationRequest request)throws Exception;
 	
+	void sendOTPForForgotPassword(String email)throws Exception;
+	
+	void updateUserPassword(String email, String newPassword, int otp)throws Exception;
+	
 	
 }

@@ -10,7 +10,7 @@ import com.app.entities.Doctor;
 public interface IDoctorService {
 	String uploadProfilePicture(long empId, MultipartFile imageFile) throws IOException;
 	
-	byte[] restoreImage(String imagePath) throws Exception;
+	byte[] restoreImage(long id) throws Exception;
 	
 	DoctorDTO getDoctorDetails(String email)throws Exception;
 }

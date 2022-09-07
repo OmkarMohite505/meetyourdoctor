@@ -6,13 +6,14 @@ function Doctor() {
     const [doctor,setDoctor]=useState({
         firstName:"",
         lastName:"",
-        doctorId:""
+        doctorId:"",
+        profilePicture:""
     })
     const navigate=useNavigate();
 
     useEffect(() => {    
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
-        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctor_id})
+        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctorId,profilePicture:doc.profilePicture})
     },[]);
 
     const logout=()=>{
@@ -40,7 +41,7 @@ function Doctor() {
                         <div className="col-sm-3"><h2 className="">Hello, Dr.{doctor.firstName} {doctor.lastName}</h2></div>
                         <div className="col-sm-3"><img src={`http://localhost:8080/api/image/ROLE_DOCTOR/${doctor.doctorId}`} style={{'height':'100px','width':'100px'}}></img></div>
                         <div className="col-sm-6">
-                            <button onClick={logout} className="btn btn-link btn-danger text-light offset-10 text-uppercase text-decoration-none " >Logout</button>
+                            <button onClick={logout} style={{"float":"right"}}>Logout</button>
                         </div>
                     </div>
 
@@ -113,6 +114,18 @@ function Doctor() {
                                         <h5 className="card-title">Change Password</h5>
                                         <p className="card-text">Change your password.</p>
                                         <button onClick={() => navigate("/changepassworddoctor")} className="btn btn-success">CHANGE</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="row my-3">
+                            <div className="col-sm-6">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Set Time Table</h5>
+                                        <p className="card-text">Set Your Time Table for Appointments</p>
+                                        <button onClick={() => navigate("/set_time_table")} className="btn btn-success">CHANGE</button>
                                     </div>
                                 </div>
                             </div>

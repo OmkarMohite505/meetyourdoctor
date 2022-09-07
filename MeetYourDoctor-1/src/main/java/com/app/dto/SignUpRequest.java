@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SignUpRequest {
-	private String userName,email, password;
+	private String userName;
+	private String email;
+	private String password;
 	private Set<String> roles;
 	private Patient patient;
 

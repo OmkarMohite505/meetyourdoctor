@@ -21,14 +21,14 @@ public class ImageServeController {
 	@Autowired
 	private IDoctorService doctorService;
 	
-	@GetMapping("/{role}/{imagePath}")
-	public ResponseEntity<?> downloadImage(@PathVariable String role, @PathVariable String imagePath) throws Exception{
+	@GetMapping("/{role}/{id}")
+	public ResponseEntity<?> downloadImage(@PathVariable String role, @PathVariable long id) throws Exception{
 		byte[] image = null;
 		if(role.equals("ROLE_PATIENT"))
-			image = patientService.restoreImage(imagePath);
+			image = patientService.restoreImage(id);
 		else
 			if(role.equals("ROLE_DOCTOR"))
-				image = doctorService.restoreImage(imagePath);
+				image = doctorService.restoreImage(id);
 		return ResponseEntity.ok(image); 
 	}
 
