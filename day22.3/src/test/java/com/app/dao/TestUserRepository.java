@@ -17,10 +17,10 @@ class TestUserRepository {
 	@Autowired
 	private LoginRepository userRepo;
 
-	@Test
-	void testFindByEmail() {
-		System.out.println(
-				userRepo.findByEmail("rama@gmail.com").orElseThrow(() -> new RuntimeException("invalid user email")));
-	}
+	/*
+	 * @Test void testFindByEmail() { System.out.println(
+	 * userRepo.findByEmail("rama@gmail.com").orElseThrow(() -> new
+	 * RuntimeException("invalid user email"))); }
+	 */
 
 }
