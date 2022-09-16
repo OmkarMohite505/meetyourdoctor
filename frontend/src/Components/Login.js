@@ -38,43 +38,6 @@ function Login(){
             return;
         }
         e.preventDefault();
-       /*  const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                user_name: data.username,
-                password: data.password
-            })
-        }
-        fetch("http://localhost:8080/logincheck",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                const json = JSON.parse(data);
-                if(json.login_id.user_type == "Patient"){
-                    sessionStorage.setItem("patient",JSON.stringify(json))
-                    navigate('/patient');
-                }
-                    
-                if(json.login_id.user_type == "Doctor"){
-                    sessionStorage.setItem("doctor",JSON.stringify(json))
-                    navigate('/doctor');
-                }
-                
-                if(json.user_type == "Admin"){
-                    sessionStorage.setItem("admin",JSON.stringify(json))
-                    navigate('/admin');
-                }
-            }
-            else{
-            //setData({loginerror:"Wrong Username or Password (or account may be disabled)! Try Again..."})
-            alert("Wrong Username or Password (or account may be disabled)! Try Again...");
-            }
-        }) */
-
-
 
         let user_captcha = document.getElementById('user_captcha_input').value;
 
@@ -94,6 +57,10 @@ function Login(){
                  sessionStorage.setItem("doctor", JSON.stringify(response.data));
                  navigate(`/doctor`);
              }
+             if(response.data.roles.includes("ROLE_ADMIN")){
+                sessionStorage.setItem("admin", JSON.stringify(response.data));
+                navigate(`/admin`);
+             }
          })
         }
  
@@ -101,16 +68,6 @@ function Login(){
             swal("Captcha Does Not Match !","Enter Correct Captcha", "error");
             // document.getElementById('user_captcha_input').value = "";
         }
-
-
-
-
-
-
-
-
-
-       
 
     }
 

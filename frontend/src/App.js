@@ -44,6 +44,13 @@ import swal from 'sweetalert';
 import SetTimeTable from './Components/SetTimeTable';
 import Pay from './Components/Pay';
 import CloseAppointment from './Components/AppointmentModify';
+import VerifyDoctor from './Components/VerifyDoctor';
+import DoctorDetails from './Components/DoctorDetails';
+import DoctorDetailsUnVerify from './Components/DoctorDetailsUnVerify';
+import ActiveDoctorList from './Components/ActiveDoctorList';
+import DoctorDetailsSuspend from './Components/DoctorDetailsSuspend';
+import SuspendedDoctorList from './Components/SuspendedDoctorList';
+import DoctorDetailsRemoveSusp from './Components/DoctorDetailsRemoveSusp';
 
 
 function App() {
@@ -152,6 +159,14 @@ function App() {
             <Route path="/set_time_table" element={<SetTimeTable/>}></Route>
             <Route path='/pay' element={<Pay></Pay>}></Route>
             <Route path='/close_appointment' element={<CloseAppointment></CloseAppointment>}></Route>
+            <Route path='/verify_doctor' element={<VerifyDoctor></VerifyDoctor>}></Route>
+            <Route path='/doctor_details' element={<DoctorDetails></DoctorDetails>}></Route>
+            <Route path='/unverify_doctor' element={<DoctorDetailsUnVerify></DoctorDetailsUnVerify>}></Route>
+            <Route path='/doctor_list_for_suspend' element={<ActiveDoctorList></ActiveDoctorList>}></Route>
+            <Route path='/suspend_doctor' element={<DoctorDetailsSuspend></DoctorDetailsSuspend>}></Route>
+            <Route path='/doctor_list_for_suspend' element={<SuspendedDoctorList></SuspendedDoctorList>}></Route>
+            <Route path='/suspended_doctor_list' element={<SuspendedDoctorList></SuspendedDoctorList>}></Route>
+            <Route path='/remove_suspended_doctor' element={<DoctorDetailsRemoveSusp></DoctorDetailsRemoveSusp>}></Route>
           </Routes> 
           <Footer/>
   

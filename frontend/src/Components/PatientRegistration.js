@@ -26,7 +26,18 @@ function PatientRegistration() {
         city: "",
         state: "",
         country: "",
-        pincode: ""
+        pincode: "",
+        weekday:"",
+        startTime:"",
+        endTime:"",
+        slotDuration:"",
+        breakTime:"",
+        panCardNo:"",
+        nameAsPerBank:"",
+        bankName:"",
+        bankAccountNo:"",
+        IFSC_Code:""
+
     });
 
     const [Error, setError] = useState({
@@ -58,7 +69,7 @@ function PatientRegistration() {
 
     const eduType = ["MBBS", "DM", "MS", "MD"];
     const specialityType = ["DERMATOLOGY", "GENERAL_PHYSICIAN", "UROLOGY"];
-    const roleSelect = ["Select Role","PATIENT","DOCTOR","ADMIN"];
+    const roleSelect = ["Select Role", "PATIENT", "DOCTOR", "ADMIN"];
 
     useEffect(() => {
         axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/states`)
@@ -321,10 +332,10 @@ function PatientRegistration() {
             console.log(obj);
             axios.post(`${IP_ADDRS}/auth/register_patient`, obj)
                 .then(res => {
-                    swal("Registration SuccessFull","Redirecting to Login Page","success");
+                    swal("Registration SuccessFull", "Redirecting to Login Page", "success");
                     navigate(`/login`);
                 })
-                .catch(err => { swal("Something Went Wrong","Please Try Again", "error") });
+                .catch(err => { swal("Something Went Wrong", "Please Try Again", "error") });
         }
 
         if (role === "DOCTOR") {
@@ -351,7 +362,9 @@ function PatientRegistration() {
                 "speciality": [{ "specialityType": data.specialityType, "servicesProvided": data.servicesProvided, "specialityDescription": data.specialityDescription, "specialityPhoto": data.specialityPhoto }],
                 "address": [{ "town": data.town, "city": data.city, "state": data.state, "country": data.country, "pincode": data.pincode }],
                 "qualification": quali,
-                "roles": ["ROLE_DOCTOR"]
+                "roles": ["ROLE_DOCTOR"],
+                "doctorTimeTable":{"weekday":data.weekday,"startTime":data.startTime,"endTime":data.endTime,"breakTime":data.breakTime,"slotDuration":data.slotDuration},
+                "bankAccount":{"nameAsPerBank":data.nameAsPerBank,"bankName":data.bankName,"bankAccountNo":data.bankAccountNo,"IFSC_Code":data.IFSC_Code,"panCardNo":data.panCardNo}
             }
             console.log(obj);
             axios.post(`${IP_ADDRS}/auth/register_doctor`, obj).then(res => { alert("Success"); console.log(res); navigate(`/login`) }).catch(err => { console.log(err) });
@@ -375,11 +388,11 @@ function PatientRegistration() {
                         <div className="form-group">
                             <label>Choose :</label>
                             <select name='role' value={role} onChange={(e) => setUserRole(e)} style={{ 'width': '150px', 'height': '40px', 'borderRadius': '7px', 'fontSize': '20px', 'backgroundColor': 'skyblue' }}>
-                            {
-                                roleSelect.map((r, i)=>(
-                                    <option key={`${r}${i}`}>{r}</option>
-                                ))
-                            }
+                                {
+                                    roleSelect.map((r, i) => (
+                                        <option key={`${r}${i}`}>{r}</option>
+                                    ))
+                                }
 
                             </select>
 
@@ -693,6 +706,62 @@ function PatientRegistration() {
                                         value={data.fees} onChange={changeHandler} />
                                     <span className="text text-danger">{Error.mobile_number_error}</span>
                                 </div>
+
+
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label style={{"marginTop":"8px"}}><b>Enter You Initial time table : </b></label><br></br>
+                                    <label style={{"marginTop":"8px"}}><b>  Weekday: </b></label>
+                                    <input type="text" name="weekday" className="form-control"
+                                        value={data.weekday} onChange={changeHandler} />
+                                </div>
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Start Time: </b></label>
+                                    <input type="time" name="startTime" className="form-control"
+                                        value={data.startTime} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  End Time: </b></label>
+                                    <input type="time" name="endTime" className="form-control"
+                                        value={data.endTime} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Slot Duration: </b></label>
+                                    <input type="text" name="slotDuration" className="form-control"
+                                        value={data.slotDuration} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Break Time: </b></label>
+                                    <input type="time"  name="breakTime" className="form-control"
+                                        value={data.breakTime} onChange={changeHandler} />
+                                </div >
+
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label style={{"marginTop":"8px"}}><b>Enter Bank Details :</b></label><br></br>
+                                    <label style={{"marginTop":"8px"}}><b>  Name As Per Bank: </b></label>
+                                    <input type="text"  name="nameAsPerBank" className="form-control"
+                                        value={data.nameAsPerBank} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Bank name: </b></label>
+                                    <input type="text"  name="bankName" className="form-control"
+                                        value={data.bankName} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Bank Account No: </b></label>
+                                    <input type="text"  name="bankAccountNo" className="form-control"
+                                        value={data.bankAccountNo} onChange={changeHandler} />
+                                </div >
+                               
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  IFSC Code: </b></label>
+                                    <input type="text"  name="IFSC_Code" className="form-control"
+                                        value={data.IFSC_Code} onChange={changeHandler} />
+                                </div >
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Pan Card No: </b></label>
+                                    <input type="text"  name="panCardNo" className="form-control"
+                                        value={data.panCardNo} onChange={changeHandler} />
+                                </div >
 
 
 

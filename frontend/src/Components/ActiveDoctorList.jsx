@@ -7,7 +7,7 @@ import { IP_ADDRS } from "../service/Constant";
 import PatientService from "../service/PatientService";
 
 
-const VerifyDoctor = () => {
+const ActiveDoctorList = () => {
     const [doctorList, setDoctorList] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
@@ -22,19 +22,19 @@ const VerifyDoctor = () => {
         //         console.log(err);
         //         swal("Something went Wrong", "", "error")
         //     })
-        let doctorList = JSON.parse(sessionStorage.getItem("verifiedDoctorList"));
+        let doctorList = JSON.parse(sessionStorage.getItem("activeDoctorList"));
         if(doctorList)
         setDoctorList(doctorList);
 
     }, []);
 
-    const getVerifiedDoctorList=()=>{
+    const getActiveDoctorList=()=>{
         let admin = JSON.parse(sessionStorage.getItem("admin"));
-        axios.get(`${IP_ADDRS}/api/admin/verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
+        axios.get(`${IP_ADDRS}/api/admin/active_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
             .then(res => {
                 console.log(res.data);
                 setDoctorList(res.data);
-                sessionStorage.setItem("verifiedDoctorList", JSON.stringify(res.data));
+                sessionStorage.setItem("activeDoctorList", JSON.stringify(res.data));
             })
             .catch(err => {
                 console.log(err);
@@ -43,15 +43,15 @@ const VerifyDoctor = () => {
     }
 
     const details = (d) => {
-        sessionStorage.setItem("verifiedDoctor", JSON.stringify(d));
-        navigate(`/unverify_doctor`);
+        sessionStorage.setItem("suspendDoctor", JSON.stringify(d));
+        navigate(`/suspend_doctor`);
     }
 
     return (
         <>
             <div className="container my-4">
                 <div>
-                    <button onClick={getVerifiedDoctorList}>Get Registered Doctor List</button>
+                    <button onClick={getActiveDoctorList}>Get Active Doctor List</button>
                     <h3>Doctor List</h3>
 
                     <table className="table table-bordered">
@@ -85,7 +85,7 @@ const VerifyDoctor = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td>
                                         <td>
-                                            <button className="btn btn-primary" onClick={() => details(v)}>Un-Verify</button>
+                                            <button className="btn btn-primary" onClick={() => details(v)}>Suspend</button>
                                         </td>
                                     </tr>
                                 );
@@ -97,4 +97,4 @@ const VerifyDoctor = () => {
         </>
     )
 }
-export default VerifyDoctor;
+export default ActiveDoctorList;

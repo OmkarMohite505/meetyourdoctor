@@ -22,19 +22,19 @@ const VerifyDoctor = () => {
         //         console.log(err);
         //         swal("Something went Wrong", "", "error")
         //     })
-        let doctorList = JSON.parse(sessionStorage.getItem("verifiedDoctorList"));
+        let doctorList = JSON.parse(sessionStorage.getItem("verifyDoctorList"));
         if(doctorList)
         setDoctorList(doctorList);
 
     }, []);
 
-    const getVerifiedDoctorList=()=>{
+    const getRegisteredDoctorList=()=>{
         let admin = JSON.parse(sessionStorage.getItem("admin"));
-        axios.get(`${IP_ADDRS}/api/admin/verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
+        axios.get(`${IP_ADDRS}/api/admin/un_verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
             .then(res => {
                 console.log(res.data);
                 setDoctorList(res.data);
-                sessionStorage.setItem("verifiedDoctorList", JSON.stringify(res.data));
+                sessionStorage.setItem("verifyDoctorList", JSON.stringify(res.data));
             })
             .catch(err => {
                 console.log(err);
@@ -43,15 +43,15 @@ const VerifyDoctor = () => {
     }
 
     const details = (d) => {
-        sessionStorage.setItem("verifiedDoctor", JSON.stringify(d));
-        navigate(`/unverify_doctor`);
+        sessionStorage.setItem("verifyDoctor", JSON.stringify(d));
+        navigate(`/doctor_details`);
     }
 
     return (
         <>
             <div className="container my-4">
                 <div>
-                    <button onClick={getVerifiedDoctorList}>Get Registered Doctor List</button>
+                    <button onClick={getRegisteredDoctorList}>Get Registered Doctor List</button>
                     <h3>Doctor List</h3>
 
                     <table className="table table-bordered">
@@ -85,7 +85,7 @@ const VerifyDoctor = () => {
                                         <td>{v.address[0].city}</td>
                                         <td>{v.address[0].state}</td>
                                         <td>
-                                            <button className="btn btn-primary" onClick={() => details(v)}>Un-Verify</button>
+                                            <button className="btn btn-primary" onClick={() => details(v)}>Verify</button>
                                         </td>
                                     </tr>
                                 );
