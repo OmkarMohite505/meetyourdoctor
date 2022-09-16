@@ -16,4 +16,6 @@ public interface IPatientService {
 	byte[] restoreImage(long id) throws Exception;
 	
 	PatientDTO getPatientDetails(String email)throws Exception;
+
+	byte[] restoreImageByPath(String imagePath) throws IOException;
 }

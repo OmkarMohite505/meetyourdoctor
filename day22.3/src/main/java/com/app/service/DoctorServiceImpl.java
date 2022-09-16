@@ -60,6 +60,12 @@ public class DoctorServiceImpl implements IDoctorService {
 		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
 //		return Files.readAllBytes(Paths.get(imagePath));
 	}
+	
+	@Override
+	public byte[] restoreImageByPath(String imagePath) throws IOException {
+		String completePath = baseFolder + File.separator + imagePath;
+		return Files.readAllBytes(Paths.get(completePath));
+	}
 
 	@Override
 	public DoctorDTO getDoctorDetails(String email) throws Exception {
@@ -164,4 +170,6 @@ public class DoctorServiceImpl implements IDoctorService {
 	public List<Doctor> getActiveDoctorsList() {
 		return doctorRepository.findAllByIsDoctorSuspended(false);
 	}
+
+	
 }

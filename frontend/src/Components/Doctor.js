@@ -14,7 +14,7 @@ function Doctor() {
 
     useEffect(() => {    
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
-        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctorId,profilePicture:doc.profilePicture})
+        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctorId,profilePicture:doc.profilePicture.substring(15)})
     },[]);
 
     const logout=()=>{
@@ -40,7 +40,7 @@ function Doctor() {
             <div className="container" style={{marginBottom : "50px"}}>
                     <div className="row my-3">
                         <div className="col-sm-3"><h2 className="">Hello, Dr.{doctor.firstName} {doctor.lastName}</h2></div>
-                        <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${doctor.doctorId}`} style={{'height':'100px','width':'100px'}}></img></div>
+                        <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div>
                         <div className="col-sm-6">
                             <button onClick={logout} style={{"float":"right"}} className="btn btn-danger">Logout</button>
                         </div>

@@ -32,26 +32,7 @@ function UpdateTimeTable(){
     },[]);
 
     const getTimeTable=()=>{
-        // fetch("http://localhost:8080/gettimetablebydoctorid/"+doctorId)
-        // .then(r => r.json())
-        // .then(d => {/*console.log(d);*/setTimeTable(d)});
-        const obj = {"email":data.email};
-        axios.post("http://localhost:8080/api/signwo", obj)
-        .then(response=>{
-            if(response.data.roles.includes("ROLE_PATIENT")){
-                sessionStorage.setItem("patient", JSON.stringify(response.data));
-                navigate(`/patient`);
-            }
-            if(response.data.roles.includes("ROLE_DOCTOR")){
-                sessionStorage.setItem("doctor", JSON.stringify(response.data));
-                setTimeTable(response.data.timetable);
-            }
-        })
-
         
-
-
-
     }
     const update=(ev)=>{
         sessionStorage.setItem("daytimetable",JSON.stringify(ev))

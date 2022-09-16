@@ -55,8 +55,15 @@ public class PatientServiceImpl implements IPatientService {
 	@Override
 	public byte[] restoreImage(long id) throws Exception {
 		Patient persistentPatient = patientRepository.findById(id).orElseThrow(()->new Exception("Patient Not Found"));
+		System.out.println(persistentPatient.getProfilePicture());
 		return Files.readAllBytes(Paths.get(persistentPatient.getProfilePicture()));
 //		return Files.readAllBytes(Paths.get(imagePath));
+	}
+	
+	@Override
+	public byte[] restoreImageByPath(String imagePath) throws IOException {
+		String completPath = baseFolder + File.separator + imagePath;
+		return Files.readAllBytes(Paths.get(completPath));
 	}
 
 	@Override
@@ -65,5 +72,7 @@ public class PatientServiceImpl implements IPatientService {
 		mapper.map(patientRepository.findByLoginEmail(email).orElseThrow(()->new Exception("Patient Not Found")), patientDTO);
 		return patientDTO;
 	}
+
+	
 
 }

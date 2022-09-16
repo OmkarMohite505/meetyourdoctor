@@ -39,4 +39,6 @@ public interface IDoctorService {
 	List<Doctor> getSuspendedDoctorsList();
 	
 	List<Doctor> getActiveDoctorsList();
+
+	byte[] restoreImageByPath(String imagePath)throws IOException;
 }

@@ -63,17 +63,33 @@ function PatientRegistration() {
     });
     const [countrylist, setCountryList] = useState({});
     const [statelist, setState] = useState([]);
-    const [stateId, setStateId] = useState(1);
+    const [stateId, setStateId] = useState();
     const [citylist, setCityList] = useState([]);
     const [yearList, setYearList] = useState([]);
 
-    const eduType = ["MBBS", "DM", "MS", "MD"];
-    const specialityType = ["DERMATOLOGY", "GENERAL_PHYSICIAN", "UROLOGY"];
-    const roleSelect = ["Select Role", "PATIENT", "DOCTOR", "ADMIN"];
+    const eduType = ["Select Education","MBBS","BDS","BAMS","BUMS","BHMS","BYNS", "DM", "MS", "MD"];
+
+    const specialityType = ["Select Speciality","DERMATOLOGISTS","CARDIOLOGISTS", "GENERAL_PHYSICIAN", "UROLOGISTS","NEUROLOGISTS",
+        "RHEUMATOLOGISTS","RADIOLOGISTS","PULMONOLOGISTS","PSYCHIATRISTS",
+        "PODIATRISTS","PHYSIATRISTS","PEDIATRICIANS","PATHOLOGIST","OTOLARYNGOLOGISTS",
+        "OSTEOPATHS","OPHTHALMOLOGISTS","ONCOLOGISTS","GYNECOLOGISTS",
+        "NEPHROLOGISTS","INTERNISTS","HEMATOLOGISTS","GASTROENTEROLOGISTS","ENDOCRINOLOGISTS",
+        "ANESTHESIOLOGISTS","IMMUNOLOGISTS"
+
+];
+    const roleSelect = ["Select Role", "PATIENT", "DOCTOR"];
 
     useEffect(() => {
         axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/states`)
-            .then(res => { setState(res.data.states); console.log(res.data) });
+            .then(res =>
+                 {  
+                    let arr = [];
+                    
+                    let st = {"state_id":0,"state_name":"Select State"};
+                    arr = res.data.states;
+                    arr.unshift(st);
+                    setState(arr); 
+                    console.log(arr) });
 
         populateYearList();
     }, [])
@@ -102,8 +118,19 @@ function PatientRegistration() {
         setData({ ...data, state: st.state_name });
     }
     useEffect(() => {
+        if(stateId!==0)
         axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${stateId}`)
-            .then(res => { setCityList(res.data.districts) });
+            .then(res => 
+                {
+                    let arr = [];
+                    
+                    let ct = {"district_id":0,"district_name":"Select City"};
+                    arr = res.data.districts;
+                    arr.unshift(ct);
+                    console.log(res.data.districts);
+                     setCityList(arr);
+                     console.log(arr);
+                     });
     }, [stateId])
 
     const [cricket, setCricket] = useState(false);
@@ -488,7 +515,9 @@ function PatientRegistration() {
                                     <label><p> State: </p></label>
 
                                     <select name="statename" value={stateId} onChange={handleState}>
-                                        {statelist.map((v) => (
+                                        {statelist.map((v, i) => (
+                                            (i===0)?<option key={v}>Select State</option> :
+                                            
                                             <option value={v.state_id} key={v.state_name}>{v.state_name}</option>
                                         ))}
                                         {/* {statelist.map((element, index) => <option key={index}>{element.state_name}</option>)} */}
@@ -553,7 +582,7 @@ function PatientRegistration() {
                                         <b>Diploma :</b><br></br>
                                         <p>Enter Education Type :</p>
                                         {/* <input type="text" name="educationType" value={diplomaEdu.educationType} onChange={setDiplomaData} className="form-control"></input> */}
-                                        <select name="educationType" value={diplomaEdu.educationType} onChange={setDiplomaData} style={{ "width": "90px" }}>
+                                        <select name="educationType" value={diplomaEdu.educationType} onChange={setDiplomaData} style={{ "width": "180px" }}>
                                             {
                                                 eduType.map((e, i) => (
                                                     <option value={e} key={`diploma${e}$`}>{e}</option>
@@ -564,7 +593,7 @@ function PatientRegistration() {
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Year of Passing</p>
                                         {/* <input type="number" name="year" value={diplomaEdu.year} onChange={setDiplomaData} className="form-control"></input> */}
-                                        <select name="year" value={diplomaEdu.year} onChange={setDiplomaData} style={{ "width": "90px" }}>
+                                        <select name="year" value={diplomaEdu.year} onChange={setDiplomaData} style={{ "width": "130px" }}>
                                             {
                                                 yearList.map((y) => (
                                                     <option value={y} key={`diploma${y}`}>{y}</option>
@@ -589,7 +618,7 @@ function PatientRegistration() {
                                         <b>Graduation :</b><br></br>
                                         <p>Enter Graduation Type :</p>
                                         {/* <input type="text" name="educationType" value={graduationEdu.educationType} onChange={setGraduationData} className="form-control"></input> */}
-                                        <select name="educationType" value={graduationEdu.educationType} onChange={setGraduationData} style={{ "width": "90px" }}>
+                                        <select name="educationType" value={graduationEdu.educationType} onChange={setGraduationData} style={{ "width": "180px" }}>
                                             {
                                                 eduType.map((e, i) => (
                                                     <option value={e} key={`gradu${e}`}>{e}</option>
@@ -601,7 +630,7 @@ function PatientRegistration() {
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Year of Passing</p>
                                         {/* <input type="number" name="year" value={graduationEdu.year} onChange={setGraduationData} className="form-control"></input> */}
-                                        <select name="year" value={graduationEdu.year} onChange={setGraduationData} style={{ "width": "90px" }}>
+                                        <select name="year" value={graduationEdu.year} onChange={setGraduationData} style={{ "width": "130px" }}>
                                             {
                                                 yearList.map((y, i) => (
                                                     <option value={y} key={`gradu${y}${i}`}>{y}</option>
@@ -627,7 +656,7 @@ function PatientRegistration() {
                                         <b>Post Graduation :</b><br></br>
                                         <p>Enter PostGraduation Type :</p>
                                         {/* <input type="text" name="educationType" value={postGraduEdu.educationType} onChange={setPostGraduData} className="form-control"></input> */}
-                                        <select name="educationType" value={postGraduEducation.educationType} onChange={setPostGraduData} style={{ "width": "90px" }}>
+                                        <select name="educationType" value={postGraduEducation.educationType} onChange={setPostGraduData} style={{ "width": "180px" }}>
                                             {
                                                 eduType.map((e, i) => (
                                                     <option value={e} key={`postgradu${e}${i}`}>{e}</option>
@@ -646,7 +675,7 @@ function PatientRegistration() {
                                                     })
                                                 }
                                             </select> */}
-                                        <select name="year" value={postGraduEducation.year} onChange={setPostGraduData} style={{ "width": "90px" }}>
+                                        <select name="year" value={postGraduEducation.year} onChange={setPostGraduData} style={{ "width": "130px" }}>
                                             {
                                                 yearList.map((y, i) => (
                                                     <option value={y} key={`postgradu${y}`}>{y}</option>
