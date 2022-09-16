@@ -46,7 +46,7 @@ public class Doctor {
 	@Column(name = "mobile_number", length = 13)
 	private String mobileNumber;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@Column(length = 12)
 	private String aadharNo;
 
@@ -72,7 +72,7 @@ public class Doctor {
 	private boolean isDoctorSuspended;
 
 	// Doctor has hobbies
-	@JsonIgnore
+//	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER) // mandatory to specify that foll is collection of basic type
 	@CollectionTable(name = "doctor_hobbies", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"doctor_id", "hobby" }))
@@ -102,7 +102,7 @@ public class Doctor {
 	@JoinColumn(name="tt_id")
 	private Set<DoctorTimeTable> timetables;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "bank_id")
 	private BankAccount bankAccount;
