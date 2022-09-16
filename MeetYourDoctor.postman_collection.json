@@ -7,6 +7,93 @@
 	},
 	"item": [
 		{
+			"name": "Register Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin3@gmail.com\",\r\n    \"password\":\"admin\",\r\n    \"roles\":[\"ROLE_ADMIN\"],\r\n    \"adminSecretKey\":\"mySecretKey\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Patient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"p1@gmail.com\",\r\n    \"password\":\"101\",\r\n    \"firstName\":\"Shiv\",\r\n    \"lastName\":\"Patil\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_PATIENT\"],\r\n     \"address\":[{\"town\":\"kalas\",\"city\":\"pune\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}]\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register_patient",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register_patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Doctor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"email\":\"kunal@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Kunal\",\r\n    \"lastName\":\"Lokhande\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"DERMATOLOGY\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"},{\"specialityType\":\"GENERAL_PHYSICIAN\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"doctorTimeTable\":{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"},\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSC_Code\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register_doctor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register_doctor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Doctor Signin",
 			"request": {
 				"method": "POST",
@@ -88,64 +175,6 @@
 					"path": [
 						"auth",
 						"signin"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Register Patient",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"p1@gmail.com\",\r\n    \"password\":\"101\",\r\n    \"firstName\":\"Shiv\",\r\n    \"lastName\":\"Patil\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_PATIENT\"],\r\n     \"address\":[{\"town\":\"kalas\",\"city\":\"pune\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}]\r\n\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/auth/register_patient",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"register_patient"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Register Doctor",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"email\":\"kunal@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Kunal\",\r\n    \"lastName\":\"Lokhande\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"DERMATOLOGY\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"},{\"specialityType\":\"GENERAL_PHYSICIAN\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"doctorTimeTable\":{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"},\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSC_Code\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/auth/register_doctor",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"register_doctor"
 					]
 				}
 			},
