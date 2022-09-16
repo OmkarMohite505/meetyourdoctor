@@ -1,0 +1,9 @@
+Major issues Facing in com.app.entites->  Doctor Entity
+
+Lazy Initilization Exception, So i made everywhere eager fetching,
+I want to fetch Doctor details based on speciality, or address details like town, city, state, so i written jpql in --> com.app.repository --> DoctorRepository  
+line no 19 to 32  -->  but giving errors    
+
+
+in table -->  doctor_timetable   and table-->  addresses  foreign key reference not adding
+relation used in both table --> oneToMany
