@@ -26,10 +26,10 @@ public class BankAccount {
 	private String nameAsPerBank;
 	
 	@Column(length = 50)
-	private String BankName;
+	private String bankName;
 	
 	@Column(length = 25)
-	private String BankAccountNo;
+	private String bankAccountNo;
 	
 	@Column(length = 20)
 	private String IFSC_Code;

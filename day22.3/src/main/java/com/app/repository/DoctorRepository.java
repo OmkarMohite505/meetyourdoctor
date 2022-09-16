@@ -12,14 +12,18 @@ import com.app.entities.Patient;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 	Optional<Doctor> findByLoginEmail(String email);
 	
+	List<Doctor> findAllByIsDoctorVerified(boolean status);
+	
+	List<Doctor> findAllByIsDoctorSuspended(boolean status);
+	
 //	@Query(value = "select d from Doctor d where d.address.town=?1")
 //	List<Doctor> findAllDoctorsByTown(String town);
 //	
 //	@Query(value = "select d from Doctor d where d.address.city=?1")
 //	List<Doctor> findAllDoctorsByCity(String city);
 //	
-////	@Query(value = "select d from Doctor d where d.address.state=?1")
-////	List<Doctor> findAllDoctorsByState(String state);
+//	@Query(value = "select d from Doctor d where d.address.state=?1")
+//	List<Doctor> findAllDoctorsByState(String state);
 //	
 //	@Query(value = "select d from Doctor d where d.address.country=?1")
 //	List<Doctor> findAllDoctorsByCountry(String country);

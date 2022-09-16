@@ -18,21 +18,20 @@ class TestRoleRepository {
 	@Autowired
 	private RoleRepository roleRepo;
 
-	/*
-	 * @Test
-	 * 
-	 * @Rollback(false) void testAddRoleAdmin() {
-	 * System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_ADMIN))); }
-	 * 
-	 * @Test
-	 * 
-	 * @Rollback(false) void testAddRoleCustomer() {
-	 * System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_PATIENT))); }
-	 * 
-	 * @Test
-	 * 
-	 * @Rollback(false) void testAddRoleUser() {
-	 * System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_DOCTOR))); }
-	 */
+//	@Test
+//	@Rollback(false)
+//	void testAddRoleAdmin() {
+//		System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_ADMIN)));
+//	}
+//	@Test
+//	@Rollback(false)
+//	void testAddRoleCustomer() {
+//		System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_PATIENT)));
+//	}
+//	@Test
+//	@Rollback(false)
+//	void testAddRoleUser() {
+//		System.out.println(roleRepo.save(new RoleEntity(RoleEnum.ROLE_DOCTOR)));
+//	}
 
 }

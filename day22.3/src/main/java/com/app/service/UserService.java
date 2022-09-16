@@ -2,6 +2,7 @@ package com.app.service;
 
 import javax.validation.Valid;
 
+import com.app.dto.AdminDTO;
 import com.app.dto.AuthenticationRequest;
 import com.app.dto.DoctorDTO;
 import com.app.dto.PatientDTO;
@@ -24,5 +25,7 @@ public interface UserService {
 	void sendOTPForForgotPassword(String email) throws Exception;
 
 	void updateUserPassword(String email, String newPassword, int otp) throws Exception;
+	
+	AdminDTO getAdminDetails(String email);
 
 }

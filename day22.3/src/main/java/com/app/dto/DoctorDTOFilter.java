@@ -30,7 +30,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DoctorDTO {
+public class DoctorDTOFilter {
 	private Long loginId;
 
 	private String message;
@@ -39,7 +39,6 @@ public class DoctorDTO {
 
 	Long doctorId;
 
-	private String userName, password;
 	private Set<RoleEnum> roles;
 	private Set<String> hobbies;
 
@@ -76,7 +75,6 @@ public class DoctorDTO {
 
 	private Set<Address> address;
 	
-	private BankAccount bankAccount;
 	
 	private DoctorTimeTable doctorTimeTable;
 
@@ -96,7 +94,7 @@ public class DoctorDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		DoctorDTO other = (DoctorDTO) obj;
+		DoctorDTOFilter other = (DoctorDTOFilter) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;

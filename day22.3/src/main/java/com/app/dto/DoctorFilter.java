@@ -1,4 +1,4 @@
-package com.app.entities;
+package com.app.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,8 +12,10 @@ import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.app.entities.Address;
+import com.app.entities.EducationalQualification;
+import com.app.entities.Speciality;
 import com.app.enums.GenderType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -26,10 +28,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Entity
-@Table(name = "doctors")
-public class Doctor {
+public class DoctorFilter {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long doctorId;
@@ -46,14 +45,12 @@ public class Doctor {
 	@Column(name = "mobile_number", length = 13)
 	private String mobileNumber;
 
-	@JsonIgnore
 	@Column(length = 12)
 	private String aadharNo;
 
 	@Column(length = 250)
 	private String profilePicture;
 
-	
 //	@Pattern(regexp="({13})")
 	@Column(length = 12)
 	private String alternateMobileNumber;
@@ -67,12 +64,8 @@ public class Doctor {
 
 	private double fees;
 
-	private boolean isDoctorVerified;
-
-	private boolean isDoctorSuspended;
 
 	// Doctor has hobbies
-	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER) // mandatory to specify that foll is collection of basic type
 	@CollectionTable(name = "doctor_hobbies", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"doctor_id", "hobby" }))
@@ -92,20 +85,12 @@ public class Doctor {
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "address_id")
 	private Set<Address> address;
-	
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "login_id")
-	private Login login;
+
 	
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name="tt_id")
 	private Set<DoctorTimeTable> timetables;
 	
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bank_id")
-	private BankAccount bankAccount;
 
 	@Override
 	public int hashCode() {
@@ -123,7 +108,7 @@ public class Doctor {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Doctor other = (Doctor) obj;
+		DoctorFilter other = (DoctorFilter) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;

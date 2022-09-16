@@ -1,5 +1,9 @@
 package com.app.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.AdminDTO;
 import com.app.dto.AuthRequest;
 import com.app.dto.AuthResp;
 import com.app.dto.AuthRespDoctor;
@@ -23,6 +28,7 @@ import com.app.dto.DoctorDTO;
 import com.app.dto.PatientDTO;
 import com.app.dto.UpdatePasswordDTO;
 import com.app.dto.UserDTO;
+import com.app.enums.RoleEnum;
 import com.app.jwt_utils.JwtUtils;
 import com.app.service.UserService;
 
@@ -46,8 +52,9 @@ public class SignInSignUpController {
 	// add a method to authenticate user . In case of success --send back token , o.w
 	// send back err mesg
 	@PostMapping("/signin")
-	public ResponseEntity<?> validateUserCreateToken(@RequestBody @Valid AuthRequest request) throws Exception {
+	public ResponseEntity<?> validateUserCreateToken(@RequestBody @Valid AuthRequest request, HttpServletRequest httpServletRequest) throws Exception {
 		// store incoming user details(not yet validated) into Authentication object
+		System.out.println(httpServletRequest.getRemoteAddr());
 		// Authentication i/f ---> implemented by UserNamePasswordAuthToken
 		UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(request.getEmail(),
 				request.getPassword());
@@ -71,7 +78,15 @@ public class SignInSignUpController {
 				doctor.setMessage("Authentication Successfull");
 				return ResponseEntity.status(HttpStatus.ACCEPTED).body(doctor);
 			}
-			
+			if(obj instanceof AdminDTO) {
+				AdminDTO admin = (AdminDTO)obj;
+				Set<RoleEnum> loginRole = new HashSet<>();
+				loginRole.add(RoleEnum.valueOf("ROLE_ADMIN"));
+				admin.setRoles(loginRole);
+				admin.setJwt(utils.generateJwtToken(authenticatedDetails));
+				admin.setMessage("Authentication Successfull");
+				return ResponseEntity.status(HttpStatus.ACCEPTED).body(admin);
+			}
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Your role not found");
 			
 			

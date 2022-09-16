@@ -11,10 +11,11 @@ import com.app.entities.Login;
 import com.app.repository.LoginRepository;
 
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Service // or @Component also works!
 @Transactional
-
+@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
 	// dep : user repository : based upon spring data JPA
 	@Autowired
@@ -22,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		System.out.println("in load by user nm " + email);
+		log.info("in Load by user name methog"+email);
 		// invoke dao's method to load user details from db by username(ie. actaully an
 		// email)
 		Login user = LoginRepo.

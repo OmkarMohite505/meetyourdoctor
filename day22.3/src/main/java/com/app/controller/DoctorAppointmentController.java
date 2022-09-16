@@ -20,6 +20,8 @@ import com.app.service.IAppointmentService;
 @CrossOrigin
 @RequestMapping("/api/doctor/appointment")
 public class DoctorAppointmentController {
+	
+	
 	@Autowired
 	private IAppointmentService appointmentService;
 	

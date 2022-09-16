@@ -1,0 +1,849 @@
+{
+	"info": {
+		"_postman_id": "f099a8a9-593b-40d3-bd8f-37f29a87a470",
+		"name": "MeetYourDoctor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20846958"
+	},
+	"item": [
+		{
+			"name": "Doctor Signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"suntamohite605@gmail.com\",\r\n    \"password\":\"100\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient SignIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"p1@gmail.com\",\r\n    \"password\":\"101\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Patient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"p1@gmail.com\",\r\n    \"password\":\"101\",\r\n    \"firstName\":\"Shiv\",\r\n    \"lastName\":\"Patil\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_PATIENT\"],\r\n     \"address\":[{\"town\":\"kalas\",\"city\":\"pune\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}]\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register_patient",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register_patient"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Doctor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"email\":\"kunal@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Kunal\",\r\n    \"lastName\":\"Lokhande\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"DERMATOLOGY\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"},{\"specialityType\":\"GENERAL_PHYSICIAN\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"doctorTimeTable\":{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"},\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSC_Code\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register_doctor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register_doctor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwMUBnbWFpbC5jb20iLCJpYXQiOjE2NjI2MTI1NzgsImV4cCI6MTY2MjY5ODk3OH0.dTVhXMfx7OLYBiiBV3jWdJU12F6ioZDLLEjIsgBa4jsj4iF3YsY6Nc_8GJpOJMVvuETITxOCqhJqdchTBVaEVg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentDate\":\"2022-01-01\",\r\n    \"doctorId\":1,\r\n    \"patientId\":1   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/patient/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Payment Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\":700,\r\n    \"appointmentId\":2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/patient/appointment/pay/create_order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"appointment",
+						"pay",
+						"create_order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Appointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkMUBnbWFpbC5jb20iLCJpYXQiOjE2NjI2MDg3MjAsImV4cCI6MTY2MjY5NTEyMH0.qGMHTuzq5RFUYhh93zTkafSGlE3bHgiHBVBYBABWx5jfskk88wiKHpbk16rl-DfT4oEgyT2igCfWH_7B4SqHYg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentId\":2,\r\n    \"doctorId\":1,\r\n    \"patientId\":2,\r\n    \"appointmentTime\":\"12:02:59\",\r\n    \"appointmentDate\":\"2022-01-01\",\r\n    \"status\":\"CLOSED\",\r\n    \"appointmentDescription\":\"Patients treated, medicines given, next appointments details send over email, more information given inn images\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/patient/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient Profile Picture Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": "/C:/Users/rahul/OneDrive/Pictures/ID Photo/omkar.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/patient/profile_picture/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"profile_picture",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor Profile Picture Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": "/C:/Users/rahul/OneDrive/Pictures/ID Photo/OM 1.jpeg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctor/profile_picture/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctor",
+						"profile_picture",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile Picture",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": "/C:/Users/rahul/OneDrive/Pictures/ID Photo/omkar.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/image/ROLE_PATIENT/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"image",
+						"ROLE_PATIENT",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Timetable",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"doctorId\":2,\r\n    \"timetable\":[{\"weekday\":\"THursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"}]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctor/save_timetable",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctor",
+						"save_timetable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Doctors List for Patient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwMUBnbWFpbC5jb20iLCJpYXQiOjE2NjI2NDMxODksImV4cCI6MTY2MjcyOTU4OX0.8c4n2AAzBeDBFrqY5F4Iu4gGjACMo0EDh8tOild58qHcTFWvkwhyfYfm5HcqfP2MJReD09mKLTyw8wRbKkWdTA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/patient/get_all_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"get_all_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Appointment Images",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdW50YW1vaGl0ZTYwNUBnbWFpbC5jb20iLCJpYXQiOjE2NjI3Mjk1MjMsImV4cCI6MTY2MjgxNTkyM30.T3e9m-fIIoqPwPzE56zhd-2SOwkfpS1Q9nJzxNEFeClOi7Wn9oY-mk3Z1ibiGYdganBNkhG_BmrlM8msBDXrjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "imageFile",
+							"type": "file",
+							"src": [
+								"/C:/Users/rahul/OneDrive/Pictures/ID Photo/OM.jpeg",
+								"/C:/Users/rahul/OneDrive/Pictures/ID Photo/omkar.jpg"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctor/appointment/upload_images/1/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctor",
+						"appointment",
+						"upload_images",
+						"1",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Close Appointment By Doctor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdW50YW1vaGl0ZTYwNUBnbWFpbC5jb20iLCJpYXQiOjE2NjI3Mjk1MjMsImV4cCI6MTY2MjgxNTkyM30.T3e9m-fIIoqPwPzE56zhd-2SOwkfpS1Q9nJzxNEFeClOi7Wn9oY-mk3Z1ibiGYdganBNkhG_BmrlM8msBDXrjg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentId\":1,\r\n    \"patientId\":1,\r\n    \"status\":\"CLOSED\",\r\n    \"description\":\"PATIENT TREATED\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctor/appointment/update_status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctor",
+						"appointment",
+						"update_status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Doctor List for Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMyOTcxNjgsImV4cCI6MTY2MzM4MzU2OH0.lLypFBxMUvdNqOBEf_xEVRY1N2V6EeKvBSfTklCmh7GsGOBjfCGhyCWOx01lUIhXEvNThL6b_cZ4o2gz6M6aQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/get_all_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"get_all_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verify Doctor By Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMyOTcxNjgsImV4cCI6MTY2MzM4MzU2OH0.lLypFBxMUvdNqOBEf_xEVRY1N2V6EeKvBSfTklCmh7GsGOBjfCGhyCWOx01lUIhXEvNThL6b_cZ4o2gz6M6aQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/verify_doctor/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"verify_doctor",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suspend Doctor By Admin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/verify_doctor/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"verify_doctor",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "un-Verify Doctor By Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/un_verify_doctor/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"un_verify_doctor",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Doctor Suspension By Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/remove_doctor_suspension/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"remove_doctor_suspension",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Doctors List By Speciality",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJvbWthcm1vaGl0ZTUwNUBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDI1MTAsImV4cCI6MTY2MzM4ODkxMH0.w_ixYFO-qkMXHOwHHiLSuO6dL1e_dKn8obQSBosktXZvfaXRaRvF4m_2jNawoGggpioqaYZEQGnY1J3e73zp2w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/patient/get_all_doctors_list/DERMATOLOGY",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"get_all_doctors_list",
+						"DERMATOLOGY"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Un-Verified Doctors List For Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/un_verified_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"un_verified_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Verified Doctors List For Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/verified_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"verified_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suspended Doctors List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/suspended_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"suspended_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Active Doctors List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/admin/active_doctors_list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"admin",
+						"active_doctors_list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "temp Doctor Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n    \"email\":\"nikhil@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Kunal\",\r\n    \"lastName\":\"Lokhande\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"DERMATOLOGY\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"doctorTimeTable\":{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"},\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSC_Code\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register_doctor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register_doctor"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

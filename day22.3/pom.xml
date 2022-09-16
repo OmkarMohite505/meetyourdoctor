@@ -63,6 +63,9 @@
 			<artifactId>modelmapper</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+		
+		
+		
 		<!-- Swagger UI -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
@@ -117,6 +120,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>meet</finalName>
 	</build>
 
 </project>

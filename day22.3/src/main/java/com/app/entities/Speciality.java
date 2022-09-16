@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import com.app.enums.SpecialityType;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Embeddable
+@EqualsAndHashCode(of = "specialityType")
 public class Speciality {
 
 	@Column(name = "speciality_type")
@@ -39,26 +41,26 @@ public class Speciality {
 
 	private String specialityPhoto;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((specialityType == null) ? 0 : specialityType.hashCode());
-		return result;
-	}
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((specialityType == null) ? 0 : specialityType.hashCode());
+//		return result;
+//	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Speciality other = (Speciality) obj;
-		if (specialityType != other.specialityType)
-			return false;
-		return true;
-	}
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Speciality other = (Speciality) obj;
+//		if (specialityType != other.specialityType)
+//			return false;
+//		return true;
+//	}
 
 }

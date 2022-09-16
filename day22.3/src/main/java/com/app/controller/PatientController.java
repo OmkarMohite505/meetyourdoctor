@@ -26,6 +26,7 @@ import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.RoleEntity;
 import com.app.enums.RoleEnum;
+import com.app.enums.SpecialityType;
 import com.app.service.IAppointmentService;
 import com.app.service.IDoctorService;
 import com.app.service.IPatientService;
@@ -61,11 +62,15 @@ public class PatientController {
 	}
 	@GetMapping("/get_all_doctors_list")
 	public ResponseEntity<?> getAllDoctorsList(){
-		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getAllDoctors());
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getAllDoctorsForPatient());
 	}
 	@GetMapping("/get_all_appointment_list/{patientId}")
 	public ResponseEntity<?> getAllAppointmentList(@PathVariable long patientId) throws Exception{
 		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllAppointmentListForPatient(patientId));
+	}
+	@GetMapping("/get_all_doctors_list/{speciality}")
+	public ResponseEntity<?> getAllDoctorsListBySpeciality(@PathVariable SpecialityType speciality){
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorsListBySpeciality(speciality));
 	}
 
 }

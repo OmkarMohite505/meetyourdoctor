@@ -30,6 +30,9 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		log.info("Request IP address : "+request.getRemoteAddr());
+		log.info("Request Uri : "+request.getRequestURI());
+		log.info("Request UrL : "+request.getRequestURL());
 		log.info("in once per request filter");
 		// get authorization header n check if not null n starting with Bearer
 		String header = request.getHeader("Authorization");

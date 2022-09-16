@@ -19,9 +19,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.app.repository.AddressRepository;
+import com.app.repository.BankRepository;
 import com.app.repository.DoctorRepository;
+import com.app.repository.DoctorTimetableRepo;
 import com.app.repository.PatientAddressRepo;
 import com.app.repository.PatientRepository;
+import com.app.dto.AdminDTO;
 import com.app.dto.AuthenticationRequest;
 import com.app.dto.DoctorDTO;
 import com.app.dto.PatientDTO;
@@ -30,7 +33,9 @@ import com.app.dto.UserDTO;
 import com.app.dto.UserRegResponse;
 import com.app.dto.UserResponseDTO;
 import com.app.entities.Address;
+import com.app.entities.BankAccount;
 import com.app.entities.Doctor;
+import com.app.entities.DoctorTimeTable;
 import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.PatientAddress;
@@ -57,10 +62,10 @@ public class UserServiceImpl implements UserService {
 	// password enc
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Autowired
 	private PatientRepository patientRepository;
-	
+
 	@Autowired
 	private DoctorRepository doctorRepository;
 
@@ -72,6 +77,10 @@ public class UserServiceImpl implements UserService {
 	private IPatientService patientService;
 	@Autowired
 	private IDoctorService doctorService;
+	@Autowired
+	private BankRepository bankRepository;
+	@Autowired
+	private DoctorTimetableRepo doctorTimetableRepo;
 
 	@Override
 	public UserRegResponse registerUser(UserDTO user) {
@@ -138,7 +147,12 @@ public class UserServiceImpl implements UserService {
 			address.add(adr);
 		}
 		doctor.setAddress(address);
-
+		BankAccount bankAccount = bankRepository.save(doctorDTO.getBankAccount());
+		DoctorTimeTable doctorTimeTable = doctorTimetableRepo.save(doctorDTO.getDoctorTimeTable());
+		doctor.setBankAccount(bankAccount);
+		Set<DoctorTimeTable> timeTable = new HashSet<>();
+		timeTable.add(doctorTimeTable);
+		doctor.setTimetables(timeTable);
 		Doctor persistentDoctor = doctorRepository.save(doctor);
 //		for (Address ad : persistentAddress) {
 //			ad.setDoctor(persistentDoctor);
@@ -150,39 +164,45 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public <T> T temporaryValidateUser(String email) throws Exception {
-		 Login validatedUser = loginRepo.findByEmail(email).orElseThrow(() -> new Exception("User Not Found"));
+		Login validatedUser = loginRepo.findByEmail(email).orElseThrow(() -> new Exception("User Not Found"));
 //		return loginRepo.findByEmailAndPassword(request.getEmail(), encoder.encode(request.getPassword()))
 //				.orElseThrow(()->new Exception("User Not Found"));
 		Set<RoleEntity> roles = validatedUser.getUserRoles();
-		RoleEntity role = new RoleEntity();
-		role.setId((long)2);
-		role.setRoleName(RoleEnum.valueOf("ROLE_PATIENT"));
-		RoleEntity role1 = new RoleEntity();
-		role1.setId((long)3);
-		role1.setRoleName(RoleEnum.valueOf("ROLE_DOCTOR"));
-		if(roles.contains(role)) {
+		RoleEntity patient = new RoleEntity();
+		patient.setId((long) 2);
+		patient.setRoleName(RoleEnum.valueOf("ROLE_PATIENT"));
+		RoleEntity doctor = new RoleEntity();
+		doctor.setId((long) 3);
+		doctor.setRoleName(RoleEnum.valueOf("ROLE_DOCTOR"));
+		RoleEntity admin = new RoleEntity();
+		admin.setId((long) 1);
+		admin.setRoleName(RoleEnum.valueOf("ROLE_ADMIN"));
+		if (roles.contains(patient)) {
 			Set<RoleEnum> loginRole = new HashSet<>();
 			loginRole.add(RoleEnum.valueOf("ROLE_PATIENT"));
 			PatientDTO dto = patientService.getPatientDetails(validatedUser.getEmail());
 			dto.setRoles(loginRole);
 			return (T) dto;
 		}
-			
-		if(roles.contains(role1)) {
+
+		if (roles.contains(doctor)) {
 			Set<RoleEnum> loginRole = new HashSet<>();
 			loginRole.add(RoleEnum.valueOf("ROLE_DOCTOR"));
 			DoctorDTO dto = doctorService.getDoctorDetails(validatedUser.getEmail());
 			dto.setRoles(loginRole);
-			return (T)dto;
+			return (T) dto;
 		}
+		if(roles.contains(admin)) {
+			return(T) mapper.map(validatedUser, AdminDTO.class);
+		}
+		
 		return null;
-		
-		
+
 	}
 
 	@Override
 	public void sendOTPForForgotPassword(String email) throws Exception {
-		Login login = loginRepo.findByEmail(email).orElseThrow(()->new Exception("Wrong Email Id you Provided"));
+		Login login = loginRepo.findByEmail(email).orElseThrow(() -> new Exception("Wrong Email Id you Provided"));
 
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(login.getEmail());
@@ -202,5 +222,14 @@ public class UserServiceImpl implements UserService {
 		Login login = loginRepo.findByEmailAndOtp(email, otp).orElseThrow(() -> new Exception("User Not Found"));
 		login.setPassword(encoder.encode(newPassword));
 	}
+
+	@Override
+	public AdminDTO getAdminDetails(String email) {
+		Login login = loginRepo.findByEmail(email).orElseThrow();
+		return mapper.map(login, AdminDTO.class);
+		
+	}
+	
+	
 
 }

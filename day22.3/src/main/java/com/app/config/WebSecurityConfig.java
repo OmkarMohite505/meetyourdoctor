@@ -42,9 +42,9 @@ public class WebSecurityConfig {
 		}).
 		and().
 		authorizeRequests()
-		.antMatchers("/products/add").hasRole("ADMIN")
-		.antMatchers("/api/patient/**").hasRole("PATIENT")
-		.antMatchers("/api/doctor/**").hasRole("DOCTOR")
+		.antMatchers("/api/admin/**").hasRole("ADMIN")
+		.antMatchers("/api/patient/**").hasAnyRole("PATIENT","ADMIN")
+		.antMatchers("/api/doctor/**").hasAnyRole("DOCTOR","ADMIN")
 		.antMatchers("/products/purchase").hasRole("CUSTOMER")
 //		.antMatchers("/api/doctor/appointment").hasRole("DOCTOR")
 		.antMatchers("/api/image/**").permitAll()
