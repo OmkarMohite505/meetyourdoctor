@@ -1,14 +1,20 @@
 package com.app.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.app.service.IAdminService;
 import com.app.service.IDoctorService;
 
 @RestController
@@ -17,6 +23,8 @@ import com.app.service.IDoctorService;
 public class AdminController {
 	@Autowired
 	private IDoctorService doctorService;
+	@Autowired
+	private IAdminService adminService;
 
 	@GetMapping("/get_all_doctors_list")
 	public ResponseEntity<?> getAllDoctorsList() {
@@ -65,6 +73,11 @@ public class AdminController {
 	@GetMapping("/active_doctors_list")
 	public ResponseEntity<?> getActiveDoctosList() {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getActiveDoctorsList());
+	}
+	@PostMapping("/upload_home_video")
+	public ResponseEntity<?> uploadHomeVideo(@RequestParam MultipartFile videoFile) throws IOException{
+		adminService.storeHomeVideo(videoFile);
+		return ResponseEntity.status(HttpStatus.OK).body("Home Vidoe uploaded Successfully");
 	}
 
 }

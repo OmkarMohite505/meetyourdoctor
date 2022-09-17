@@ -51,6 +51,7 @@ import ActiveDoctorList from './Components/ActiveDoctorList';
 import DoctorDetailsSuspend from './Components/DoctorDetailsSuspend';
 import SuspendedDoctorList from './Components/SuspendedDoctorList';
 import DoctorDetailsRemoveSusp from './Components/DoctorDetailsRemoveSusp';
+import HomeVideo from './Components/HomeVideo';
 
 
 function App() {
@@ -167,6 +168,7 @@ function App() {
             <Route path='/doctor_list_for_suspend' element={<SuspendedDoctorList></SuspendedDoctorList>}></Route>
             <Route path='/suspended_doctor_list' element={<SuspendedDoctorList></SuspendedDoctorList>}></Route>
             <Route path='/remove_suspended_doctor' element={<DoctorDetailsRemoveSusp></DoctorDetailsRemoveSusp>}></Route>
+            <Route path='/home_video_upload' element={<HomeVideo></HomeVideo>}></Route>
           </Routes> 
           <Footer/>
   

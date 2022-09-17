@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import swal from "sweetalert";
 import { IP_ADDRS } from "../service/Constant";
 import ImageService from "../service/ImageService";
 import { WebcamCapture } from "./Webcam";
@@ -21,6 +22,8 @@ function UpdatePatient(){
         profilePicture:"",
         jwt:""
     });
+
+    const [pic, setPic] = useState([]);
 
     const [Error,setError] = useState({
         first_name_error:"",
@@ -117,81 +120,67 @@ function UpdatePatient(){
     useEffect(() => {
         let patient= JSON.parse(sessionStorage.getItem("patient"));
         setData({patientId:patient.patientId,firstName:patient.firstName,lastName:patient.lastName,
-            gender:patient.gender,dob:patient.dob,mobileNumber:patient.mobileNumber,blood_group:patient.bloodGroup,login_id:patient.loginId, profilePicture:patient.profilePicture,
+            gender:patient.gender,dob:patient.dob,mobileNumber:patient.mobileNumber,blood_group:patient.bloodGroup,
+            login_id:patient.loginId, profilePicture:patient.profilePicture.substring(15),
             jwt:patient.jwt})
 
     },[]);
+    useEffect(()=>{
+        fetchImage();
+    },[data])
+
+
+    const fetchImage=()=>{
+        const options = {
+            method: 'GET',
+            url: `${IP_ADDRS}/api/patient/profile_picture/${data.profilePicture}`,
+            headers: {Authorization: `Bearer ${data.jwt}`}
+          };
+          console.log(options.url)
+          
+          axios.request(options).then(response=>{
+            setPic(response.data.image);
+          }).catch(error=>{
+            console.error(error);
+          });
+    }
 
 
     
       const submitData=(e)=>{
         e.preventDefault();
 
-        var c = window.confirm("Are you Confirm ?");
-        if(!c)
-        return;
-        const formData = new FormData();
-        formData.append('imageFile',imageFile)  //1st argumet 'imageFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
-        console.log(imageFile);
-        console.log(formData);
-
-       /*   axios.post(`http://localhost:8080/api/patient/profile_picture/${data.patientId}`,
-         formData,
-        {headers:
-            {'Content-type':'multipart/form-data;boundary=<calculated when request is sent>'},
-
-            'Authorization' : `Bearer ${data.jwt}`} */
-        // ).then(res=>alert("success"));
-        ImageService.uploadPatientProfilePicture(data.patientId, formData, data.jwt)
-        .then(res=>{alert("success")})
-        .catch(err=>{alert("Error")})
-        return;
-
-
-
-
-
-
-
-
-        //console.log(flag.firstName+" "+flag.lastName+" "+flag.mobileNumber)
-        if(flag.firstName&&flag.lastName&&flag.mobileNumber){
-        const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                patient_id:data.patientId,
-                firstName:data.firstName,
-                lastName:data.lastName,
-                mobileNumber:data.mobileNumber,
-                gender:data.gender,
-                dob:data.dob,
-                blood_group:data.blood_group,
-                login_id:data.login_id
-            })
-        }
-        fetch("http://localhost:8080/updatepatient",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                const json = JSON.parse(data);
-                alert("update successful!!!");
-                sessionStorage.setItem("patient",JSON.stringify(json))
-                navigate('/patient');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
+        swal({
+            title: "Are you Confirm to Upload Picture?",
+            text: "Image Will be upload !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((upload)=>{
+            if(upload){
+                const formData = new FormData();
+                formData.append('imageFile', imageFile)  //1st argumet 'videoFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
+        
+                const form = new FormData();
+                form.append("imageFile", imageFile);
+                const options = {
+                    method: 'PUT',
+                    url: `${IP_ADDRS}/api/patient/profile_picture/${data.patientId}`,
+                    headers: {
+                        Authorization: `Bearer ${data.jwt}`,
+                        'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+                    },
+                    data: form
+                };
+        
+                axios.request(options).then(response => {
+                    swal(`${response.data}`, "success");
+                }).catch(error => {
+                    swal("Something went Wrong", "error");
+                });
             }
         })
-        }
-        else{
-            alert("All fields are compulsory and must follow guidelines");
-            // window.location.reload();
-            navigate('/updatepatient');
-        }
 
     }
     
@@ -286,7 +275,10 @@ function UpdatePatient(){
 
 
 {imgFlag ?  <img src={URL.createObjectURL(imageFile)} style={{'height':'200px','width':'200px'}}></img>
-            : <img src={`${IP_ADDRS}/api/image/ROLE_PATIENT/${data.patientId}`} style={{'height':'400px','width':'400px'}}></img>}
+            :
+            //  <img src={`${IP_ADDRS}/api/image/ROLE_PATIENT/${data.patientId}`} style={{'height':'400px','width':'400px'}}></img>
+             <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{'height':'100px','width':'100px'}}></img></div>
+             }
 
     </div>
     );

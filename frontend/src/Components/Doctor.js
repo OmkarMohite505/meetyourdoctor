@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -8,39 +9,52 @@ function Doctor() {
         firstName:"",
         lastName:"",
         doctorId:"",
-        profilePicture:""
-    })
+        profilePicture:"",
+        jwt:""
+    });
+    const [pic, setPic] = useState([]);
     const navigate=useNavigate();
 
     useEffect(() => {    
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
-        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctorId,profilePicture:doc.profilePicture.substring(15)})
+        setDoctor({firstName:doc.firstName,lastName:doc.lastName,doctorId:doc.doctorId,
+            profilePicture:doc.profilePicture.substring(15),
+            jwt:doc.jwt
+        })
     },[]);
+
+    useEffect(()=>{
+        fetchImage();
+    },[doctor])
 
     const logout=()=>{
         sessionStorage.removeItem("doctor");
         navigate("/");
     }
 
+    const fetchImage=()=>{
+        const options = {
+            method: 'GET',
+            url: `${IP_ADDRS}/api/doctor/profile_picture/${doctor.profilePicture}`,
+            headers: {Authorization: `Bearer ${doctor.jwt}`}
+          };
+          
+          axios.request(options).then(response=>{
+            setPic(response.data.image);
+          }).catch(error=>{
+            console.error(error);
+          });
+    }
+
 
         return (
             <>
-            {/* <div className="container fluid">
-                <button className="btn btn-primary" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
-                <h1>Doctor DashBoard</h1>
-                <h2>Welcome...{doctor.firstName} {doctor.lastName}</h2>
-
-                <button className='btn btn-primary' onClick={() => navigate("/updatedoctor")} style={{ marginLeft: "10px", marginTop: "10px" }}>Update Profile</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/updatetimetable")}>Update TimeTable</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/updatetimetable")}>Change TimeTable Status</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/doctorcurrentappointments")}>Current Appointments</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/doctorcurrentappointments")}>Cancel Appointments</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/doctorappointmenthistory")}>Appointment History</button>
-            </div> */}
+          
             <div className="container" style={{marginBottom : "50px"}}>
                     <div className="row my-3">
                         <div className="col-sm-3"><h2 className="">Hello, Dr.{doctor.firstName} {doctor.lastName}</h2></div>
-                        <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div>
+                        {/* <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div> */}
+                        <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{'height':'100px','width':'100px'}}></img></div>
                         <div className="col-sm-6">
                             <button onClick={logout} style={{"float":"right"}} className="btn btn-danger">Logout</button>
                         </div>

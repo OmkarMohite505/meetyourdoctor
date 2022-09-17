@@ -99,9 +99,9 @@ function Admin() {
                     <div className="col-sm-6">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">Add Area</h5>
-                                <p className="card-text">Add new areas.</p>
-                                <button onClick={() => navigate("/addarea")} className="btn btn-info">ADD</button>
+                                <h5 className="card-title">Upload Home Video</h5>
+                                <p className="card-text">Click to upload Home vidoe</p>
+                                <button onClick={() => navigate("/home_video_upload")} className="btn btn-info">ADD</button>
                             </div>
                         </div>
                     </div>

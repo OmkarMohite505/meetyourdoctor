@@ -9,29 +9,45 @@ function Patient(){
         firstName:"",
         lastName:"",
         patientId:"",
-        profilePicture:""
+        profilePicture:"",
+        token:""
+        
     });
+    const [pic, setPic] = useState([]);
+    const [contentType, setContentType] = useState('');
     const navigate=useNavigate();
 
       // Similar to componentDidMount and componentDidUpdate:  
       useEffect(() => {    
             let patient= JSON.parse(sessionStorage.getItem("patient"));
-            setState({firstName:patient.firstName,lastName:patient.lastName, patientId:patient.patientId, profilePicture:patient.profilePicture.substring(15)});
+            setState({firstName:patient.firstName,lastName:patient.lastName, patientId:patient.patientId, 
+                profilePicture:patient.profilePicture.substring(15),
+                token:patient.jwt
+                });
             console.log(patient.profilePicture.substring(15));
         },[]);
+
+        useEffect(()=>{
+            fetchImage();
+        },[state])
         
     const logout=()=>{
         sessionStorage.removeItem("patient");
         navigate("/");
     }
 
-    const fetchImage=async(url)=>{
-        const response = axios.get(url);
-        console.log(response);
-        // const imageBytes = await response.data.arrayBuffer();
-        // var blob = new Blob([imageBytes], {type:"image/jpeg"});
-        // var imageURL = URL.createObjectURL(blob);
-        // return imageURL;
+    const fetchImage=()=>{
+        const options = {
+            method: 'GET',
+            url: `${IP_ADDRS}/api/patient/profile_picture/${state.profilePicture}`,
+            headers: {Authorization: `Bearer ${state.token}`}
+          };
+          
+          axios.request(options).then(response=>{
+            setPic(response.data.image);
+          }).catch(error=>{
+            console.error(error);
+          });
     }
         
     return(
@@ -53,8 +69,9 @@ function Patient(){
         <div className="container" style={{marginBottom : "50px"}}>
                 <div className="row my-3">
                     <div className="col-sm-3"><h2 className="">Hello, {state.firstName} {state.lastName}</h2></div>
-                    <div className="col-sm-3"> <img src={`${IP_ADDRS}/api/image/path/ROLE_PATIENT/${state.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div>
-                    {/* <div className="col-sm-3"><img src={fetchImage(`${IP_ADDRS}/api/image/ROLE_PATIENT/${state.patientId}`)} style={{'height':'100px','width':'100px'}}></img></div> */}
+
+                    {/* <div className="col-sm-3"> <img src={`${IP_ADDRS}/api/image/path/ROLE_PATIENT/${state.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div> */}
+                    <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{'height':'100px','width':'100px'}}></img></div>
                     <div className="col-sm-6">
                         <button onClick={logout} style={{"float":"right"}} className="btn btn-danger">Logout </button>
                     </div>

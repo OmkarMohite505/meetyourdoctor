@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import swal from "sweetalert";
 import { IP_ADDRS } from "../service/Constant";
 import ImageService from "../service/ImageService";
 
@@ -74,23 +75,6 @@ function UpdateDoctor(){
       };
 
 
-    //   const cityFetch=(e)=>{
-    //       const val=e.target.value;
-    //     fetch("http://localhost:8080/getcitybystate/"+val)
-    //     .then(r => r.json())
-    //     .then(d => setCity(d));
-    //     console.log(city);
-    //   }
-
-
-    //   const areaFetch=(e)=>{
-    //     const val=e.target.value;
-    //   fetch("http://localhost:8080/areabycity/"+val)
-    //   .then(r => r.json())
-    //   .then(d => setArea(d))
-    //   console.log(area)
-    // }
-
     const logout=()=>{
         sessionStorage.removeItem("doctor");
         navigate("/");
@@ -102,9 +86,9 @@ function UpdateDoctor(){
             gender:doc.gender,dob:doc.dob,graduation:doc.qualification[0].educationType,postGraduation:doc.postGraduation,
             speciality:doc.speciality[0].specialityType,fees:doc.fees,mobileNumber:doc.mobileNumber,profilePicture:doc.profilePicture,
             jwt:doc.jwt})
-             setState(doc.address.state);
-             setCity(doc.address.city);
-             setArea(doc.address.town);
+             setState(doc.address[0].state);
+             setCity(doc.address[0].city);
+             setArea(doc.address[0].town);
             //getState();
 
     },[]);
@@ -212,73 +196,48 @@ const validateFees=(e)=>{
 
 
         
-        var c = window.confirm("Are you Confirm ?");
-        if(!c)
-        return;
-        const formData = new FormData();
-        formData.append('imageFile',imageFile)  //1st argumet 'imageFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
-        console.log(imageFile);
-        console.log(formData);
-        ImageService.uploadDoctorProfilePicture(data.doctorId, formData, data.jwt)
-        .then(res=>{alert("Success")})
-     /*     axios.post(`http://localhost:8080/api/doctor/profile_picture/${data.doctorId}`,formData,
-        {headers:{'Content-type':'multipart/form-data;boundary=<calculated when request is sent>'}},
-       // {"Authorization" : `Bearer ${JSON.parse(localStorage.getItem("user"))}`}
-        ).then(res=>alert("success")).catch(err=>console.log(err)); */
-        return;
+        // var c = window.confirm("Are you Confirm ?");
+        // if(!c)
+        // return;
+        // const formData = new FormData();
+        // formData.append('imageFile',imageFile)  //1st argumet 'imageFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
+        // console.log(imageFile);
+        // console.log(formData);
+        // ImageService.uploadDoctorProfilePicture(data.doctorId, formData, data.jwt)
+        // .then(res=>{alert("Success")})
 
 
-
-
-
-
-
-
-
-
-        //console.log(flag.firstName+" "+flag.lastName+" "+flag.mobileNumber+" "+flag.speciality+" "+flag.fees)
-        if(flag.firstName&&flag.lastName&&flag.mobileNumber&&flag.speciality&&flag.fees){
-                const reqOptions ={
-                    method : 'POST',
+        swal({
+            title: "Are you Confirm to Upload Picture?",
+            text: "Image Will be upload !",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((upload)=>{
+            if(upload){
+                const formData = new FormData();
+                formData.append('imageFile', imageFile)  //1st argumet 'videoFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
+        
+                const form = new FormData();
+                form.append("imageFile", imageFile);
+                const options = {
+                    method: 'PUT',
+                    url: `${IP_ADDRS}/api/doctor/profile_picture/${data.doctorId}`,
                     headers: {
-                        'Content-Type':'application/json'
+                        Authorization: `Bearer ${data.jwt}`,
+                        'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
                     },
-                    body : JSON.stringify({
-                        doctorId:data.doctorId,
-                        firstName:data.firstName,
-                        lastName:data.lastName,
-                        mobileNumber:data.mobileNumber,
-                        gender:data.gender,
-                        dob:data.dob,
-                        graduation:data.graduation,
-                        postGraduation:data.postGraduation,
-                        speciality:data.speciality,
-                        fees:data.fees,
-                        area_id:data.areaId,
-                        login_id:data.loginId
-                    })
-                }
-                fetch("http://localhost:8080/updatedoctor",reqOptions)
-                .then(resp=>resp.text())
-                .then(data=> {if(data.length != 0)
-                    {
-                        const json = JSON.parse(data);
-                        alert("update successful!!!");
-                        sessionStorage.setItem("doctor",JSON.stringify(json))
-                        navigate('/doctor');
-                    }
-                    else{
-                        alert("Failed!!!");
-                        //window.location.reload();
-                        navigate('/updatedoctor');
-                    }
-                })
-        }
-        else{
-            alert("All fields are compulsory and must follow guidelines");
-                // window.location.reload();
-                navigate('/updatedoctor');
-        }
+                    data: form
+                };
+        
+                axios.request(options).then(response => {
+                    swal(`${response.data}`, "success");
+                }).catch(error => {
+                    swal("Something went Wrong", "error");
+                });
+            }
+        })
 
     }
     
@@ -314,8 +273,8 @@ const validateFees=(e)=>{
             </div>
              <div style={{ marginTop: '10px' }} className = "form-group" >
                 <label><b>  Gender: </b></label> 
-                <input style={{ marginLeft: '10px' }} type="radio" value="Male" name="gender" checked={data.gender==='Male'} disabled/> Male
-                <input style={{ marginLeft: '10px' }} type="radio" value="Female" name="gender" checked={data.gender==='Female'} disabled/> Female
+                <input style={{ marginLeft: '10px' }} type="radio" value="Male" name="gender" checked={data.gender==='MALE'} disabled/> Male
+                <input style={{ marginLeft: '10px' }} type="radio" value="Female" name="gender" checked={data.gender==='FEMALE'} disabled/> Female
                 <input style={{ marginLeft: '10px' }} type="radio" value="Other" name="gender" checked={data.gender==='Other'} disabled/> Other
             </div> 
 

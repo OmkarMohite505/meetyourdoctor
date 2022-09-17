@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.Image;
 import com.app.enums.RoleEnum;
+import com.app.service.IAdminService;
 import com.app.service.IDoctorService;
 import com.app.service.IPatientService;
 
@@ -26,6 +28,8 @@ public class ImageServeController {
 	private IPatientService patientService;
 	@Autowired
 	private IDoctorService doctorService;
+	@Autowired
+	private IAdminService adminService;
 	
 	@GetMapping("/{role}/{id}")
 	public ResponseEntity<?> downloadImage(@PathVariable String role, @PathVariable long id) throws Exception{
@@ -35,7 +39,8 @@ public class ImageServeController {
 		else
 			if(role.equals("ROLE_DOCTOR"))
 				image = doctorService.restoreImage(id);
-		return ResponseEntity.ok(image); 
+//		return ResponseEntity.ok(image); 
+		return ResponseEntity.status(HttpStatus.OK).body(image); 
 	}
 	@GetMapping("/path/{role}/{imagePath}")
 	public ResponseEntity<?> downloadImageByPath(@PathVariable String role, @PathVariable String imagePath) throws IOException{
@@ -46,7 +51,15 @@ public class ImageServeController {
 		else
 			if(role.equals("ROLE_DOCTOR"))
 				image = doctorService.restoreImageByPath(imagePath);
-		return ResponseEntity.ok(image); 
+		
+		Image img = new Image();
+		img.setImage(image);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(img); 
+	}
+	@GetMapping("/home_video")
+	public ResponseEntity<?> downloadHomeVideo() throws IOException{
+		return ResponseEntity.ok(adminService.downloadHomeVideo());
 	}
 
 }

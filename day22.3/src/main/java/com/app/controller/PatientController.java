@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.dto.Image;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
 import com.app.entities.Login;
@@ -46,10 +48,8 @@ public class PatientController {
 	IDoctorService doctorService;
 	@Autowired
 	IAppointmentService appointmentService;
-	
 
-
-	@PostMapping("/profile_picture/{patientId}")
+	@PutMapping("/profile_picture/{patientId}")
 	public ResponseEntity<?> uploadImage(@PathVariable long patientId, @RequestParam MultipartFile imageFile)
 			throws IOException {
 
@@ -60,17 +60,26 @@ public class PatientController {
 		return ResponseEntity.status(HttpStatus.OK).body(patientService.uploadProfilePicture(patientId, imageFile));
 
 	}
+
 	@GetMapping("/get_all_doctors_list")
-	public ResponseEntity<?> getAllDoctorsList(){
+	public ResponseEntity<?> getAllDoctorsList() {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getAllDoctorsForPatient());
 	}
+
 	@GetMapping("/get_all_appointment_list/{patientId}")
-	public ResponseEntity<?> getAllAppointmentList(@PathVariable long patientId) throws Exception{
+	public ResponseEntity<?> getAllAppointmentList(@PathVariable long patientId) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllAppointmentListForPatient(patientId));
 	}
+
 	@GetMapping("/get_all_doctors_list/{speciality}")
-	public ResponseEntity<?> getAllDoctorsListBySpeciality(@PathVariable SpecialityType speciality){
+	public ResponseEntity<?> getAllDoctorsListBySpeciality(@PathVariable SpecialityType speciality) {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorsListBySpeciality(speciality));
 	}
 
+	@GetMapping("/profile_picture/{imagePath}")
+	public ResponseEntity<?> downloadImage(@PathVariable String imagePath, Image img) throws Exception {
+		byte[] image = patientService.restoreImageByPath(imagePath);
+		img.setImage(image);
+		return ResponseEntity.status(HttpStatus.OK).body(img);
+	}
 }

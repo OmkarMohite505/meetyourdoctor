@@ -1,5 +1,6 @@
 package com.app.service;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -47,6 +49,8 @@ import com.app.repository.RoleRepository;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+	@Value("${file.profile.upload.location}")
+	private String baseFolder;
 	@Autowired
 	private JavaMailSender sender;
 	// dep : user repo n role repo
@@ -118,7 +122,8 @@ public class UserServiceImpl implements UserService {
 			address.add(patientAddress);
 		}
 		patient.setAddress(address);
-
+		String defaultProfile = baseFolder + File.separator + "default.jpg";
+		patient.setProfilePicture(defaultProfile);
 		patientRepository.save(patient);
 		UserResponseDTO dto = new UserResponseDTO();
 		BeanUtils.copyProperties(persistentUser, dto);// for sending resp : copied User--->User resp DTO
@@ -153,6 +158,8 @@ public class UserServiceImpl implements UserService {
 		Set<DoctorTimeTable> timeTable = new HashSet<>();
 		timeTable.add(doctorTimeTable);
 		doctor.setTimetables(timeTable);
+		String defaultProfile = baseFolder + File.separator + "default.jpg";
+		doctor.setProfilePicture(defaultProfile);
 		Doctor persistentDoctor = doctorRepository.save(doctor);
 //		for (Address ad : persistentAddress) {
 //			ad.setDoctor(persistentDoctor);

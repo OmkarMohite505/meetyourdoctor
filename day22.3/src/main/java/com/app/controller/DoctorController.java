@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.DoctorDTO;
+import com.app.dto.Image;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
 import com.app.entities.Login;
@@ -50,7 +52,7 @@ public class DoctorController {
 	
 	
 	
-	@PostMapping("/profile_picture/{doctorId}")
+	@PutMapping("/profile_picture/{doctorId}")
 	public ResponseEntity<?> uploadImage(@PathVariable long doctorId, @RequestParam MultipartFile imageFile)
 			throws IOException {
 
@@ -75,5 +77,11 @@ public class DoctorController {
 	@GetMapping("/get_appointment_list/{doctorId}")
 	public ResponseEntity<?> getAppointmentList(@PathVariable long doctorId) throws Exception{
 		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllAppointmentListForDoctor(doctorId));
+	}
+	@GetMapping("/profile_picture/{imagePath}")
+	public ResponseEntity<?> downloadImage(@PathVariable String imagePath, Image img) throws Exception{
+		byte[] image = doctorService.restoreImageByPath(imagePath);
+		img.setImage(image);
+		return ResponseEntity.status(HttpStatus.OK).body(img); 
 	}
 }
