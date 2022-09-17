@@ -50,9 +50,7 @@ public class DoctorController {
 	private IDoctorTimeTable doctorTimeTable;
 	@Autowired
 	private IAppointmentService appointmentService;
-	
-	
-	
+
 	@PutMapping("/profile_picture/{doctorId}")
 	public ResponseEntity<?> uploadImage(@PathVariable long doctorId, @RequestParam MultipartFile imageFile)
 			throws IOException {
@@ -64,26 +62,39 @@ public class DoctorController {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.uploadProfilePicture(doctorId, imageFile));
 
 	}
-	
+
 	@PostMapping("/save_timetable")
-	public ResponseEntity<?> saveTimetable(@RequestBody DoctorDTO doctorDTO) throws Exception{
+	public ResponseEntity<?> saveTimetable(@RequestBody DoctorDTO doctorDTO) throws Exception {
 		doctorTimeTable.saveDoctorTimetable(doctorDTO);
 		return ResponseEntity.status(HttpStatus.OK).body("Saved TImetable");
 	}
-	
+
 	@PostMapping("/update_timetable")
-	public ResponseEntity<?> updateTimeTable(@RequestBody DoctorDTO doctorDTO){
+	public ResponseEntity<?> updateTimeTable(@RequestBody DoctorDTO doctorDTO) {
 		return ResponseEntity.status(HttpStatus.OK).body("Timetable Updated");
 	}
+
 	@GetMapping("/get_appointment_list/{doctorId}")
-	public ResponseEntity<?> getAppointmentList(@PathVariable long doctorId) throws Exception{
+	public ResponseEntity<?> getAppointmentList(@PathVariable long doctorId) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllAppointmentListForDoctor(doctorId));
 	}
+
 	@GetMapping("/profile_picture/{imagePath}")
-	public ResponseEntity<?> downloadImage(@PathVariable String imagePath, Image img) throws Exception{
+	public ResponseEntity<?> downloadImage(@PathVariable String imagePath, Image img) throws Exception {
 		byte[] image = doctorService.restoreImageByPath(imagePath);
 		img.setImage(image);
-		return ResponseEntity.status(HttpStatus.OK).body(img); 
+		return ResponseEntity.status(HttpStatus.OK).body(img);
 	}
-	
+
+	@GetMapping("/get_all_open_appointment/{doctorId}")
+	public ResponseEntity<?> getAllOpenAppointment(@PathVariable long doctorId) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(appointmentService.getAllOpenOppointmentListForDoctor(doctorId));
+	}
+
+	@GetMapping("/get_all_closed_appointment/{doctorId}")
+	public ResponseEntity<?> getAllClosedAppointment(@PathVariable long doctorId) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(appointmentService.getAllClosedOppointmentListForDoctor(doctorId));
+	}
 }

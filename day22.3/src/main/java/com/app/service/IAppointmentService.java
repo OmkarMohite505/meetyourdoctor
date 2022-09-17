@@ -20,4 +20,12 @@ public interface IAppointmentService {
 	List<AppointmentDTO> getAllAppointmentListForDoctor(long doctorId)throws Exception;
 	
 	void updateAndCloseAppointmentByDoctor(AppointmentDTO appointmentDTO)throws Exception;
+	
+	List<Appointment> getAllOpenOppointmentListForPatient(long patientId)throws Exception;
+	
+	List<Appointment> getAllOpenOppointmentListForDoctor(long doctorId)throws Exception;
+	
+	List<AppointmentDTO> getAllClosedOppointmentListForPatient(long patientId)throws Exception;
+	
+	List<Appointment> getAllClosedOppointmentListForDoctor(long doctorId)throws Exception;
 }

@@ -73,6 +73,21 @@ function PatientRegistration() {
     const [postGraduPic, setPostGraduPic] = useState([]);
     const [specialityPic, setSpecialityPic] = useState([]);
 
+    const [passType, setPassType] = useState("text");
+    const [isChecked, setIsChecked] = useState(false);
+
+
+       const handleShowPassword=()=>{
+        setIsChecked(!isChecked);
+    }
+    useEffect(()=>{
+        if(isChecked==true){
+            setPassType("text");
+            return;
+        }
+        setPassType("password");
+    },[isChecked])
+
 
     const handlePictureChange = (event) => {
         if (event.target.name === "profilePic")
@@ -547,9 +562,10 @@ function PatientRegistration() {
                                 </div>
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Password: </b></label>
-                                    <input type="password" placeholder="Password" name="password" className="form-control"
+                                    <input type={passType} placeholder="Password" name="password" className="form-control"
                                         value={data.password} onChange={changeHandler} onBlur={validatePassword} />
                                     <span className="text text-danger">{Error.password_error}</span>
+                                    <span><input type="checkbox" checked={isChecked} onChange={handleShowPassword} style={{'marginLeft':'150px'}} id="show"></input>&emsp;</span><label htmlFor="show">Show Password</label>
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  first Name: </b></label>
@@ -838,7 +854,7 @@ function PatientRegistration() {
 
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Fees You want to charge: </b></label>
-                                    <input type="number" placeholder="" name="fees" className="form-control"
+                                    <input type="number" placeholder="" min={10} max={20000} name="fees" className="form-control"
                                         value={data.fees} onChange={changeHandler} />
                                     <span className="text text-danger">{Error.mobile_number_error}</span>
                                 </div>

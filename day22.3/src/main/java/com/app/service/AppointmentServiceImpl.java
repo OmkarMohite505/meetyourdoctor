@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -188,26 +189,24 @@ public class AppointmentServiceImpl implements IAppointmentService {
 //		System.out.println(message.getSid());
 		return true;
 	}
-	
-	
+
 	public static void sendClosedAppointmentEmailAndSMS(Appointment appointment) {
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(appointment.getPatient().getEmail());
 		mesg.setSubject("Your Appointment Bookking Details Updated Successfully");
 		var doctorName = appointment.getDoctor().getFirstName();
-		mesg.setText("Dear " + appointment.getPatient().getFirstName()
-				+ ",\nYour Appointment Closed By Doctor. "
-				+ doctorName+"\nFor more information log on to www.meetyourdoctor.co.in"
-						+ "\nRegards,\nMeet You Doctor Services" );
-				
+		mesg.setText("Dear " + appointment.getPatient().getFirstName() + ",\nYour Appointment Closed By Doctor. "
+				+ doctorName + "\nFor more information log on to www.meetyourdoctor.co.in"
+				+ "\nRegards,\nMeet You Doctor Services");
+
 		sender.send(mesg);
 
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-		Message message = Message.creator(new PhoneNumber(MY_NUMBER), new PhoneNumber("+917620608558"),
-				"Hello " + appointment.getPatient().getFirstName()
-						+ ", Your Appointment Closed \nAppointment Id: "
-						+ appointment.getAppointmentId())
+		Message message = Message
+				.creator(new PhoneNumber(MY_NUMBER), new PhoneNumber("+917620608558"),
+						"Hello " + appointment.getPatient().getFirstName()
+								+ ", Your Appointment Closed \nAppointment Id: " + appointment.getAppointmentId())
 				.create();
 	}
 
@@ -251,12 +250,48 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	@Override
 	public void updateAndCloseAppointmentByDoctor(AppointmentDTO appointmentDTO) throws Exception {
 		Appointment persistAppointment = appointmentRepository.getById(appointmentDTO.getAppointmentId());
-		if (appointmentDTO.getAppointmentId() != persistAppointment.getAppointmentId() && appointmentDTO.getPatientId() != persistAppointment.getPatient().getPatientId())
+		if (appointmentDTO.getAppointmentId() != persistAppointment.getAppointmentId()
+				&& appointmentDTO.getPatientId() != persistAppointment.getPatient().getPatientId())
 			throw new Exception("Please Provide correct details");
 		persistAppointment.setStatus(appointmentDTO.getStatus());
 		persistAppointment.setAppointmentDescription(appointmentDTO.getAppointmentDescription());
 //		sendClosedAppointmentEmailAndSMS(persistAppointment);
 		log.info("Appointment Closed");
+	}
+
+	@Override
+	public List<Appointment> getAllOpenOppointmentListForPatient(long patientId) throws Exception {
+		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new Exception("Patient Not Found"));
+		List<Appointment> list = appointmentRepository.findByPatient(patient);
+		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("OPEN"))
+				.collect(Collectors.toList());
+
+	}
+
+	@Override
+	public List<Appointment> getAllOpenOppointmentListForDoctor(long doctorId) throws Exception {
+		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("Doctor Not Found"));
+		List<Appointment> list = appointmentRepository.findByDoctor(doctor);
+		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("OPEN"))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<AppointmentDTO> getAllClosedOppointmentListForPatient(long patientId) throws Exception {
+		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new Exception("Patient Not Found"));
+		List<Appointment> list = appointmentRepository.findByPatient(patient);
+		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("CLOSED"))
+				.map(a -> mapper.map(a, AppointmentDTO.class))
+				.collect(Collectors.toList());
+
+	}
+
+	@Override
+	public List<Appointment> getAllClosedOppointmentListForDoctor(long doctorId) throws Exception {
+		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("Doctor Not Found"));
+		List<Appointment> list = appointmentRepository.findByDoctor(doctor);
+		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("CLOSED"))
+				.collect(Collectors.toList());
 	}
 
 }

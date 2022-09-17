@@ -17,7 +17,7 @@ function PatientCurrentAppointments(){
     },[]);
 
     const currentappointments=()=>{
-        axios.get(`${IP_ADDRS}/api/patient/get_all_appointment_list/${patientId}`,{ headers: {"Authorization" : `Bearer ${jwt}`}})
+        axios.get(`${IP_ADDRS}/api/patient/get_all_open_appointment/${patientId}`,{ headers: {"Authorization" : `Bearer ${jwt}`}})
         .then(res=>{
             setAppointments(res.data);
             console.log(res.data);

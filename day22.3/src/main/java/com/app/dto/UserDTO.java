@@ -22,9 +22,9 @@ public class UserDTO {
 	@JsonProperty(access = Access.READ_ONLY) // user id will be serialized n sent to clnt BUT it won't be read from clnt
 												// n de-serialized
 	private Long userId;
-	@NotBlank(message = "first name must be supplied")
+//	@NotBlank(message = "first name must be supplied")
 	private String firstName;
-	@NotBlank(message = "last name must be supplied")
+//	@NotBlank(message = "last name must be supplied")
 	private String lastName;
 	@NotBlank(message = "email must be supplied")
 	@Email(message = "Invalid email format")

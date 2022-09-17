@@ -12,11 +12,23 @@ function Login(){
         password:"",
         loginerror:""
     });
+    const [passType, setPassType] = useState("text");
+    const [isChecked, setIsChecked] = useState(false);
 
 
     useEffect(()=>{
         loadCaptchaEnginge(6,'red','black','upper'); 
        },[])
+       const handleShowPassword=()=>{
+        setIsChecked(!isChecked);
+    }
+    useEffect(()=>{
+        if(isChecked==true){
+            setPassType("text");
+            return;
+        }
+        setPassType("password");
+    },[isChecked])
 
 
     const changeHandler = (e) => {
@@ -91,8 +103,9 @@ function Login(){
                     </div>
                     <div className = "form-group">
                         <label> Password: </label>
-                        <input type="password" placeholder="Password" name="password" className="form-control" 
+                        <input type={passType} placeholder="Password" name="password" className="form-control" 
                             value={data.password} onChange={changeHandler}/>
+                            <span><input type="checkbox" checked={isChecked} onChange={handleShowPassword} style={{'marginLeft':'150px'}} id="show"></input>&emsp;</span><label htmlFor="show">Show Password</label>
                             
                     </div >
 
