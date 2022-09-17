@@ -8,6 +8,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ import com.app.dto.DoctorDTO;
 import com.app.dto.DoctorDTOFilter;
 import com.app.dto.DoctorFilter;
 import com.app.entities.Doctor;
+import com.app.entities.EducationalQualification;
 import com.app.entities.Patient;
 import com.app.entities.Speciality;
 import com.app.enums.SpecialityType;
@@ -43,9 +45,8 @@ public class DoctorServiceImpl implements IDoctorService {
 	public String uploadProfilePicture(long doctorId, MultipartFile imageFile) throws IOException {
 		Doctor doctor = doctorRepository.getById(doctorId);
 		Clock clock = Clock.systemDefaultZone();
-		long milliSeconds=clock.millis();
-		String completePath = baseFolder + File.separator + doctorId + milliSeconds
-				+ imageFile.getOriginalFilename();
+		long milliSeconds = clock.millis();
+		String completePath = baseFolder + File.separator + doctorId + milliSeconds + imageFile.getOriginalFilename();
 		System.out.println("complete path " + completePath);
 		System.out.println("Copied no of bytes "
 				+ Files.copy(imageFile.getInputStream(), Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING));
@@ -53,14 +54,14 @@ public class DoctorServiceImpl implements IDoctorService {
 		doctor.setProfilePicture(completePath);
 		return "Profile Picture uploaded";
 	}
-	
+
 	@Override
 	public byte[] restoreImage(long id) throws Exception {
-		Doctor persistentDoctor = doctorRepository.findById(id).orElseThrow(()->new Exception("Patient Not Found"));
+		Doctor persistentDoctor = doctorRepository.findById(id).orElseThrow(() -> new Exception("Patient Not Found"));
 		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
 //		return Files.readAllBytes(Paths.get(imagePath));
 	}
-	
+
 	@Override
 	public byte[] restoreImageByPath(String imagePath) throws IOException {
 		String completePath = baseFolder + File.separator + imagePath;
@@ -70,20 +71,21 @@ public class DoctorServiceImpl implements IDoctorService {
 	@Override
 	public DoctorDTO getDoctorDetails(String email) throws Exception {
 		DoctorDTO doctorDTO = new DoctorDTO();
-		mapper.map(doctorRepository.findByLoginEmail(email).orElseThrow(()->new Exception("Doctor not found")), doctorDTO);
+		mapper.map(doctorRepository.findByLoginEmail(email).orElseThrow(() -> new Exception("Doctor not found")),
+				doctorDTO);
 		return doctorDTO;
 	}
 
 	@Override
 	public List<Doctor> getAllDoctorsForPatient() {
 		List<DoctorFilter> list = new ArrayList<>();
-		
-		List<Doctor> persistList =  doctorRepository.findAll();
-		
+
+		List<Doctor> persistList = doctorRepository.findAll();
+
 		List<Doctor> filteredList = persistList.stream()
-		.filter(d-> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
+				.filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
 //		.forEach(d-> System.out.println());
-		.collect(Collectors.toList());
+				.collect(Collectors.toList());
 //		persistList.stream().filter(d->{
 //			(d.isDoctorVerified() ==true && d.isDoctorSuspended == false);
 //		});
@@ -93,13 +95,13 @@ public class DoctorServiceImpl implements IDoctorService {
 //			list.add(doctorFilter);
 //		});
 		return filteredList;
-		
+
 	}
 
 	@Override
 	public List<Doctor> getAllDoctorsListForAdmin() {
 //		List<DoctorDTO> list = new ArrayList<>();
-		List<Doctor> persistList =  doctorRepository.findAll();
+		List<Doctor> persistList = doctorRepository.findAll();
 //		persistList.forEach(d->{
 //			list.add(mapper.map(persistList, DoctorDTO.class));
 //		});
@@ -143,12 +145,70 @@ public class DoctorServiceImpl implements IDoctorService {
 //				.collect(Collectors.toList());
 		Speciality spec = new Speciality();
 		spec.setSpecialityType(speciality);
-		
-		List<Doctor> filteredList = 
-				list.stream()
-				.filter(d -> d.getSpeciality().contains(spec)).collect(Collectors.toList());
-				
+
+		List<Doctor> filteredList = list.stream().filter(d -> d.getSpeciality().contains(spec))
+				.collect(Collectors.toList());
+
 		return filteredList;
+	}
+	@Override
+	public void updateSpecialityPhoto(long doctorId, String specialityType, MultipartFile specialityPic)
+			throws IOException {
+		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow();
+		if (specialityType.equals("empty")) {
+			Clock clock = Clock.systemDefaultZone();
+			long milliSeconds = clock.millis();
+			String completePath = baseFolder + File.separator + doctorId + milliSeconds
+					+ specialityPic.getOriginalFilename();
+			System.out.println("complete path " + completePath);
+			Files.copy(specialityPic.getInputStream(), Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING);
+
+			doctor.getSpeciality().forEach(s -> s.setSpecialityPhoto(completePath));
+		}
+	}
+	@Override
+	public void updateEducatiionPhoto(long doctorId, MultipartFile[] educationPic) {
+		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow();
+		
+		List<String> eduPicPath = new ArrayList<>();
+		List<String> fileNames = new ArrayList<>();
+		try {
+
+			Arrays.asList(educationPic).stream().forEach(file -> {
+
+				Clock clock = Clock.systemDefaultZone();
+				long milliSeconds = clock.millis();
+				String completePath = baseFolder + File.separator + doctorId + milliSeconds
+						+ file.getOriginalFilename();
+				System.out.println("complete path " + completePath);
+				try {
+					 Files.copy(file.getInputStream(),
+							Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				eduPicPath.add(completePath);
+				fileNames.add(file.getOriginalFilename());
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		int idx = 0;
+		String[] arr = new String[eduPicPath.size()];
+		for (String string : eduPicPath) {
+			arr[idx++] = string;
+		}
+		int index = 0;
+//		doctor.getQualification().forEach(q -> q.setCertificatePhoto(arr[index++]));
+		Set<EducationalQualification> list = doctor.getQualification();
+		for (EducationalQualification educationalQualification : list) {
+			educationalQualification.setCertificatePhoto(arr[index++]);
+		}
+	}
+	
+	public void uploadSpecialityPhoto(long doctorId, MultipartFile specialityPhoto) {
+		
 	}
 
 	@Override
@@ -171,5 +231,4 @@ public class DoctorServiceImpl implements IDoctorService {
 		return doctorRepository.findAllByIsDoctorSuspended(false);
 	}
 
-	
 }

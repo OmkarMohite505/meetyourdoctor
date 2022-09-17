@@ -124,9 +124,9 @@ public class UserServiceImpl implements UserService {
 		patient.setAddress(address);
 		String defaultProfile = baseFolder + File.separator + "default.jpg";
 		patient.setProfilePicture(defaultProfile);
-		patientRepository.save(patient);
+		Patient persistentPatient = patientRepository.save(patient);
 		UserResponseDTO dto = new UserResponseDTO();
-		BeanUtils.copyProperties(persistentUser, dto);// for sending resp : copied User--->User resp DTO
+		dto.setId(persistentPatient.getPatientId());
 		return dto;
 	}
 
@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
 //			ad.setDoctor(persistentDoctor);
 //		}
 		UserResponseDTO dto = new UserResponseDTO();
-		BeanUtils.copyProperties(persistentUser, dto);// for sending resp : copied User--->User resp DTO
+		dto.setId(persistentDoctor.getDoctorId());
 		return dto;
 	}
 

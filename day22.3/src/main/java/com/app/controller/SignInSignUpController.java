@@ -109,14 +109,12 @@ public class SignInSignUpController {
 	
 	@PostMapping("/register_doctor")
 	public ResponseEntity<?> registerPatient(@RequestBody DoctorDTO doctor){
-		 userService.registerDoctor(doctor);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Registered Successfully");
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerDoctor(doctor));
 	}
 	
 	@PostMapping("/register_patient")
 	public ResponseEntity<?> registerPatient(@RequestBody PatientDTO patient) {
-		userService.registerPatient(patient);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Registered Successfully");
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerPatient(patient));
 	}
 	
 	@PostMapping("/send_otp")

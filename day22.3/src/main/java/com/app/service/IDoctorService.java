@@ -41,4 +41,8 @@ public interface IDoctorService {
 	List<Doctor> getActiveDoctorsList();
 
 	byte[] restoreImageByPath(String imagePath)throws IOException;
+	
+	void updateSpecialityPhoto(long doctorId, String specialityType, MultipartFile specialityPic)
+			throws IOException;
+	 void updateEducatiionPhoto(long doctorId, MultipartFile[] educationPic);
 }

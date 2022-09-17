@@ -326,38 +326,7 @@ const validateFees=(e)=>{
                     value={area} disabled/>
 
                     
-                    {/* <select style={{ marginLeft: '10px' }} name="state" onChange={cityFetch}>
-                        <option value={"0"} >--state--</option>
-                        {
-                            state.map((v)=>{
-                            return (
-                                <option key={v.stateId} value={v.stateId}  selected={v.stateId===data.areaId.city_id.state_id.stateId}>{v.stateName}</option>
-                                
-                            )
-                        })
-                        }
-                    </select>
-                    
-                   <select style={{ marginLeft: '10px' }} name="city" onChange={areaFetch}>
-                        <option value="0" >--city--</option>
-                         {
-                            city.map((v)=>{
-                            return (
-                                <option key={v.cityId} value={v.cityId} selected={v.cityId===data.areaId.city_id.cityId}>{v.cityName}</option>
-                            )})
-                        } 
-                    </select>
-
-                     <select style={{ marginLeft: '10px' }} name="areaId" onChange={changeHandler}>
-                        <option value="0">--area--</option>
-                        {
-                            area.map((v)=>{
-                            return (
-                                
-                                <option key={v.areaId} value={v} selected={v.areaId===data.areaId.areaId} >{v.areaName}</option>
-                            )})
-                        }
-                    </select>  */}
+              
             </div>
 
             <div style={{ marginTop: '10px' }} className = "form-group">

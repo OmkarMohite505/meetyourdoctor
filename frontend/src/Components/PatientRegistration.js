@@ -27,16 +27,16 @@ function PatientRegistration() {
         state: "",
         country: "",
         pincode: "",
-        weekday:"",
-        startTime:"",
-        endTime:"",
-        slotDuration:"",
-        breakTime:"",
-        panCardNo:"",
-        nameAsPerBank:"",
-        bankName:"",
-        bankAccountNo:"",
-        IFSC_Code:""
+        weekday: "",
+        startTime: "",
+        endTime: "",
+        slotDuration: "",
+        breakTime: "",
+        panCardNo: "",
+        nameAsPerBank: "",
+        bankName: "",
+        bankAccountNo: "",
+        IFSC_Code: ""
 
     });
 
@@ -67,29 +67,49 @@ function PatientRegistration() {
     const [citylist, setCityList] = useState([]);
     const [yearList, setYearList] = useState([]);
 
-    const eduType = ["Select Education","MBBS","BDS","BAMS","BUMS","BHMS","BYNS", "DM", "MS", "MD"];
+    const [profilePic, setProfilePic] = useState([]);
+    const [diplomaPic, setDiplomaPic] = useState([]);
+    const [graduationPic, setGraduationPic] = useState([]);
+    const [postGraduPic, setPostGraduPic] = useState([]);
+    const [specialityPic, setSpecialityPic] = useState([]);
 
-    const specialityType = ["Select Speciality","DERMATOLOGISTS","CARDIOLOGISTS", "GENERAL_PHYSICIAN", "UROLOGISTS","NEUROLOGISTS",
-        "RHEUMATOLOGISTS","RADIOLOGISTS","PULMONOLOGISTS","PSYCHIATRISTS",
-        "PODIATRISTS","PHYSIATRISTS","PEDIATRICIANS","PATHOLOGIST","OTOLARYNGOLOGISTS",
-        "OSTEOPATHS","OPHTHALMOLOGISTS","ONCOLOGISTS","GYNECOLOGISTS",
-        "NEPHROLOGISTS","INTERNISTS","HEMATOLOGISTS","GASTROENTEROLOGISTS","ENDOCRINOLOGISTS",
-        "ANESTHESIOLOGISTS","IMMUNOLOGISTS"
 
-];
+    const handlePictureChange = (event) => {
+        if (event.target.name === "profilePic")
+            setProfilePic(event.target.files[0]);
+        if (event.target.name === "diplomaPic")
+            setDiplomaPic(event.target.files[0]);
+        if (event.target.name === "graduationPic")
+            setGraduationPic(event.target.files[0]);
+        if (event.target.name === "postGraduPic")
+            setPostGraduPic(event.target.files[0]);
+        if (event.target.name === "specialityPic")
+            setSpecialityPic(event.target.files[0]);
+    }
+
+    const eduType = ["Select Education", "MBBS", "BDS", "BAMS", "BUMS", "BHMS", "BYNS", "DM", "MS", "MD"];
+
+    const specialityType = ["Select Speciality", "DERMATOLOGISTS", "CARDIOLOGISTS", "GENERAL_PHYSICIAN", "UROLOGISTS", "NEUROLOGISTS",
+        "RHEUMATOLOGISTS", "RADIOLOGISTS", "PULMONOLOGISTS", "PSYCHIATRISTS",
+        "PODIATRISTS", "PHYSIATRISTS", "PEDIATRICIANS", "PATHOLOGIST", "OTOLARYNGOLOGISTS",
+        "OSTEOPATHS", "OPHTHALMOLOGISTS", "ONCOLOGISTS", "GYNECOLOGISTS",
+        "NEPHROLOGISTS", "INTERNISTS", "HEMATOLOGISTS", "GASTROENTEROLOGISTS", "ENDOCRINOLOGISTS",
+        "ANESTHESIOLOGISTS", "IMMUNOLOGISTS"
+
+    ];
     const roleSelect = ["Select Role", "PATIENT", "DOCTOR"];
 
     useEffect(() => {
         axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/states`)
-            .then(res =>
-                 {  
-                    let arr = [];
-                    
-                    let st = {"state_id":0,"state_name":"Select State"};
-                    arr = res.data.states;
-                    arr.unshift(st);
-                    setState(arr); 
-                    console.log(arr) });
+            .then(res => {
+                let arr = [];
+
+                let st = { "state_id": 0, "state_name": "Select State" };
+                arr = res.data.states;
+                arr.unshift(st);
+                setState(arr);
+                console.log(arr)
+            });
 
         populateYearList();
     }, [])
@@ -118,19 +138,18 @@ function PatientRegistration() {
         setData({ ...data, state: st.state_name });
     }
     useEffect(() => {
-        if(stateId!==0)
-        axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${stateId}`)
-            .then(res => 
-                {
+        if (stateId !== 0)
+            axios.get(`https://cdn-api.co-vin.in/api/v2/admin/location/districts/${stateId}`)
+                .then(res => {
                     let arr = [];
-                    
-                    let ct = {"district_id":0,"district_name":"Select City"};
+
+                    let ct = { "district_id": 0, "district_name": "Select City" };
                     arr = res.data.districts;
                     arr.unshift(ct);
                     console.log(res.data.districts);
-                     setCityList(arr);
-                     console.log(arr);
-                     });
+                    setCityList(arr);
+                    console.log(arr);
+                });
     }, [stateId])
 
     const [cricket, setCricket] = useState(false);
@@ -359,7 +378,26 @@ function PatientRegistration() {
             console.log(obj);
             axios.post(`${IP_ADDRS}/auth/register_patient`, obj)
                 .then(res => {
-                    swal("Registration SuccessFull", "Redirecting to Login Page", "success");
+                    let patientId = res.data.id;
+                    console.log("Patient Id : "+patientId);
+                    const form = new FormData();
+                    form.append("profilePic", profilePic);
+                    const options = {
+                        method: 'PATCH',
+                        url: `${IP_ADDRS}/api/image/ROLE_PATIENT/upload_profile_picture/${patientId}`,
+                        headers: {
+                            Authorization: ``,
+                            'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+                        },
+                        data: form
+                    };
+
+                    axios.request(options).then(response => {
+                    }).catch(error => {
+                    });
+
+
+                    // swal("Registration SuccessFull", "Redirecting to Login Page", "success");
                     navigate(`/login`);
                 })
                 .catch(err => { swal("Something Went Wrong", "Please Try Again", "error") });
@@ -390,11 +428,83 @@ function PatientRegistration() {
                 "address": [{ "town": data.town, "city": data.city, "state": data.state, "country": data.country, "pincode": data.pincode }],
                 "qualification": quali,
                 "roles": ["ROLE_DOCTOR"],
-                "doctorTimeTable":{"weekday":data.weekday,"startTime":data.startTime,"endTime":data.endTime,"breakTime":data.breakTime,"slotDuration":data.slotDuration},
-                "bankAccount":{"nameAsPerBank":data.nameAsPerBank,"bankName":data.bankName,"bankAccountNo":data.bankAccountNo,"IFSC_Code":data.IFSC_Code,"panCardNo":data.panCardNo}
+                "doctorTimeTable": { "weekday": data.weekday, "startTime": data.startTime, "endTime": data.endTime, "breakTime": data.breakTime, "slotDuration": data.slotDuration },
+                "bankAccount": { "nameAsPerBank": data.nameAsPerBank, "bankName": data.bankName, "bankAccountNo": data.bankAccountNo, "IFSC_Code": data.IFSC_Code, "panCardNo": data.panCardNo }
             }
             console.log(obj);
-            axios.post(`${IP_ADDRS}/auth/register_doctor`, obj).then(res => { alert("Success"); console.log(res); navigate(`/login`) }).catch(err => { console.log(err) });
+            axios.post(`${IP_ADDRS}/auth/register_doctor`, obj)
+                .then(res => {
+
+                    // upload profile pic
+                    let doctoId = res.data.id;
+                    const form = new FormData();
+                    form.append("profilePic", profilePic);
+                    const options = {
+                        method: 'PATCH',
+                        url: `${IP_ADDRS}/api/image/ROLE_DOCTOR/upload_profile_picture/${doctoId}`,
+                        headers: {
+                            Authorization: ``,
+                            'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+                        },
+                        data: form
+                    };
+
+                    axios.request(options).then(response => {
+                    }).catch(error => {
+                    });
+
+                    //upload Eduactional photo
+                    let allEducPic = [];
+                    if (diploma)
+                        allEducPic.push(diplomaPic);
+                    if (graduation)
+                        allEducPic.push(graduationPic);
+                    if (postGradu)
+                        allEducPic.push(postGraduPic);
+
+                    const formEduc = new FormData();
+                    // formEduc.append("imageFile", profilePic);
+                    allEducPic.forEach(image => formEduc.append('imageFile', image));
+                    const opt = {
+                        method: 'PUT',
+                        url: `${IP_ADDRS}/api/image/ROLE_DOCTOR/educational_picture/${doctoId}`,
+                        headers: {
+                            Authorization: ``,
+                            'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+                        },
+                        data: formEduc
+                    };
+
+                    axios.request(opt).then(response => {
+                    }).catch(error => {
+                    });
+
+                    //upload speciality photo
+                    const formSpeciality = new FormData();
+                    formSpeciality.append("specialityPic", specialityPic);
+                    const spec = {
+                        method: 'PATCH',
+                        url: `${IP_ADDRS}/api/image/ROLE_DOCTOR/speciality_picture/${doctoId}`,
+                        headers: {
+                            Authorization: ``,
+                            'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+                        },
+                        data: formSpeciality
+                    };
+
+                    axios.request(spec).then(response => {
+                    }).catch(error => {
+                    });
+
+
+
+
+
+
+
+                    navigate(`/login`)
+                })
+                .catch(err => { console.log(err) });
         }
 
     }
@@ -453,6 +563,13 @@ function PatientRegistration() {
                                         value={data.lastName} onChange={changeHandler} onBlur={validateLastName} />
                                     <span className="text text-danger">{Error.last_name_error}</span>
                                 </div >
+
+                                <div style={{ marginTop: '10px' }} className="form-group">
+                                    <label><b>  Profile Picture: </b></label>
+                                    <input type="file" accept=".png, .jpg,.jpeg" onChange={handlePictureChange} name="profilePic" className="form-control"></input>
+                                    <span className="text text-danger"></span>
+                                </div >
+
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  User mobile_number: </b></label>
                                     <input type="text" placeholder="User mobile_number" name="mobileNumber" className="form-control"
@@ -516,9 +633,9 @@ function PatientRegistration() {
 
                                     <select name="statename" value={stateId} onChange={handleState}>
                                         {statelist.map((v, i) => (
-                                            (i===0)?<option key={v}>Select State</option> :
-                                            
-                                            <option value={v.state_id} key={v.state_name}>{v.state_name}</option>
+                                            (i === 0) ? <option key={v}>Select State</option> :
+
+                                                <option value={v.state_id} key={v.state_name}>{v.state_name}</option>
                                         ))}
                                         {/* {statelist.map((element, index) => <option key={index}>{element.state_name}</option>)} */}
                                     </select>
@@ -608,7 +725,7 @@ function PatientRegistration() {
 
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Certicate Photo</p>
-                                        <input type="text" name="certificatePhoto" value={diplomaEdu.certificatePhoto} onChange={setDiplomaData} className="form-control"></input>
+                                        <input type="file" accept=".png, .jpg,.jpeg" onChange={handlePictureChange} name="diplomaPic" className="form-control"></input>
                                     </div>
 
                                 </div>}
@@ -646,7 +763,7 @@ function PatientRegistration() {
 
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Certicate Photo</p>
-                                        <input type="text" name="certificatePhoto" value={graduationEdu.certificatePhoto} onChange={setGraduationData} className="form-control"></input>
+                                        <input type="file" accept=".png, .jpg,.jpeg" onChange={handlePictureChange} name="graduationPic" className="form-control"></input>
                                     </div>
 
                                 </div>}
@@ -667,14 +784,7 @@ function PatientRegistration() {
 
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Year of Passing</p>
-                                        {/* <input type="number" name="year" value={postGraduEdu.year} onChange={setPostGraduData} className="form-control"></input> */}
-                                        {/* <select name="year" value={postGraduEdu.year} onChange={setPostGraduData} style={{ "width": "90px" }}>
-                                                {
-                                                    yearList.map((y,i)=>{
-                                                        <option value={y} key={`postgradu${y}`}>{y}</option>
-                                                    })
-                                                }
-                                            </select> */}
+
                                         <select name="year" value={postGraduEducation.year} onChange={setPostGraduData} style={{ "width": "130px" }}>
                                             {
                                                 yearList.map((y, i) => (
@@ -691,7 +801,7 @@ function PatientRegistration() {
 
                                     <div style={{ marginTop: "10px" }} className="form-group">
                                         <p>Certicate Photo</p>
-                                        <input type="text" name="certificatePhoto" value={postGraduEducation.certificatePhoto} onChange={setPostGraduData} className="form-control"></input>
+                                        <input type="file" accept=".png, .jpg,.jpeg" onChange={handlePictureChange} name="postGraduPic" className="form-control"></input>
                                     </div>
 
 
@@ -699,8 +809,6 @@ function PatientRegistration() {
 
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Speciality: </b></label>
-                                    {/* <input type="text" placeholder="" name="specialityType" className="form-control" */}
-                                    {/* value={data.specialityType} onChange={changeHandler} /> */}
                                     <select name="specialityType" value={data.specialityType} onChange={changeHandler}>
                                         {
                                             specialityType.map((s, i) => (
@@ -724,8 +832,7 @@ function PatientRegistration() {
                                 </div>
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Speciality Photo: </b></label>
-                                    <input type="text" placeholder="" name="specialityPhoto" className="form-control"
-                                        value={data.specialityPhoto} onChange={changeHandler} />
+                                    <input type="file" accept=".png, .jpg,.jpeg" onChange={handlePictureChange} name="specialityPic" className="form-control"></input>
                                     <span className="text text-danger">{Error.mobile_number_error}</span>
                                 </div>
 
@@ -738,8 +845,8 @@ function PatientRegistration() {
 
 
                                 <div style={{ marginTop: '10px' }} className="form-group">
-                                    <label style={{"marginTop":"8px"}}><b>Enter You Initial time table : </b></label><br></br>
-                                    <label style={{"marginTop":"8px"}}><b>  Weekday: </b></label>
+                                    <label style={{ "marginTop": "8px" }}><b>Enter You Initial time table : </b></label><br></br>
+                                    <label style={{ "marginTop": "8px" }}><b>  Weekday: </b></label>
                                     <input type="text" name="weekday" className="form-control"
                                         value={data.weekday} onChange={changeHandler} />
                                 </div>
@@ -755,40 +862,40 @@ function PatientRegistration() {
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Slot Duration: </b></label>
-                                    <input type="text" name="slotDuration" className="form-control"
+                                    <input type="number" name="slotDuration" min={0} className="form-control"
                                         value={data.slotDuration} onChange={changeHandler} />
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Break Time: </b></label>
-                                    <input type="time"  name="breakTime" className="form-control"
+                                    <input type="time" name="breakTime" className="form-control"
                                         value={data.breakTime} onChange={changeHandler} />
                                 </div >
 
                                 <div style={{ marginTop: '10px' }} className="form-group">
-                                    <label style={{"marginTop":"8px"}}><b>Enter Bank Details :</b></label><br></br>
-                                    <label style={{"marginTop":"8px"}}><b>  Name As Per Bank: </b></label>
-                                    <input type="text"  name="nameAsPerBank" className="form-control"
+                                    <label style={{ "marginTop": "8px" }}><b>Enter Bank Details :</b></label><br></br>
+                                    <label style={{ "marginTop": "8px" }}><b>  Name As Per Bank: </b></label>
+                                    <input type="text" name="nameAsPerBank" className="form-control"
                                         value={data.nameAsPerBank} onChange={changeHandler} />
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Bank name: </b></label>
-                                    <input type="text"  name="bankName" className="form-control"
+                                    <input type="text" name="bankName" className="form-control"
                                         value={data.bankName} onChange={changeHandler} />
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Bank Account No: </b></label>
-                                    <input type="text"  name="bankAccountNo" className="form-control"
+                                    <input type="text" name="bankAccountNo" className="form-control"
                                         value={data.bankAccountNo} onChange={changeHandler} />
                                 </div >
-                               
+
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  IFSC Code: </b></label>
-                                    <input type="text"  name="IFSC_Code" className="form-control"
+                                    <input type="text" name="IFSC_Code" className="form-control"
                                         value={data.IFSC_Code} onChange={changeHandler} />
                                 </div >
                                 <div style={{ marginTop: '10px' }} className="form-group">
                                     <label><b>  Pan Card No: </b></label>
-                                    <input type="text"  name="panCardNo" className="form-control"
+                                    <input type="text" name="panCardNo" className="form-control"
                                         value={data.panCardNo} onChange={changeHandler} />
                                 </div >
 
