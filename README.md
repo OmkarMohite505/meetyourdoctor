@@ -11,6 +11,7 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
 </div>
 
+Swagger Url
 ```bash
-npm install
+http://localhost:8080/swagger-ui/index.html
 ```
