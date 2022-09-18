@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -16,7 +19,8 @@ import lombok.Setter;
 @Table(name = "bank_accounts")
 public class BankAccount {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "bank_acct_id")
 	private Long bankId;
 	
 	@Column(length = 15)
@@ -32,6 +36,12 @@ public class BankAccount {
 	private String bankAccountNo;
 	
 	@Column(length = 20)
-	private String IFSC_Code;
+	private String IFSCcode;
+	
+//	@OneToOne(mappedBy = "bankAccount")
+	@OneToOne
+	@MapsId
+	@JoinColumn(name = "bank_acct_id")
+	private Doctor doctor;
 
 }

@@ -91,28 +91,32 @@ public class Doctor {
 
 //	@OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
 //	@JoinColumn(name = "address_id")
-	@OneToMany(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
-	@JoinColumn(name="doctor_id")
-	private Set<Address> address;
+	
+//	@OneToMany(
+//	        cascade = CascadeType.ALL,
+//	        orphanRemoval = true
+//	    )
+//	@JoinColumn(name="doctor_id")
+//	private Set<Address> address;
 	
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "login_id")
+//	@PrimaryKeyJoinColumn
 	private Login login;
 	
-	@OneToMany(
-	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
-	    )
-	@JoinColumn(name="doctor_id")
-	private Set<DoctorTimeTable> timetables;
+//	@OneToMany(
+//	        cascade = CascadeType.ALL,
+//	        orphanRemoval = true,
+//	        fetch = FetchType.EAGER
+//	    )
+//	@JoinColumn(name="doctor_id")
+//	private Set<DoctorTimeTable> timetables;
 	
 //	@JsonIgnore
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "bank_id")
+	@OneToOne(mappedBy = "doctor",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "bank_acct_id")
+	@PrimaryKeyJoinColumn
 	private BankAccount bankAccount;
 
 	@Override

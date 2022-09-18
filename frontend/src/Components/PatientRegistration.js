@@ -443,7 +443,7 @@ function PatientRegistration() {
                 "address": [{ "town": data.town, "city": data.city, "state": data.state, "country": data.country, "pincode": data.pincode }],
                 "qualification": quali,
                 "roles": ["ROLE_DOCTOR"],
-                "doctorTimeTable": { "weekday": data.weekday, "startTime": data.startTime, "endTime": data.endTime, "breakTime": data.breakTime, "slotDuration": data.slotDuration },
+                "timetables": [{ "weekday": data.weekday, "startTime": data.startTime, "endTime": data.endTime, "breakTime": data.breakTime, "slotDuration": data.slotDuration }],
                 "bankAccount": { "nameAsPerBank": data.nameAsPerBank, "bankName": data.bankName, "bankAccountNo": data.bankAccountNo, "IFSC_Code": data.IFSC_Code, "panCardNo": data.panCardNo }
             }
             console.log(obj);

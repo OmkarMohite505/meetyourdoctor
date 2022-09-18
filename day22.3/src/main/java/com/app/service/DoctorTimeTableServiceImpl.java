@@ -35,10 +35,8 @@ public class DoctorTimeTableServiceImpl implements IDoctorTimeTable {
 		Doctor doctor = doctorRepository.findById(timeTableDTO.getDoctorId()).orElseThrow(()->new Exception("Doctor Not Found"));
 		
 		for (DoctorTimeTable doctorTimeTable : persistentTimetable) {
-//			temp.add(doctorTimeTable);
-			doctor.getTimetables().add(doctorTimeTable);
+//			doctor.getTimetables().add(doctorTimeTable);
 		}
-//		doctor.setTimetable(temp);
 		return "Saved TImetable";
 	}
 

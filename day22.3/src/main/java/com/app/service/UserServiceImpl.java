@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepo;
+	
 
 	// mapper
 	@Autowired
@@ -151,19 +152,34 @@ public class UserServiceImpl implements UserService {
 
 			address.add(adr);
 		}
-		doctor.setAddress(address);
-		BankAccount bankAccount = bankRepository.save(doctorDTO.getBankAccount());
-		DoctorTimeTable doctorTimeTable = doctorTimetableRepo.save(doctorDTO.getDoctorTimeTable());
-		doctor.setBankAccount(bankAccount);
+//		doctor.setAddress(address);
+//		BankAccount bankAccount = bankRepository.save(doctorDTO.getBankAccount());
+//		DoctorTimeTable doctorTimeTable = doctorTimetableRepo.save(doctorDTO.getDoctorTimeTable());
+//		doctor.setBankAccount(bankAccount);
 		Set<DoctorTimeTable> timeTable = new HashSet<>();
-		timeTable.add(doctorTimeTable);
-		doctor.setTimetables(timeTable);
+//		timeTable.add(doctorTimeTable);
+//		doctor.setTimetables(timeTable);
 		String defaultProfile = baseFolder + File.separator + "default.jpg";
 		doctor.setProfilePicture(defaultProfile);
+		BankAccount bankAccount = doctor.getBankAccount();
+		doctor.setBankAccount(null);
 		Doctor persistentDoctor = doctorRepository.save(doctor);
+		bankAccount.setDoctor(persistentDoctor);
+		bankRepository.save(bankAccount);
 //		for (Address ad : persistentAddress) {
 //			ad.setDoctor(persistentDoctor);
 //		}
+		
+		doctorDTO.getAddress().forEach(a -> {
+			a.setDoctor(persistentDoctor);
+			addressRepository.save(a);
+		});
+		
+		doctorDTO.getTimetables().forEach(t ->{
+			t.setDoctor(persistentDoctor);
+			doctorTimetableRepo.save(t);
+		});
+		
 		UserResponseDTO dto = new UserResponseDTO();
 		dto.setId(persistentDoctor.getDoctorId());
 		return dto;

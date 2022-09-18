@@ -48,8 +48,8 @@ public class DoctorTimeTable {
 	@Column
 	String status;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "doctor_id", nullable = false)
-//	private Doctor doctor;
+	@ManyToOne
+	@JoinColumn(name = "doctor_id")
+	private Doctor doctor;
 
 }

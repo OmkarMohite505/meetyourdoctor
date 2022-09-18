@@ -71,7 +71,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \r\n    \"email\":\"d1@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Amit\",\r\n    \"lastName\":\"Poonanwala\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"NEUROLOGISTS\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"},{\"specialityType\":\"CARDIOLOGISTS\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"doctorTimeTable\":{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"},\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSC_Code\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
+					"raw": "{\r\n    \r\n    \"email\":\"d2@gmail.com\",\r\n    \"password\":\"100\",\r\n    \"firstName\":\"Amit\",\r\n    \"lastName\":\"Poonanwala\",\r\n    \"mobileNumber\":\"7620608558\",\r\n    \"alternateMobileNumber\":\"7972545283\",\r\n    \"gender\":\"MALE\",\r\n    \"bloodGroup\":\"A+\",\r\n    \"dob\":\"2022-01-01\",\r\n    \"hobbies\":[\"Badminton\",\"Football\"],\r\n    \"roles\":[\"ROLE_DOCTOR\"],\r\n    \"qualification\":[{\"educationType\":\"MBBS\",\"year\":2022,\"percentageMarks\":75.40,\"certificatePhoto\":\"/images/photo\"}],\r\n    \"speciality\":[{\"specialityType\":\"NEUROLOGISTS\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"},{\"specialityType\":\"CARDIOLOGISTS\",\"servicesProvided\":\"all\",\"specialityDescription\":\"describe here\",\"specialityPhoto\":\"/images/photo\"}],\r\n    \"aadharNo\":\"739804152362\",\r\n    \"fees\":200,\r\n    \"profilePicture\":\"/images/photo\",\r\n    \"address\":[{\"town\":\"Loni\",\"city\":\"Beed\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105},\r\n                {\"town\":\"Rui\",\"city\":\"Nashik\",\"state\":\"maharashtra\",\"country\":\"India\",\"pincode\":413105}],\r\n    \"timetables\":[{\"weekday\":\"Thursday\",\"startTime\":\"10:02:59\",\"endTime\":\"05:10:10\",\"slotDuration\":1,\"breakTime\":\"01:01:01\"}],\r\n    \"bankAccount\":{\"nameAsPerBank\":\"Kunal Lokhande\",\"bankName\":\"BOM\",\"bankAccountNo\":123456789,\"IFSCcode\":\"IFSC1234\",\"panCardNo\":\"CTDPM5542H\"}\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -729,7 +729,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjMzMDIyOTksImV4cCI6MTY2MzM4ODY5OX0.73FsPYE1syvF_4TLqnsXJve8XWPDut01IYiYR3gRTvtKulCyI3oQ598NiFHopzD_h3pN7e2h4S_WFQE2lMNUwg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2NjM0ODUzMjAsImV4cCI6MTY2MzU3MTcyMH0.ujYQyJ7H997KDmus4VAAaylwvoc3wgLECml5VvMXj7RV4b6F17PBNrTZ8cA-eZeJSa4fiZO99q_f2Csl2bdy2Q",
 							"type": "string"
 						}
 					]
@@ -890,6 +890,70 @@
 						"api",
 						"admin",
 						"upload_home_video"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Closed Appointment list ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwMjJAZ21haWwuY29tIiwiaWF0IjoxNjYzNDMyNzEyLCJleHAiOjE2NjM1MTkxMTJ9.pqhqAvyRMFtDeN0owZNnVcQu93-oYA4iloS5ibLvAed-lsYd0neUpgapkgCXxpVGw7G3wg-xBO3qegM6pLehIg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/patient/get_all_closed_appointment/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"get_all_closed_appointment",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Open Appointment List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwMjJAZ21haWwuY29tIiwiaWF0IjoxNjYzNDMyNzEyLCJleHAiOjE2NjM1MTkxMTJ9.pqhqAvyRMFtDeN0owZNnVcQu93-oYA4iloS5ibLvAed-lsYd0neUpgapkgCXxpVGw7G3wg-xBO3qegM6pLehIg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/patient/get_all_open_appointment/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"patient",
+						"get_all_open_appointment",
+						"5"
 					]
 				}
 			},
