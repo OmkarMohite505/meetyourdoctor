@@ -58,7 +58,7 @@ public class ImageServeController {
 
 		Image img = new Image();
 		img.setImage(image);
-
+//		return ResponseEntity.ok(image); 
 		return ResponseEntity.status(HttpStatus.OK).body(img);
 	}
 

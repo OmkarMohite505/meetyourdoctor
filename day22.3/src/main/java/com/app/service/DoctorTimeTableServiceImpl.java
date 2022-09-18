@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.app.repository.DoctorRepository;
 import com.app.repository.DoctorTimetableRepo;
 import com.app.dto.DoctorDTO;
+import com.app.dto.TimeTableDTO;
 import com.app.entities.Doctor;
 import com.app.entities.DoctorTimeTable;
 
@@ -24,14 +25,14 @@ public class DoctorTimeTableServiceImpl implements IDoctorTimeTable {
 	private DoctorRepository doctorRepository;
 
 	@Override
-	public String saveDoctorTimetable(DoctorDTO doctorDTO) throws Exception {
+	public String saveDoctorTimetable(TimeTableDTO timeTableDTO ) throws Exception {
 		Set<DoctorTimeTable> temp = new HashSet<>();
 		
-		Set<DoctorTimeTable> timetable = doctorDTO.getTimetables();
+		Set<DoctorTimeTable> timetable = timeTableDTO.getTimetable();
 		
 		List<DoctorTimeTable> persistentTimetable = timetableRepo.saveAll(timetable);
 		
-		Doctor doctor = doctorRepository.findById(doctorDTO.getDoctorId()).orElseThrow(()->new Exception("Doctor Not Found"));
+		Doctor doctor = doctorRepository.findById(timeTableDTO.getDoctorId()).orElseThrow(()->new Exception("Doctor Not Found"));
 		
 		for (DoctorTimeTable doctorTimeTable : persistentTimetable) {
 //			temp.add(doctorTimeTable);

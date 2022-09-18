@@ -82,13 +82,36 @@ public class PatientController {
 		img.setImage(image);
 		return ResponseEntity.status(HttpStatus.OK).body(img);
 	}
-	
+
 	@GetMapping("/get_all_open_appointment/{patientId}")
-	public ResponseEntity<?> getAllOpenAppointment(@PathVariable long patientId) throws Exception{
-		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllOpenOppointmentListForPatient(patientId));
+	public ResponseEntity<?> getAllOpenAppointment(@PathVariable long patientId) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(appointmentService.getAllOpenOppointmentListForPatient(patientId));
 	}
+
 	@GetMapping("/get_all_closed_appointment/{patientId}")
-	public ResponseEntity<?> getAllClosedAppointment(@PathVariable long patientId) throws Exception{
-		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllClosedOppointmentListForPatient(patientId));
+	public ResponseEntity<?> getAllClosedAppointment(@PathVariable long patientId) throws Exception {
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(appointmentService.getAllClosedOppointmentListForPatient(patientId));
+	}
+
+	@GetMapping("/get_all_doctors_list_by_town/{townName}")
+	public ResponseEntity<?> getAllDoctorsListByTown(@PathVariable String townName) {
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.findAllDoctorsByTown(townName));
+	}
+
+	@GetMapping("/get_all_doctors_list_by_city/{cityName}")
+	public ResponseEntity<?> getAllDoctorsListByCity(@PathVariable String cityName) {
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.findAllDoctorsByCity(cityName));
+	}
+
+	@GetMapping("/get_all_doctors_list_by_state/{stateName}")
+	public ResponseEntity<?> getAllDoctorsListByState(@PathVariable String stateName) {
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.findAllDoctorsByState(stateName));
+	}
+
+	@GetMapping("/get_all_doctors_list_by_pincode/{pincode}")
+	public ResponseEntity<?> getAllDoctorsListByPincode(@PathVariable int pincode) {
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.findAllDoctorsByPincode(pincode));
 	}
 }

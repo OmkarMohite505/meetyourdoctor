@@ -89,8 +89,13 @@ public class Doctor {
 			"doctor_id", "speciality_type" }))
 	private Set<Speciality> speciality = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "address_id")
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
+//	@JoinColumn(name = "address_id")
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	@JoinColumn(name="doctor_id")
 	private Set<Address> address;
 	
 	@JsonIgnore
@@ -98,8 +103,11 @@ public class Doctor {
 	@JoinColumn(name = "login_id")
 	private Login login;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="tt_id")
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	@JoinColumn(name="doctor_id")
 	private Set<DoctorTimeTable> timetables;
 	
 //	@JsonIgnore

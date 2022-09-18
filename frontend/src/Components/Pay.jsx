@@ -10,6 +10,7 @@ function Pay() {
     const [appointmentId,setappointmentId] = useState('');
     const [doctor, setDoctor] = useState({});
     const [patient, setPatient] = useState({});
+    const [doctorPic, setDoctorPic] = useState([]);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -19,7 +20,14 @@ function Pay() {
         setDoctor(doctor);
         setappointmentId(apptId.appointmentId);
         setPatient(patient);
+        console.log(doctor.profilePicture.substring(15));
     },[])
+    useEffect(()=>{
+        axios.get(`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture.substring(15)}`)
+        .then(res=>{
+            setDoctorPic(res.data.image);
+        })
+    },[doctor])
 
     function loadScript(src) {
         return new Promise((resolve) => {
@@ -61,9 +69,10 @@ function Pay() {
             key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: "INR",
-            name: "Donation",
-            description: "Test Transaction",
+            name: `Dr. ${doctor.firstName} ${doctor.lastName}`,
+            description: "Appointment Fees of Doctor",
             order_id: order_id,
+            image:`data:image/jpg;base64,${doctorPic}`,
             handler: async function (response) {
                 const data = {
                     orderCreationId: order_id,
@@ -86,9 +95,9 @@ function Pay() {
                 // alert("Payment Success");
             },
             prefill: {
-                name: "",
-                email: "",
-                contact: "",
+                name: `${patient.firstName} ${patient.lastName}`,
+                email: `${patient.email}`,
+                contact: `${patient.mobileNumber}`,
             },
             notes: {
                 address: "",
@@ -103,11 +112,14 @@ function Pay() {
     }
 
     return (
-        <div >
+        <div style={{"marginLeft":"300px"}}>
             <h1>Checkout to do Payement </h1>
              <label>Fees to Pay to Book Appoinment </label>
                 <h3>Amount : {doctor.fees}</h3>
+                <h2>Dr. {doctor.firstName} &nbsp;{doctor.lastName}</h2>
+                <img src={`data:image/jpg;base64,${doctorPic}`} alt="" height="200px" width="200px"/>
               &emsp;  <button className="btn btn-success btn-lg" onClick={displayRazorpay}>
+               
                    Confirm 
                 </button>
         </div>

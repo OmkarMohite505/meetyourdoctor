@@ -26,6 +26,7 @@ import com.app.dto.DoctorDTO;
 import com.app.dto.Image;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
+import com.app.dto.TimeTableDTO;
 import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.RoleEntity;
@@ -64,8 +65,8 @@ public class DoctorController {
 	}
 
 	@PostMapping("/save_timetable")
-	public ResponseEntity<?> saveTimetable(@RequestBody DoctorDTO doctorDTO) throws Exception {
-		doctorTimeTable.saveDoctorTimetable(doctorDTO);
+	public ResponseEntity<?> saveTimetable(@RequestBody TimeTableDTO timeTableDTO) throws Exception {
+		doctorTimeTable.saveDoctorTimetable(timeTableDTO);
 		return ResponseEntity.status(HttpStatus.OK).body("Saved TImetable");
 	}
 

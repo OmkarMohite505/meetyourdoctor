@@ -14,6 +14,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -117,14 +118,14 @@ public class SignInSignUpController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerPatient(patient));
 	}
 	
-	@PostMapping("/send_otp")
+	@PatchMapping("/send_otp")
 	public ResponseEntity<?> sendOTP(@RequestBody UpdatePasswordDTO updatePasswordDTO) throws Exception{
 		userService.sendOTPForForgotPassword(updatePasswordDTO.getEmail());
 		return ResponseEntity.status(HttpStatus.OK).body("OTP sent to your email");
 		
 	}
 	
-	@PostMapping("/update_password")
+	@PatchMapping("/update_password")
 	public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordDTO update) throws Exception{
 		userService.updateUserPassword(update.getEmail(), update.getNewPassword(), update.getOtp());
 		return ResponseEntity.status(HttpStatus.OK).body("Password Updated");

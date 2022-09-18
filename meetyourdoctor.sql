@@ -32,7 +32,7 @@ select * from roles;
 select * from login;
 select * from user_roles;
 
-select * from addresses;
+select * from doctor_addresses;
 select * from doctors;
 select * from doctor_hobbies;
 select * from bank_accounts;

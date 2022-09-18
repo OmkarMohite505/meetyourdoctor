@@ -6,19 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -80,8 +68,13 @@ public class Patient {
 //	  @MapsId 
 	private Login login;
 	
-	@OneToMany//(fetch = FetchType.EAGER)
-	@JoinColumn(name = "address_id")
+//	@OneToMany//(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "address_id")
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+	@JoinColumn(name="patient_id")
 	private Set<PatientAddress> address;
 
 }

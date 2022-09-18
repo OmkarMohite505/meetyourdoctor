@@ -283,7 +283,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("CLOSED"))
 				.map(a -> mapper.map(a, AppointmentDTO.class))
 				.collect(Collectors.toList());
-
+//		List<Appointment> list = appointmentRepository.getAllAppointmentListByStatusForPatient("CLOSED", patientId);
+//		return list.stream().map(a -> mapper.map(list, AppointmentDTO.class))
+//				.collect(Collectors.toList());
 	}
 
 	@Override

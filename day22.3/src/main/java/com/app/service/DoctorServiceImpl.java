@@ -231,4 +231,25 @@ public class DoctorServiceImpl implements IDoctorService {
 		return doctorRepository.findAllByIsDoctorSuspended(false);
 	}
 
+	@Override
+	public List<Doctor> findAllDoctorsByTown(String Town) {
+		
+		return doctorRepository.findAllDoctorsByTown(Town);
+	}
+
+	@Override
+	public List<Doctor> findAllDoctorsByCity(String city) {
+		return doctorRepository.findAllDoctorsByCity(city);
+	}
+
+	@Override
+	public List<Doctor> findAllDoctorsByState(String state) {
+		return doctorRepository.findAllDoctorsByState(state);
+	}
+
+	@Override
+	public List<Doctor> findAllDoctorsByPincode(int pincode) {
+		return doctorRepository.findAllDoctorsByPinCode(pincode);
+	}
+
 }

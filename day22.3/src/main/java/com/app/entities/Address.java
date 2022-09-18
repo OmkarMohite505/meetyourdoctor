@@ -26,7 +26,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="addresses")
+@Table(name="doctor_addresses")
 public class Address  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,9 +47,9 @@ public class Address  {
 	
 	private int pincode;
 	
-	@ManyToOne
-	@JoinColumn(name = "doctor_id")
-	private Doctor doctor;
+//	@ManyToOne
+//	@JoinColumn(name = "doctor_id", nullable = false)
+//	private Doctor doctor;
 	
 	
 

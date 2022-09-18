@@ -35,7 +35,7 @@ function ForgotPassword(){
         e.preventDefault();
 
         const obj = {"email":data.email, "otp":data.otp,"newPassword":data.newPassword};
-        axios.post(`${IP_ADDRS}/api/update_password`, obj)
+        axios.patch(`${IP_ADDRS}/api/update_password`, obj)
                   .then(res=>{navigate(`/login`)})
                   .catch(err=>{
                     swal("Enter Correct Details","","error");
@@ -52,7 +52,7 @@ function ForgotPassword(){
         }
         const obj = {"email":data.email}
 
-       axios.post(`${IP_ADDRS}/api/send_otp`, obj)
+       axios.patch(`${IP_ADDRS}/api/send_otp`, obj)
             .then(res=>{setWaitOTP(true);})
             .catch(err=>{setWaitLockFlag(true);
                 console.log("Error");

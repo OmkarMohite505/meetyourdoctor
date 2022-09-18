@@ -3,6 +3,8 @@ package com.app.service;
 import java.io.IOException;
 import java.util.List;
 
+import javax.print.Doc;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.DoctorDTO;
@@ -45,4 +47,12 @@ public interface IDoctorService {
 	void updateSpecialityPhoto(long doctorId, String specialityType, MultipartFile specialityPic)
 			throws IOException;
 	 void updateEducatiionPhoto(long doctorId, MultipartFile[] educationPic);
+	 
+	 List<Doctor> findAllDoctorsByTown(String town);
+	 
+	 List<Doctor> findAllDoctorsByCity(String city);
+	 
+	 List<Doctor> findAllDoctorsByState(String state);
+	 
+	 List<Doctor> findAllDoctorsByPincode(int pincode);
 }
