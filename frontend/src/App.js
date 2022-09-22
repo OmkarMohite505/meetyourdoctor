@@ -41,6 +41,7 @@ import languages from './Language/language'
 import GlobeIcon from './Icon/GlobeIcon'
 import { useEffect, useState } from 'react';
 import swal from 'sweetalert';
+import './Components/CSS/SelectLanguage.css'
 import SetTimeTable from './Components/SetTimeTable';
 import Pay from './Components/Pay';
 import CloseAppointment from './Components/AppointmentModify';
@@ -52,6 +53,7 @@ import DoctorDetailsSuspend from './Components/DoctorDetailsSuspend';
 import SuspendedDoctorList from './Components/SuspendedDoctorList';
 import DoctorDetailsRemoveSusp from './Components/DoctorDetailsRemoveSusp';
 import HomeVideo from './Components/HomeVideo';
+import ReactTooltip from 'react-tooltip';
 
 
 function App() {
@@ -108,7 +110,6 @@ function App() {
    } 
 
    useEffect(() => {
-    console.log('Setting page stuff')
     // document.body.dir = currentLanguage.dir || 'ltr'
     document.title = t('app_title')
   }, [currentLanguage, t])
@@ -124,9 +125,9 @@ function App() {
     <div>
 
     
-   
-    <Header title="Connect2YourDoctor" />
-    <Icon></Icon>
+<ReactTooltip id="select_language_tooltip">Click to Select Language</ReactTooltip>
+    <Header title="MeetYourDoctor" />
+   <div id='' data-tip data-for="select_language_tooltip" style={{"float":"right","width":"80px"}}> <Icon></Icon></div>
    
 
           <Routes>

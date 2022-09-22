@@ -175,9 +175,10 @@ function UpdatePatient(){
                 };
         
                 axios.request(options).then(response => {
-                    swal(`${response.data}`, "success");
+                    swal(`${response.data}`,"You can see updated picture after Re-Login", "success");
+                    navigate(`/patient`);
                 }).catch(error => {
-                    swal("Something went Wrong", "error");
+                    swal("Something went Wrong","", "error");
                 });
             }
         })
@@ -200,39 +201,29 @@ function UpdatePatient(){
 
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  First Name: </b></label>
-                <input type="text" placeholder={data.firstName} name="firstName" className="form-control" 
+                <input type="text" placeholder={data.firstName} readOnly name="firstName" className="form-control" 
                     value={data.firstName} onChange={changeHandler} onBlur={validateFirstName}/>
                     <span className="text text-danger">{Error.first_name_error}</span>
             </div>
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Last Name: </b></label>
-                <input type="text" placeholder={data.lastName} name="lastName" className="form-control" 
+                <input type="text" placeholder={data.lastName} readOnly name="lastName" className="form-control" 
                     value={data.lastName} onChange={changeHandler} onBlur={validateLastName}/>
                     <span className="text text-danger">{Error.last_name_error}</span>
             </div >
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Mobile Number: </b></label>
-                <input type="text" placeholder={data.mobileNumber} name="mobileNumber" className="form-control" 
+                <input type="text" placeholder={data.mobileNumber} readOnly name="mobileNumber" className="form-control" 
                     value={data.mobileNumber} onChange={changeHandler} onBlur={validateMobileNumber}/>
                     <span className="text text-danger">{Error.mobile_number_error}</span>
             </div>
-            {/* <div style={{ marginTop: '10px' }} className = "form-group">
-                <label><b>  Gender: </b></label>
-                <input type="text" placeholder={data.gender} name="gender" className="form-control" 
-                    value={data.gender} onChange={changeHandler} disabled/>
-            </div> */}
+          
 
-            {/* <div style={{ marginTop: '10px' }} className = "form-group" onChange={changeHandler}>
-                <label><b>  Gender: </b></label>
-                <input style={{ marginLeft: '10px' }} type="radio" value="Male" name="gender" disabled={true}/> Male
-                <input style={{ marginLeft: '10px' }} type="radio" value="Female" name="gender" disabled={true}/> Female
-                <input style={{ marginLeft: '10px' }} type="radio" value="Other" name="gender" disabled={true}/> Other
-            </div> */}
 
             <div style={{ marginTop: '10px' }} className = "form-group" onChange={changeHandler}>
                 <label><b>  Gender: </b></label> 
-                <input style={{ marginLeft: '10px' }} type="radio" value="Male" name="gender" checked={data.gender==='Male'} disabled/> Male
-                <input style={{ marginLeft: '10px' }} type="radio" value="Female" name="gender" checked={data.gender==='Female'} disabled/> Female
+                <input style={{ marginLeft: '10px' }} type="radio" value="Male" name="gender" checked={data.gender==='MALE'} disabled/> Male
+                <input style={{ marginLeft: '10px' }} type="radio" value="Female" name="gender" checked={data.gender==='FEMALE'} disabled/> Female
                 <input style={{ marginLeft: '10px' }} type="radio" value="Other" name="gender" checked={data.gender==='Other'} disabled/> Other
             </div> 
 
@@ -249,7 +240,8 @@ function UpdatePatient(){
             </div >
 
             <div style={{ marginTop: '10px' }} className = "form-group">
-            <input  type="file" accept=".png, .jpg,.jpeg" onChange={handleChange} name="file"></input>
+            <label><b>  Choose Profile Photo: </b></label><br></br>
+            <input  type="file" accept=".png, .jpg,.jpeg" onChange={handleChange} className="form-control"  name="file"></input>
             </div >
 
             <div style={{marginTop: "10px"}}>

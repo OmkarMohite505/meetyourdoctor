@@ -39,10 +39,10 @@ public class Patient {
 	@Column(length = 25)
 	String lastName;
 
-	@Column(length = 14)
+	@Column(length = 15)
 	String mobileNumber;
 
-	@Column(length = 14)
+	@Column(length = 15)
 	String alternateMobileNumber;
 
 	@Enumerated(EnumType.STRING)
@@ -72,7 +72,8 @@ public class Patient {
 //	@JoinColumn(name = "address_id")
 	@OneToMany(
 	        cascade = CascadeType.ALL,
-	        orphanRemoval = true
+	        orphanRemoval = true,
+	        fetch = FetchType.EAGER
 	    )
 	@JoinColumn(name="patient_id")
 	private Set<PatientAddress> address;

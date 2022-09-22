@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.dto.Image;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
+import com.app.dto.UpdatePasswordDTO;
 import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.RoleEntity;
@@ -113,5 +116,16 @@ public class PatientController {
 	@GetMapping("/get_all_doctors_list_by_pincode/{pincode}")
 	public ResponseEntity<?> getAllDoctorsListByPincode(@PathVariable int pincode) {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.findAllDoctorsByPincode(pincode));
+	}
+	
+	@PatchMapping("/update_password")
+	public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordDTO dto) {
+		patientService.updatePassword(dto);
+		return ResponseEntity.status(HttpStatus.OK).body("Password Updated Successfully");
+	}
+	@DeleteMapping("/{patientId}")
+	public ResponseEntity<?> deleteDoctor(@PathVariable long patientId){
+		patientService.deletePatient(patientId);
+		return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
 	}
 }

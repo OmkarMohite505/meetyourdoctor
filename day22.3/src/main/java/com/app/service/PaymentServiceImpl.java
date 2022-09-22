@@ -69,10 +69,12 @@ public class PaymentServiceImpl implements IPaymentService {
 				.orElseThrow(() -> new Exception("Appointment Detials Not found"));
 
 		Payment payment = appointment.getPayment();
-		payment.setAmount_paid(paymentDTO.getAmount_paid());
-		payment.setRazorpayOrderId(paymentDTO.getRazorpayOrderId());
+		/*
+		 * payment.setAmount_paid(paymentDTO.getAmount_paid());
+		 * payment.setRazorpayOrderId(paymentDTO.getRazorpayOrderId());
+		 */
 		payment.setRazorpayPaymentId(paymentDTO.getRazorpayPaymentId());
-		payment.setRazorpaySignature(paymentDTO.getRazorpaySignature());
+		/* payment.setRazorpaySignature(paymentDTO.getRazorpaySignature()); */
 		payment.setStatus("PAID");
 		return "Payment Records Updated";
 	}

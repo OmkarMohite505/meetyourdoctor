@@ -9,18 +9,23 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Clock;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.repository.PatientRepository;
+import com.app.subdto.PatientAll;
 import com.app.dto.PatientDTO;
+import com.app.dto.UpdatePasswordDTO;
 import com.app.entities.Patient;
 
 @Service
@@ -32,6 +37,8 @@ public class PatientServiceImpl implements IPatientService {
 	private ModelMapper mapper;
 	@Autowired
 	private PatientRepository patientRepository;
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public Patient registerPatient(Patient patient) {
@@ -40,7 +47,7 @@ public class PatientServiceImpl implements IPatientService {
 
 	@Override
 	public String uploadProfilePicture(long patientId, MultipartFile imageFile) throws IOException {
-		Patient patient = patientRepository.getById(patientId);
+		Patient patient = patientRepository.getReferenceById(patientId);
 		Clock clock = Clock.systemDefaultZone();
 		long milliSeconds=clock.millis();
 		String completePath = baseFolder + File.separator + patientId +milliSeconds + imageFile.getOriginalFilename();
@@ -71,6 +78,23 @@ public class PatientServiceImpl implements IPatientService {
 		PatientDTO patientDTO = new PatientDTO();
 		mapper.map(patientRepository.findByLoginEmail(email).orElseThrow(()->new Exception("Patient Not Found")), patientDTO);
 		return patientDTO;
+	}
+
+	@Override
+	public List<PatientAll> getAllPatientList() {
+		return patientRepository.findAll().stream().map(p -> mapper.map(p, PatientAll.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public void updatePassword(UpdatePasswordDTO dto) {
+		Patient patient = patientRepository.getReferenceById(dto.getId());
+		patient.getLogin().setPassword(encoder.encode(dto.getNewPassword()));
+	}
+
+	@Override
+	public void deletePatient(long patientId) {
+		patientRepository.deleteById(patientId);
 	}
 
 	

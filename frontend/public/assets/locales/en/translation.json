@@ -11,6 +11,13 @@
     "login":"Login",
     "register":"Register",
     "forgot_password":"Forgot  Password",
+
+    "click_here_register_tooltip":"Click here to register",
+    "click_here_login_tooltip":"CLick to Login If you are already registered",
+    "landing_page_headline_text":"Book appointments on the go with best specialist doctors in your city",
+    "welcome_to_our_portal":"Welcome to Our Portal",
+    "book_appointment_landing":"Book Appointment",
+    "weather_info":"Weather Info",
   
     "enter_registered_email":"Enter Registered Email",
     "send_otp":"Send OTP",

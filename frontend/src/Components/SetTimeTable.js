@@ -32,7 +32,7 @@ function SetTimeTable(){
             ...data,
             [e.target.name]:e.target.value
         }));
-        console.log(e.target.name+" "+e.target.value)
+        // console.log(e.target.name+" "+e.target.value)
     }
     const refreshPage = (e) => {
         window.location.reload();
@@ -41,38 +41,7 @@ function SetTimeTable(){
 
       const submitData=(e)=>{
         e.preventDefault();
-        /* const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                ttId: timetable.ttId,
-                doctor_id: timetable.doctor_id,
-                weekday: timetable.weekday,
-                startTime: timetable.startTime,
-                endTime: timetable.endTime,
-                slotDuration: timetable.slotDuration,
-                breakTime: timetable.breakTime,
-                status: timetable.status
-
-            })
-        }
-        fetch("http://localhost:8080/updatetimetable",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                alert("update successful!!!");
-                sessionStorage.removeItem("daytimetable")
-                navigate('/updatetimetable');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
-               
-            }
-        })
- */
+       
         const obj = {"doctorId":timetable.doctor_id,
                      "timetables":[{"weekday":timetable.weekday,"startTime":timetable.startTime,"endTime":timetable.endTime,
                      "breakTime":timetable.breakTime,"slotDuration":timetable.slotDuration}]}
@@ -92,26 +61,13 @@ function SetTimeTable(){
                             icon: "success",
                           });
                             navigate(`/doctor`)})
-                        .catch(err=>{swal("Records Saved", {
-                            icon: "success",
+                        .catch(err=>{swal("Something Went Wrong", {
+                            icon: "error",
                           });})
                        
                       });
 
                       return;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     DoctorService.saveTimetable(obj, timetable.jwt)
                     .then(res=>{alert("Success")})
@@ -148,11 +104,11 @@ function SetTimeTable(){
                     <input type="time"  name="endTime" className="form-control" 
                         value={timetable.endTime} onChange={changeHandler}/>
                 </div >
-                <div style={{ marginTop: '10px' }} className = "form-group">
+                {/* <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Slot Duration: </b></label>
-                    <input type="text"  name="slotDuration" className="form-control" 
+                    <input type="number" min="1" max="60" name="slotDuration" className="form-control" 
                         value={timetable.slotDuration} onChange={changeHandler}/>
-                </div >
+                </div > */}
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Break Time: </b></label>
                     <input type="time" placeholder={timetable.breakTime} name="breakTime" className="form-control" 

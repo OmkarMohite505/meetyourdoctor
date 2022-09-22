@@ -4,10 +4,17 @@ import { NavLink } from "react-router-dom";
 
 function Admin() {
     const [admin, setAdmin] = useState({});
+    const [cnt, setCnt] = useState(0);
 
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
-        setAdmin(admin)
+        setAdmin(admin);
+        if(cnt === 0){
+            setCnt(1);
+            // window.location.reload();
+
+        }
+       
     }, []);
 
     const logout = () => {
@@ -18,28 +25,13 @@ function Admin() {
     const navigate = useNavigate();
     return (
         <>
-            {/* <div className="container fluid">
-            <button className="btn btn-primary" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
-            <div className="container-fluid">
-                <h1>Admin Page</h1>s
-                <h2>Welcome {admin}</h2>
-
-                <button className='btn btn-primary' onClick={() => navigate("/adddoctor")} style={{ marginLeft: "10px", marginTop: "10px" }}>Add New Doctor</button>
-                <button className='btn btn-primary' onClick={() => navigate("/viewdoctor")} style={{ marginLeft: "10px", marginTop: "10px" }}>View Doctor</button>
-                <button className='btn btn-primary' onClick={() => navigate("/viewdoctor")} style={{ marginLeft: "10px", marginTop: "10px" }}>Enable/Disable Doctor</button>
-                <button className='btn btn-primary' onClick={() => navigate("/viewpatient")} style={{ marginLeft: "10px", marginTop: "10px" }}>View Patient</button>
-                <button className='btn btn-primary' onClick={() => navigate("/viewpatient")} style={{ marginLeft: "10px", marginTop: "10px" }}>Enable/Disable Patient</button>
-                <button className="btn btn-primary" onClick={() => navigate("/addarea")} style={{ marginLeft: "10px", marginTop: "10px" }}>Add New Area</button>
-                <button className="btn btn-primary" onClick={() => navigate("/addcity")} style={{ marginLeft: "10px", marginTop: "10px" }}>Add New City</button>
-                <button className="btn btn-primary" onClick={() => navigate("/addstate")} style={{ marginLeft: "10px", marginTop: "10px" }}>Add New State</button>
-            </div>
-        </div> */}
+          
             <div className="container" style={{ marginBottom: "50px" }}>
                 <div className="row my-3">
                     <div className="col-sm-6"><h2 className="">Hello {admin.email}</h2>
                     </div>
                     <div className="col-sm-6">
-                        <button className="btn btn-link btn-danger text-light offset-10 text-uppercase text-decoration-none " onClick={logout}>Logout</button>
+                        <button className="" onClick={logout}>Logout</button>
                     </div>
                 </div>
 

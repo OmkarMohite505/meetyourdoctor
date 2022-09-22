@@ -52,20 +52,7 @@ function Patient(){
         
     return(
         <>
-        {/* <div className="container fluid">
-            <button className="btn btn-primary" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
-            <div className="container-fluid">
-                <h1>Patient DashBoard</h1>
-                <h2>Welcome...{state.firstName} {state.lastName}</h2>
-                <button className='btn btn-primary' onClick={() => navigate("/updatepatient")} style={{ marginLeft: "10px", marginTop: "10px" }}>Update Profile</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/searchdoctor")}>Search Doctor</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/patientcurrentappointments")}>Current Appointments</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/patientappointmenthistory")}>Appointment History</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/patientcurrentappointments")}>Cancel Appointments</button>
-                <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={() => navigate("/searchdoctor")}>Book Appointment</button>
-            </div>
-
-        </div> */}
+     
         <div className="container" style={{marginBottom : "50px"}}>
                 <div className="row my-3">
                     <div className="col-sm-3"><h2 className="">Hello, {state.firstName} {state.lastName}</h2></div>

@@ -28,14 +28,14 @@ public class DoctorTimeTableServiceImpl implements IDoctorTimeTable {
 	public String saveDoctorTimetable(TimeTableDTO timeTableDTO ) throws Exception {
 		Set<DoctorTimeTable> temp = new HashSet<>();
 		
-		Set<DoctorTimeTable> timetable = timeTableDTO.getTimetable();
+		Set<DoctorTimeTable> timetables = timeTableDTO.getTimetables();
 		
-		List<DoctorTimeTable> persistentTimetable = timetableRepo.saveAll(timetable);
+//		List<DoctorTimeTable> persistentTimetable = timetableRepo.saveAll(timetables);
 		
-		Doctor doctor = doctorRepository.findById(timeTableDTO.getDoctorId()).orElseThrow(()->new Exception("Doctor Not Found"));
+		Doctor doctor = doctorRepository.getReferenceById(timeTableDTO.getDoctorId());
 		
-		for (DoctorTimeTable doctorTimeTable : persistentTimetable) {
-//			doctor.getTimetables().add(doctorTimeTable);
+		for (DoctorTimeTable doctorTimeTable : timetables) {
+			doctor.getTimetables().add(doctorTimeTable);
 		}
 		return "Saved TImetable";
 	}
@@ -49,7 +49,7 @@ public class DoctorTimeTableServiceImpl implements IDoctorTimeTable {
 			
 			persistTimeTable.setBreakTime(doctorTimeTable.getBreakTime());
 			persistTimeTable.setStartTime(doctorTimeTable.getStartTime());
-			persistTimeTable.setSlotDuration(doctorTimeTable.getSlotDuration());
+			/* persistTimeTable.setSlotDuration(doctorTimeTable.getSlotDuration()); */
 			persistTimeTable.setEndTime(doctorTimeTable.getEndTime());
 			persistTimeTable.setStatus(doctorTimeTable.getStatus());
 			persistTimeTable.setWeekday(doctorTimeTable.getWeekday());

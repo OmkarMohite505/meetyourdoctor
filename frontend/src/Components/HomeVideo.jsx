@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { IP_ADDRS } from '../service/Constant'
 
@@ -10,6 +10,7 @@ const HomeVideo = () => {
     const [imgFlag, setImgflag] = useState(false);
     const [videoFile, setVideoFile] = useState();
     const [token, setToken] = useState();
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         setVideoFile(event.target.files[0]);
@@ -50,7 +51,9 @@ const HomeVideo = () => {
                 };
         
                 axios.request(options).then(response => {
-                    swal(`${response.data}`, "success");
+                    swal(`${response.data}`,"", "success");
+                    navigate(`/admin`);
+                    
                 }).catch(error => {
                     swal("Something went Wrong", "error");
                 });
@@ -68,7 +71,7 @@ const HomeVideo = () => {
     }
     return (
         <div style={{ "marginLeft": "100px", "marginTop": "50px" }}>
-            <Link to={`/`}><button className="btn btn-danger">Go TO Home Page</button></Link><br /><br />
+            <Link to={`/admin`}><button className="btn btn-danger">Go TO Home Page</button></Link><br /><br />
             <input type="file" onChange={handleChange} name="file"></input><br /><br />
             {/* <video controls style={{"width":"900px","height":"500px"}}>
                 <source src={`${IP_ADDRS}/api/image/home_video`}/>

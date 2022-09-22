@@ -73,6 +73,8 @@ function Login(){
                 sessionStorage.setItem("admin", JSON.stringify(response.data));
                 navigate(`/admin`);
              }
+         }).catch(err=>{
+            swal("Wrong Detials You were Entered","Enter Correct Details again, Make Sure you are registered before Login","error");
          })
         }
  

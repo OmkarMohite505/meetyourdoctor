@@ -23,8 +23,12 @@ function SearchDoctor(){
         let patient = JSON.parse(sessionStorage.getItem("patient"));  
         PatientService.getDoctorList(patient.jwt)
         .then(res=>{let obj = JSON.stringify(res.data); sessionStorage.setItem("doctorList",obj);
-            console.log(obj);
-            setDoctorList(res.data)})
+            // console.log(obj);
+            setDoctorList(res.data);
+            if(res.data.length === 0)
+            swal("No Doctors Found","","info");
+        })
+            
         .catch(err=>{swal("Failed to fetch Doctor List","","error")});
     },[]);
 
@@ -47,39 +51,13 @@ function SearchDoctor(){
     }
 
     const areaFetch=(e)=>{
-        setCityId(e.target.value);
-        // console.log(cityId);
-      const val=e.target.value;
-      fetch("http://localhost:8080/areabycity/"+val)
-      .then(r => r.json())
-      .then(d => setArea(d))
     }
 
     const search=(ev)=>{
-        setDoctor([]);
-        if(stateId === "" && cityId === "" && areaId === ""){
-            setError("Please Select State and City and Area");
-         }else if(stateId !== "" && cityId !== "" && areaId !== "" && specId=="" || specId==0){
-             setError("");
-             fetch("http://localhost:8080/alldoctorsbyarea/"+areaId)
-             .then(r => r.json())
-             .then(d => setDoctor(d)) 
-         }else if(stateId !== "" && cityId !== "" && areaId !== "" && specId!=""){
-            setError("");
-            fetch("http://localhost:8080/doctorsbyareaandspec/"+areaId+"/"+specId)
-            .then(r => r.json())
-            .then(d => setDoctor(d)) 
-            // console.log("hii"+specId)
-         }
-
   
     }
     const [speciality,setSpeciality]=useState([]);
     const fetchSpeciality=()=>{
-        console.log("hiii");
-        fetch("http://localhost:8080/speciality")
-        .then(r => r.json())
-        .then(d =>{console.log(d); setSpeciality(d)}) 
     }
     const [specId,setSpecId]=useState("");
 
@@ -154,23 +132,7 @@ function SearchDoctor(){
             <div>
             <p className="text text-danger"><b>{error}</b></p>  
             </div>
-            {/* <div>
-        <div>
-        <select style={{ marginLeft: '10px',marginTop:"10px" }} name="areaId" onChange={searchBySpeciality}>
-                    <option value="0">--Speciality--</option>
-                    {
-                        speciality.map((v)=>{
-                        return (
-                            <option key={v} value={v} >{v}</option>
-                        )})
-                    }
-                </select>
-        </div>
-        <button  className='btn btn-primary' style={{marginLeft:"10px",marginTop:"10px"}} onClick={searchBySpeciality}>Search</button>
-        <button type="button" className="btn btn-danger" style={{marginLeft: "10px",marginTop:"10px"}} onClick={refreshPage}>Reset</button>
-        <button className="btn btn-danger" onClick={() => navigate("/patient")} style={{marginLeft: "10px",marginTop:"10px"}}>Cancel</button>
-     
-        </div> */}
+           
         
         </div>
         <div className="container my-4">
@@ -194,9 +156,9 @@ function SearchDoctor(){
                     </tr>
                         </thead>
                         <tbody>
-                            {doctorList.map((v) => {
+                            {doctorList.map((v,i) => {
                         return (
-                            <tr>
+                            <tr key={`dr_list${i}`}>
                                 <td>{v.speciality[0].specialityType}</td>
                                 <td>{v.firstName}</td>
                                 <td>{v.lastName}</td>

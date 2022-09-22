@@ -28,15 +28,15 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "specialityType")
 public class Speciality {
 
-	@Column(name = "speciality_type")
+	@Column(name = "speciality_type", length=60)
 	@Enumerated(EnumType.STRING)
 	private SpecialityType specialityType;
-	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long specialityId;
-
+	//Madhura commented : it's not an entity
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long specialityId;
+	@Column(length=300)
 	private String servicesProvided;
-
+	@Column(length=500)
 	private String specialityDescription;
 
 	private String specialityPhoto;

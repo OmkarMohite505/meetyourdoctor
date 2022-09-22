@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +35,7 @@ import com.app.jwt_utils.JwtUtils;
 import com.app.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice.Return;
 
 @RestController
 @RequestMapping("/auth")
@@ -49,6 +51,8 @@ public class SignInSignUpController {
 	//dep : user service for handling users
 	@Autowired
 	private UserService userService;
+	@Value("${adminSecretKey}")
+	private String adminSecretKey;
 
 	// add a method to authenticate user . In case of success --send back token , o.w
 	// send back err mesg
@@ -103,6 +107,8 @@ public class SignInSignUpController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> userRegistration(@RequestBody @Valid UserDTO user)
 	{
+		if(!adminSecretKey.equals(user.getAdminSecretKey()))
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong Secret Key you provided");
 		System.out.println("in reg user : user "+user+" roles "+user.getRoles());//{....."roles" : [ROLE_USER,...]}
 		//invoke service layer method , for saving : user info + associated roles info
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.registerUser(user));		

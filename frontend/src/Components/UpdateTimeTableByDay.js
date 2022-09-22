@@ -1,6 +1,8 @@
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IP_ADDRS } from "../service/Constant";
+import swal from "sweetalert";
 
 function UpdateTimeTableByDay(){
     const [timetable,setTimetable]=useState({
@@ -11,12 +13,15 @@ function UpdateTimeTableByDay(){
         endTime: "",
         slotDuration: "",
         breakTime: "",
-        status:""
+        status:"",
+        token:""
     })
     useEffect(() => {
         const tt= JSON.parse(sessionStorage.getItem("daytimetable"));
         const doc = JSON.parse(sessionStorage.getItem("doctor"));
-        setTimetable({ttId:tt.timeTableId,doctor_id:doc.doctorId,weekday:tt.weekday,startTime:tt.startTime,endTime:tt.endTime,slotDuration:tt.slotDuration,breakTime:tt.breakTime,status:tt.status})
+        setTimetable({ttId:tt.timeTableId,doctor_id:doc.doctorId,weekday:tt.weekday,
+            startTime:tt.startTime,endTime:tt.endTime,slotDuration:tt.slotDuration,
+            breakTime:tt.breakTime,status:tt.status,token:doc.jwt})
         
     },[]);
     const navigate=useNavigate();
@@ -30,7 +35,7 @@ function UpdateTimeTableByDay(){
             ...data,
             [e.target.name]:e.target.value
         }));
-        console.log(e.target.name+" "+e.target.value)
+        // console.log(e.target.name+" "+e.target.value)
     }
     const refreshPage = (e) => {
         window.location.reload();
@@ -42,51 +47,23 @@ function UpdateTimeTableByDay(){
 
         const obj = {
             "doctorId": timetable.doctor_id,
-            "timetable":[{"timeTableId": timetable.ttId,
+            "timeTableId": timetable.ttId,
             "weekday": timetable.weekday,
             "startTime": timetable.startTime,
             "endTime": timetable.endTime,
-            "slotDuration": timetable.slotDuration,
+            // "slotDuration": timetable.slotDuration,
             "breakTime": timetable.breakTime,
-            "status": timetable.status}]}
-
+            "status": timetable.status}
+            
         
-        axios.post(`http://localhost:8080/api/doctor/update_timetable`, obj).then(navigate(`/updatetimetable`)).catch(err=>alert("Error"));
-        return;
-
-
-
-        const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                ttId: timetable.ttId,
-                doctor_id: timetable.doctor_id,
-                weekday: timetable.weekday,
-                startTime: timetable.startTime,
-                endTime: timetable.endTime,
-                slotDuration: timetable.slotDuration,
-                breakTime: timetable.breakTime,
-                status: timetable.status
-
-            })
-        }
-        fetch("http://localhost:8080/updatetimetable",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                alert("update successful!!!");
-                sessionStorage.removeItem("daytimetable")
-                navigate('/updatetimetable');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
-               
-            }
+        axios.post(`${IP_ADDRS}/api/doctor/update_timetable`, obj,{ headers: {"Authorization" : `Bearer ${timetable.token}`}})
+        .then(res=>{
+            swal("Updated","","success")
+            navigate(`/updatetimetable`)
         })
+        .catch(err=>{
+            swal("Something Went Wrong","","error")
+        });
 
     }
 
@@ -103,8 +80,8 @@ function UpdateTimeTableByDay(){
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Weekday: </b></label>
                     <p>{timetable.weekday}</p>
-                    <input type="text" placeholder={timetable.weekday}  name="weekday" className="form-control" 
-                        value={timetable.weekday} disabled/>
+                    <input type="text" placeholder={timetable.weekday} onChange={changeHandler}  name="weekday" className="form-control" 
+                        value={timetable.weekday} />
                 </div>
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Start Time: </b></label>
@@ -116,11 +93,11 @@ function UpdateTimeTableByDay(){
                     <input type="time" placeholder={timetable.endTime} name="endTime" className="form-control" 
                         value={timetable.endTime} onChange={changeHandler}/>
                 </div >
-                <div style={{ marginTop: '10px' }} className = "form-group">
+                {/* <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Slot Duration: </b></label>
                     <input type="text" placeholder={timetable.slotDuration} name="slotDuration" className="form-control" 
                         value={timetable.slotDuration} onChange={changeHandler}/>
-                </div >
+                </div > */}
                 <div style={{ marginTop: '10px' }} className = "form-group">
                     <label><b>  Break Time: </b></label>
                     <input type="time" placeholder={timetable.breakTime} name="breakTime" className="form-control" 

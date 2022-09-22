@@ -30,7 +30,7 @@ public class DoctorTimeTable {
 //	@JoinColumn(name="doctor_id")
 //	Doctor doctor;
 	
-	@Column
+	@Column(length=15)
 	String weekday;
 
 	@Column(name="start_time")
@@ -39,17 +39,18 @@ public class DoctorTimeTable {
 	@Column(name="end_time")
 	LocalTime endTime;
 	
-	@Column(name="slot_duration")
-	Long slotDuration;
+	/*
+	 * @Column(name="slot_duration") Long slotDuration;
+	 */
 	
 	@Column(name="break_time")
 	LocalTime breakTime;
 	
-	@Column
+	@Column(length=20)
 	String status;
 	
-	@ManyToOne
-	@JoinColumn(name = "doctor_id")
-	private Doctor doctor;
+//	@ManyToOne
+//	@JoinColumn(name = "doctor_id")
+//	private Doctor doctor;
 
 }

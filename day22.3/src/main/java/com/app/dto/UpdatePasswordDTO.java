@@ -8,6 +8,8 @@ import lombok.Setter;
 public class UpdatePasswordDTO {
 	private String email;
 	private String newPassword;
+	private String oldPassword;
 	private int otp;
+	private Long id;
 
 }

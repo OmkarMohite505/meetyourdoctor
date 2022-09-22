@@ -30,11 +30,16 @@ const DoctorDetailsSuspend = () => {
     const [admin, setAdmin] = useState({});
     useEffect(() => {
         let doctor = JSON.parse(sessionStorage.getItem("suspendDoctor"));
-        setDoctor(doctor);
         let admin = JSON.parse(sessionStorage.getItem("admin"));
+        if(doctor === null){
+            navigate(`/admin`);
+        }
+        else{
+            setDoctor(doctor);
         setAdmin(admin);
         setSpeciality(doctor.speciality);
         setTimetables(doctor.timetables);
+        }
         // setUserData(doctor, patient);
     }, []);
 

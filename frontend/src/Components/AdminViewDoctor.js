@@ -11,17 +11,6 @@ const VerifyDoctor = () => {
     const [doctorList, setDoctorList] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        // let admin = JSON.parse(sessionStorage.getItem("admin"));
-        // axios.get(`${IP_ADDRS}/api/admin/un_verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        //     .then(res => {
-        //         console.log(res.data);
-        //         setDoctorList(res.data);
-        //         sessionStorage.setItem("verifyDoctorList", JSON.stringify(res.data));
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         swal("Something went Wrong", "", "error")
-        //     })
         let doctorList = JSON.parse(sessionStorage.getItem("verifiedDoctorList"));
         if(doctorList)
         setDoctorList(doctorList);
@@ -51,7 +40,7 @@ const VerifyDoctor = () => {
         <>
             <div className="container my-4">
                 <div>
-                    <button onClick={getVerifiedDoctorList}>Get Registered Doctor List</button>
+                    <button onClick={getVerifiedDoctorList}>Get Verified Doctor List</button>
                     <h3>Doctor List</h3>
 
                     <table className="table table-bordered">
@@ -71,9 +60,9 @@ const VerifyDoctor = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {doctorList.map((v) => {
+                            {doctorList.map((v,i) => {
                                 return (
-                                    <tr>
+                                    <tr key={`dr_list${i}`}>
                                         <td>{v.speciality[0].specialityType}</td>
                                         <td>{v.firstName}</td>
                                         <td>{v.lastName}</td>

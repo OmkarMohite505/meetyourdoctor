@@ -7,9 +7,6 @@ function AddCity(){
     const [record,setRecord]=useState("");
 
     useEffect(() => {   
-        fetch("http://localhost:8080/allstates")
-        .then(r => r.json())
-        .then(d => setState(d))
     },[]);
 
     const [data,setData] = useState({
@@ -32,37 +29,8 @@ function AddCity(){
     };
       const submitData=(e)=>{
         e.preventDefault();
-        const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                cityName:data.cityName,
-                state_id:record
-            })
-        }
-        fetch("http://localhost:8080/savecity",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                alert("New City added successfully!!!");
-                navigate('/admin');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
-
-            }
-        })
-
     }
     const oneState=(e)=>{
-        const val=e.target.value;
-        console.log(val);
-      fetch("http://localhost:8080/statebyid/"+val)
-      .then(r => r.json())
-      .then(d => {console.log(d); setRecord(d)})
     }
 
 

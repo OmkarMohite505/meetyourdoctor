@@ -1,20 +1,27 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
+import axios from "axios";
+import { IP_ADDRS } from "../service/Constant";
 
 function DoctorAppointmentHistory(){
 
     const [doctorId,setDoctorId]=useState("");
     const [appointments,setAppointments]=useState([]);
+    const [token, setToken] = useState("");
     useEffect(() => {
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
         setDoctorId(doc.doctorId);
+        setToken(doc.jwt);
     },[]);
 
     const allAppointments=()=>{
-        fetch("http://localhost:8080/getappointmenthistorybydid/"+doctorId)
-        .then(r => r.json())
-        .then(d => setAppointments(d))
+       axios.get(`${IP_ADDRS}/api/doctor/get_all_closed_appointment/${doctorId}`,
+       { headers: {"Authorization" : `Bearer ${token}`}})
+       .then(res=>{
+        setAppointments(res.data);
+        console.log(res.data);
+       })
     }
 
     const navigate = useNavigate();
@@ -25,43 +32,7 @@ function DoctorAppointmentHistory(){
     }
     return(
         <>
-        {/* <div className="container-fluid">
-            <button className="btn btn-primary" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
-            <button className='btn btn-primary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/doctor")}>Back to Dashboard</button>
-            <button className='btn btn-primary' onClick={allAppointments}>Show All Appointment</button>
-
-            <div>
-                <h1 className="font-weight-bold offset-4">Doctor Appointment List</h1>
-
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                            <th>Appointment Date</th>
-                            <th>Appointment Time</th>
-                            <th>Appointment Type</th>
-                            <th>Appointment Status</th>
-                            <th>Patient Id</th>
-                            <th>Patient Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {appointments.map((v) => {
-                            return (
-                                <tr>
-                                    <td>{v.appointmentDate}</td>
-                                    <td>{v.appointmentTime}</td>
-                                    <td>{v.appointmentType}</td>
-                                    <td>{v.status}</td>
-                                    <td>{v.patientId.patient_id}</td>
-                                    <td>{v.patientId.firstName} {v.patientId.lastName}</td>
-
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </div>
-        </div> */}
+       
         <div className="container my-4" style={{marginBottom : "50px"}}>
         <button className="btn btn-danger" onClick={logout} style={{float:"right",marginTop:"10px",marginRight:"10px"}}>Logout</button>
         <button  className='btn btn-secondary' style={{float:"right",marginTop:"10px",marginRight:"10px"}} onClick={() => navigate("/doctor")}>Go Back</button> 
@@ -74,23 +45,23 @@ function DoctorAppointmentHistory(){
                         <tr>
                             <th>Appointment Date</th>
                             <th>Appointment Time</th>
-                            <th>Appointment Type</th>
+                            {/* <th>Appointment Type</th> */}
                             <th>Appointment Status</th>
                             <th>Patient Id</th>
                             <th>Patient Name</th>
                         </tr>
                         </thead>
                         <tbody>
-                            {appointments.map((v) => {
+                            {appointments.map((v,i) => {
                                 return (
-                                    <tr>
-                                        <td>{v.appointmentDate}</td>
-                                        <td>{v.appointmentTime}</td>
-                                        <td>{v.appointmentType}</td>
-                                        <td style={{ display: v.status === 'cancelled' ? 'block' : 'none' }}>{v.status}</td>
-                                        <td style={{ display: v.status === 'scheduled' ? 'block' : 'none' }}>success</td>
-                                        <td>{v.patientId.patient_id}</td>
-                                        <td>{v.patientId.firstName} {v.patientId.lastName}</td>
+                                    <tr key={`appt_li${i}`}>
+                                        <td><input type="date" value={v.appointmentDate} disabled style={{"border":"none"}}></input></td>
+                                        <td><input type="time" value={v.appointmentTime} disabled style={{"border":"none"}}></input></td>
+                                        {/* <td>{v.appointmentType}</td> */}
+                                        <td >{v.status}</td>
+                                        {/* <td >success</td> */}
+                                        <td>{v.patient.patientId}</td>
+                                        <td>{v.patient.firstName} {v.patient.lastName}</td>
 
                                     </tr>
                                 );

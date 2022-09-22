@@ -30,11 +30,17 @@ const DoctorDetailsUnVerify = () => {
     const [admin, setAdmin] = useState({});
     useEffect(() => {
         let doctor = JSON.parse(sessionStorage.getItem("verifiedDoctor"));
-        setDoctor(doctor);
+       
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         setAdmin(admin);
+       if(doctor === null){
+        navigate(`/admin`);
+       }
+       else{
+        setDoctor(doctor);
         setSpeciality(doctor.speciality);
         setTimetables(doctor.timetables);
+       }
         // setUserData(doctor, patient);
     }, []);
 

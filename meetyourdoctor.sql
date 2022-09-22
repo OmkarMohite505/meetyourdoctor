@@ -1,6 +1,6 @@
 drop database meetyour;
 
-use meetyour;
+use meetyourdoctor;
 show tables;
 
 --  Creating trigger for login table

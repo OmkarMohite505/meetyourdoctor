@@ -31,8 +31,9 @@ public class Appointment {
 	@Column(name="appointment_time")
 	private LocalTime appointmentTime;
 	
-	@Column(name="appointment_type")
-	private String appointmentType;
+	/*
+	 * @Column(name="appointment_type") private String appointmentType;
+	 */
 	
 	@ManyToOne
 	@JoinColumn(name="doctor_id")
@@ -49,7 +50,7 @@ public class Appointment {
 	@Column(name="appointment_description", length = 500)
 	private String appointmentDescription;
 	
-	@Column(name="cancelled_by")
+	@Column(name="cancelled_by", length=60)
 	private String cancelledBy;
 	
 	@ElementCollection  // mandatory to specify that foll is collection of basic type

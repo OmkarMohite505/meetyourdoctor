@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.service.IAdminService;
 import com.app.service.IDoctorService;
+import com.app.service.IPatientService;
 
 @RestController
 @CrossOrigin
@@ -25,10 +26,16 @@ public class AdminController {
 	private IDoctorService doctorService;
 	@Autowired
 	private IAdminService adminService;
+	@Autowired
+	private IPatientService patientService;
 
 	@GetMapping("/get_all_doctors_list")
 	public ResponseEntity<?> getAllDoctorsList() {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getAllDoctorsListForAdmin());
+	}
+	@GetMapping("/get_all_patients_list")
+	public ResponseEntity<?> getAllPatientsList() {
+		return ResponseEntity.status(HttpStatus.OK).body(patientService.getAllPatientList());
 	}
 
 	@GetMapping("/verify_doctor/{doctorId}")

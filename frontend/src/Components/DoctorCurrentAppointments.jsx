@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table'
 import axios from "axios";
 import { IP_ADDRS } from "../service/Constant";
+import swal from "sweetalert";
 
 function DoctorCurrentAppointments() {
     const [doctorId, setDoctorId] = useState("");
@@ -15,10 +16,12 @@ function DoctorCurrentAppointments() {
     }, []);
 
     const currentappointments = () => {
-        axios.get(`${IP_ADDRS}/api/doctor/get_appointment_list/${doctorId}`, { headers: { "Authorization": `Bearer ${jwt}` } })
+        axios.get(`${IP_ADDRS}/api/doctor/get_all_open_appointment/${doctorId}`, { headers: { "Authorization": `Bearer ${jwt}` } })
             .then(res => {
                 setAppointments(res.data);
                 console.log(res.data)
+                if(res.data.length===0)
+                swal("No Active Appointments Right Now","","info");
             })
             .catch(err => console.log(err));
     }
@@ -136,8 +139,8 @@ function DoctorCurrentAppointments() {
                                         <td><input type="time" value={v.appointmentTime} readOnly style={{ "border": "none" }}></input></td>
                                         <td>Available Soon</td>
                                         <td>{v.status}</td>
-                                        <td>{v.patientId}</td>
-                                        <td>{v.patientName}</td>
+                                        <td>{v.patient.patientId}</td>
+                                        <td>{v.patient.firstName}</td>
 
                                         <td>
                                             {/* <Link to={{pathname:`/close_appointment`, state:{appt:v}}}><button className="btn btn-warning">Close Appointment</button></Link> */}

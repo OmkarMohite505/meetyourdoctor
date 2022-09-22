@@ -25,28 +25,6 @@ function AddState(){
     };
       const submitData=(e)=>{
         e.preventDefault();
-        const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                stateName:data.stateName
-            })
-        }
-        fetch("http://localhost:8080/savestate",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                alert("New State added successfully!!!");
-                navigate('/admin');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
-
-            }
-        })
 
     }
 

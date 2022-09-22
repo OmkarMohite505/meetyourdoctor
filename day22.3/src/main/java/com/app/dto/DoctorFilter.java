@@ -29,34 +29,22 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DoctorFilter {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long doctorId;
 
-	@Column(length = 35)
 	private String email;
 
-	@Column(name = "first_name", length = 20)
 	private String firstName;
 
-	@Column(name = "last_name", length = 25)
 	private String lastName;
 
-	@Column(name = "mobile_number", length = 13)
 	private String mobileNumber;
 
-	@Column(length = 12)
 	private String aadharNo;
 
-	@Column(length = 250)
 	private String profilePicture;
 
-//	@Pattern(regexp="({13})")
-	@Column(length = 12)
 	private String alternateMobileNumber;
 
-	@Column
-	@Enumerated(EnumType.STRING)
 	private GenderType gender;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -65,31 +53,16 @@ public class DoctorFilter {
 	private double fees;
 
 
-	// Doctor has hobbies
-	@ElementCollection(fetch = FetchType.EAGER) // mandatory to specify that foll is collection of basic type
-	@CollectionTable(name = "doctor_hobbies", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
-			"doctor_id", "hobby" }))
-	@Column(name = "hobby", length = 40)
 	private List<String> hobbies = new ArrayList<>();
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "doctor_qualifications", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
-			"doctor_id", "education_type" }))
 	private Set<EducationalQualification> qualification = new HashSet<>();
 
-	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "doctor_speciality", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
-			"doctor_id", "speciality_type" }))
 	private Set<Speciality> speciality = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "address_id")
 	private Set<Address> address;
 
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name="tt_id")
-	private Set<DoctorTimeTable> timetables;
+	private Set<DoctorTimeTableDTO> timetables;
 	
 
 	@Override

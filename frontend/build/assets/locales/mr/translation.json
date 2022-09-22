@@ -1,0 +1,31 @@
+{
+    "app_title":"तुमच्या डॉक्टरांना भेटा",
+    "home":"होम",
+    "about_us":"आमच्याबद्दल",
+    "contact_us":"आमच्याशी संपर्क साधा",
+    "language": "भाषा",
+    "welcome_message": "स्वागत",
+    "hello":"स्वागत",
+    "email":"ईमेल आयडी",
+    "password":"पासवर्ड",
+    "login":"लॉग इन करा",
+    "register":"रजिस्टर करा",
+
+    "click_here_register_tooltip":"रजिस्टर करण्यासाठी इथे क्लिक करा",
+    "click_here_login_tooltip":"तुम्ही रजिस्टर्ड युजर असताल तर येथे क्लिक करा",
+    "landing_page_headline_text":"तुमच्या शहरातील सर्वोत्कृष्ट तज्ञ डॉक्टरांच्या भेटी बुक करा",
+    "welcome_to_our_portal":"आमच्या पोर्टलवर आपले स्वागत आहे",
+    "book_appointment_landing":"अपॉइंटमेंट बुक करा",
+
+    "forgot_password":"पासवर्ड विसरलात",
+    "enter_registered_email":"नोंदणीकृत ईमेल प्रविष्ट करा",
+    "send_otp":"ओटीपी पाठवा",
+    "back":"मागे जा",
+    "send_otp_wait_text":"ओटीपी पाठवत आहे कृपया प्रतीक्षा करा",
+    "received_otp_text":" ईमेल आयडी ला पाठवलेला ओटीपी प्रविष्ट करा",
+    "resend_otp":"ओटीपी पुन्हा पाठवा",
+    "enter_otp":"ओटीपी प्रविष्ट करा",
+    "enter_new_password":"नवीन पासवर्ड ",
+    "submit":"सबमिट करा"
+  }
+  

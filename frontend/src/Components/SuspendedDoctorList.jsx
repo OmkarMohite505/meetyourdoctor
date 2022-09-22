@@ -71,9 +71,9 @@ const SuspendedDoctorList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {doctorList.map((v) => {
+                            {doctorList.map((v,i) => {
                                 return (
-                                    <tr>
+                                    <tr key={`sus_list${i}`}>
                                         <td>{v.speciality[0].specialityType}</td>
                                         <td>{v.firstName}</td>
                                         <td>{v.lastName}</td>

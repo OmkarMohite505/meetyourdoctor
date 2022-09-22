@@ -43,7 +43,7 @@ public class Doctor {
 	@Column(name = "last_name", length = 25)
 	private String lastName;
 
-	@Column(name = "mobile_number", length = 13)
+	@Column(name = "mobile_number", length = 15)
 	private String mobileNumber;
 
 //	@JsonIgnore
@@ -55,10 +55,10 @@ public class Doctor {
 
 	
 //	@Pattern(regexp="({13})")
-	@Column(length = 12)
+	@Column(length = 15)
 	private String alternateMobileNumber;
 
-	@Column
+	@Column(length = 30)
 	@Enumerated(EnumType.STRING)
 	private GenderType gender;
 
@@ -105,19 +105,26 @@ public class Doctor {
 //	@PrimaryKeyJoinColumn
 	private Login login;
 	
-//	@OneToMany(
-//	        cascade = CascadeType.ALL,
-//	        orphanRemoval = true,
-//	        fetch = FetchType.EAGER
-//	    )
-//	@JoinColumn(name="doctor_id")
-//	private Set<DoctorTimeTable> timetables;
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true,
+	        fetch = FetchType.EAGER
+	    )
+	@JoinColumn(name="doctor_id")
+	private Set<DoctorTimeTable> timetables;
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true,
+	        fetch = FetchType.EAGER
+	    )
+	@JoinColumn(name="doctor_id")
+	private Set<Address> address;
 	
 //	@JsonIgnore
-	@OneToOne(mappedBy = "doctor",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@OneToOne(mappedBy = "doctor",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	@JoinColumn(name = "bank_acct_id")
-	@PrimaryKeyJoinColumn
-	private BankAccount bankAccount;
+//	@PrimaryKeyJoinColumn
+//	private BankAccount bankAccount;
 
 	@Override
 	public int hashCode() {

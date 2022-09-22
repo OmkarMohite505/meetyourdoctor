@@ -1,5 +1,8 @@
+import axios from "axios";
 import { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import swal from "sweetalert";
+import { IP_ADDRS } from "../service/Constant";
 
 function ChangePasswordDoctor(){
 
@@ -9,18 +12,32 @@ function ChangePasswordDoctor(){
         confirmpass:"",
         passerror:""
     });
+    const [passType, setPassType] = useState("password");
+    const [isChecked, setIsChecked] = useState(false);
+
+
+    const handleShowPassword = () => {
+        setIsChecked(!isChecked);
+    }
+    useEffect(() => {
+        if (isChecked == true) {
+            setPassType("text");
+            return;
+        }
+        setPassType("password");
+    }, [isChecked])
 
     const logout=()=>{
         sessionStorage.removeItem("doctor");
         navigate("/");
     }
 
-    const [login, setLogin] = useState({});
+    const [login, setLogin] = useState({doctorId:"",token:""});
 
 
     useEffect(() => {
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
-        setLogin(doc.login_id)
+        setLogin({doctorId:doc.doctorId,token:doc.jwt});
     },[]);
 
 
@@ -39,7 +56,7 @@ function ChangePasswordDoctor(){
         e.preventDefault();
         if(data.currentpass === data.newpass)
         {
-            setData({passerror : "Current password and new password are same.. Please enter new password"})
+            setData({passerror : "Current password and new password must be different.. Please enter new password"})
         }
         else if(data.newpass === data.confirmpass){
             if(data.newpass === ""){
@@ -47,37 +64,26 @@ function ChangePasswordDoctor(){
                 return;
             }
             setData({passerror : ""})
-            if(login.password === data.currentpass){
-                const reqOptions ={
-                    method : 'POST',
+            if(true){
+                let obj = { "id": login.doctorId, "newPassword": data.newpass };
+                const reqOptions = {
+                    url: `${IP_ADDRS}/api/doctor/update_password`,
+                    method: 'PATCH',
                     headers: {
-                        'Content-Type':'application/json'
+                        Authorization: `Bearer ${login.token}`,
+                        'Content-Type': 'application/json'
                     },
-                    body : JSON.stringify({
-                        login_id:login.login_id,
-                        password: data.newpass,
-                        status: login.status,
-                        user_name: login.user_name,
-                        user_type: login.user_type
-                    })
+                    data: obj
                 }
-                fetch("http://localhost:8080/updateuser",reqOptions)
-                .then(resp=>resp.text())
-                .then(data=> {if(data.length != 0)
-                    {
-
-                        alert("Password Changed!");
-                        navigate('/login');
-
-                    }
-                    else{
-                        alert("Password Not Changed");
-                        navigate('/changepassword');
-                    }
+                axios.request(reqOptions).then(res => {
+                    swal(`${res.data}`, "", "success");
+                    navigate(`/doctor`);
                 })
+                    .catch(err => {
+                        swal("You Entered Wrong details", "", "error");
+                    })
             }
             else{
-                alert("Current password is wrong.. Please try again")
             }
         }
         else{
@@ -106,15 +112,17 @@ function ChangePasswordDoctor(){
 
                     <div className = "form-group">
                         <label>New Password: </label>
-                        <input type="password" placeholder="New Password" name="newpass" className="form-control" 
+                        <input type={passType} placeholder="New Password" name="newpass" className="form-control" 
                             value={data.newpass} onChange={changeHandler}/>
+                                                            <span><span><input type="checkbox" checked={isChecked} onChange={handleShowPassword} style={{ 'marginLeft': '150px' }} id="show_new_password"></input>&emsp;</span><label htmlFor="show_new_password">Show Password</label></span>
                             
                     </div >
 
                     <div className = "form-group">
                         <label>Confirm Password: </label>
-                        <input type="password" placeholder="Confirm Password" name="confirmpass" className="form-control" 
+                        <input type={passType} placeholder="Confirm Password" name="confirmpass" className="form-control" 
                             value={data.confirmpass} onChange={changeHandler}/>
+                                                            <span><span><input type="checkbox" checked={isChecked} onChange={handleShowPassword} style={{ 'marginLeft': '150px' }} id="show_confirm_password"></input>&emsp;</span><label htmlFor="show_confirm_password">Show Password</label></span>
                             
                     </div >
                     <div style={{marginTop: "10px", marginLeft:"180px"}}>

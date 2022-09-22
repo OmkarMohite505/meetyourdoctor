@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.DoctorDTO;
+import com.app.dto.DoctorTimeTableDTO;
 import com.app.dto.Image;
 import com.app.dto.PatientDTO;
 import com.app.dto.SignUpRequest;
 import com.app.dto.TimeTableDTO;
+import com.app.dto.UpdatePasswordDTO;
 import com.app.entities.Login;
 import com.app.entities.Patient;
 import com.app.entities.RoleEntity;
@@ -71,7 +74,8 @@ public class DoctorController {
 	}
 
 	@PostMapping("/update_timetable")
-	public ResponseEntity<?> updateTimeTable(@RequestBody DoctorDTO doctorDTO) {
+	public ResponseEntity<?> updateTimeTable(@RequestBody DoctorTimeTableDTO dto) {
+		doctorService.updateTimeTable(dto);
 		return ResponseEntity.status(HttpStatus.OK).body("Timetable Updated");
 	}
 
@@ -97,5 +101,19 @@ public class DoctorController {
 	public ResponseEntity<?> getAllClosedAppointment(@PathVariable long doctorId) throws Exception {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(appointmentService.getAllClosedOppointmentListForDoctor(doctorId));
+	}
+	@PatchMapping("/update_password")
+	public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordDTO dto) {
+		doctorService.updatePassword(dto);
+		return ResponseEntity.status(HttpStatus.OK).body("Password Updated Successfully");
+	}
+	@GetMapping("/get_doctor_timetable/{doctorId}")
+	public ResponseEntity<?> getDoctorTimeTable(@PathVariable long doctorId){
+		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorTimetable(doctorId));
+	}
+	@DeleteMapping("/{doctorId}")
+	public ResponseEntity<?> deleteDoctor(@PathVariable long doctorId){
+		doctorService.deleteDoctor(doctorId);
+		return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
 	}
 }

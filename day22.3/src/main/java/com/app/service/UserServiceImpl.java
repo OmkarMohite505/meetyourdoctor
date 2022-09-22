@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
 	private String baseFolder;
 	@Autowired
 	private JavaMailSender sender;
+	@Autowired
+	private static JavaMailSender mailSender;
 	// dep : user repo n role repo
 	@Autowired
 	private LoginRepository loginRepo;
@@ -128,6 +130,12 @@ public class UserServiceImpl implements UserService {
 		Patient persistentPatient = patientRepository.save(patient);
 		UserResponseDTO dto = new UserResponseDTO();
 		dto.setId(persistentPatient.getPatientId());
+//		sendRegistrationEmailToPatient(persistentPatient.getEmail(), persistentPatient.getFirstName());
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(persistentPatient.getEmail());
+		mesg.setSubject("Congratulations you are registered successfully ");
+		mesg.setText("Hello "+persistentPatient.getFirstName()+",\nYou are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		sender.send(mesg);
 		return dto;
 	}
 
@@ -140,48 +148,43 @@ public class UserServiceImpl implements UserService {
 		userEntity.setEmail(doctorDTO.getEmail());
 		userEntity.setPassword(encoder.encode(doctorDTO.getPassword()));// set encoded pwd
 
-		Login persistentUser = loginRepo.save(userEntity);// persisted user details in db
+		Login persistentUser = loginRepo.save(userEntity);// persisted user details in db : parent rec
 
-		Doctor doctor = new Doctor();
-		mapper.map(doctorDTO, doctor);
+	//map dto --> doc entity
+		Doctor doctor=mapper.map(doctorDTO, Doctor.class);
+		//establish uni dir asso doc --> login
 		doctor.setLogin(persistentUser);
-
-		Set<Address> address = new HashSet<>();
-		List<Address> persistentAddress = addressRepository.saveAll(doctorDTO.getAddress());
-		for (Address adr : persistentAddress) {
-
-			address.add(adr);
-		}
-//		doctor.setAddress(address);
-//		BankAccount bankAccount = bankRepository.save(doctorDTO.getBankAccount());
-//		DoctorTimeTable doctorTimeTable = doctorTimetableRepo.save(doctorDTO.getDoctorTimeTable());
-//		doctor.setBankAccount(bankAccount);
-		Set<DoctorTimeTable> timeTable = new HashSet<>();
-//		timeTable.add(doctorTimeTable);
-//		doctor.setTimetables(timeTable);
+		//create profile url n assign it to a doc
 		String defaultProfile = baseFolder + File.separator + "default.jpg";
 		doctor.setProfilePicture(defaultProfile);
-		BankAccount bankAccount = doctor.getBankAccount();
-		doctor.setBankAccount(null);
-		Doctor persistentDoctor = doctorRepository.save(doctor);
-		bankAccount.setDoctor(persistentDoctor);
-		bankRepository.save(bankAccount);
-//		for (Address ad : persistentAddress) {
-//			ad.setDoctor(persistentDoctor);
-//		}
-		
-		doctorDTO.getAddress().forEach(a -> {
-			a.setDoctor(persistentDoctor);
-			addressRepository.save(a);
-		});
-		
-		doctorDTO.getTimetables().forEach(t ->{
-			t.setDoctor(persistentDoctor);
-			doctorTimetableRepo.save(t);
-		});
+		//since all rpimary details of doc is set , save the entity (parent rec saved)
+		Doctor persistentDoctor = doctorRepository.save(doctor);//ins in doc tbl
+		//establish uni from adr --> doc
+//		doctorDTO.getAddress().forEach(a -> a.setDoctor(persistentDoctor));
+		//save all adr entities
+		List<Address> persistentAddress = addressRepository.saveAll(doctorDTO.getAddress());//ins in adr tbl with FK
+		//get acct details from dto
+		BankAccount account= doctorDTO.getBankAccount();	
+		//establish uni dir asso acct --> doc
+		account.setDoctor(persistentDoctor);
+		//save child rec of acc with fk set
+		bankRepository.save(account);//ins in acct tbl with FK
+		//Your payload n dto had a problem : I have corrected it : should be Set<..>
+		//establish uni dir asso timetable --> doc
+//		doctorDTO.getTimetables().forEach(t ->{
+//			t.setDoctor(persistentDoctor);
+			
+//		});
+		//save tm tbls with FK : doc id
+		doctorTimetableRepo.saveAll(doctorDTO.getTimetables());//ins in doc tm tbl with FK
 		
 		UserResponseDTO dto = new UserResponseDTO();
 		dto.setId(persistentDoctor.getDoctorId());
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(persistentDoctor.getEmail());
+		mesg.setSubject("Congratulations you are registered successfully ");
+		mesg.setText("Hello "+persistentDoctor.getFirstName()+",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		sender.send(mesg);
 		return dto;
 	}
 
@@ -251,6 +254,15 @@ public class UserServiceImpl implements UserService {
 		Login login = loginRepo.findByEmail(email).orElseThrow();
 		return mapper.map(login, AdminDTO.class);
 		
+	}
+	
+	
+	public static void sendRegistrationEmailToPatient(String email, String name) {
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(email);
+		mesg.setSubject("Congratulations you are registered successfully ");
+		mesg.setText("Hello "+name+",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		mailSender.send(mesg);
 	}
 	
 	

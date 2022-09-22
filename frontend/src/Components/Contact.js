@@ -1,4 +1,6 @@
 import React from 'react'
+import './Loader.css'
+import '../Components/CSS/Button.css'
 
 const Contact = () => {
 
@@ -26,6 +28,9 @@ const Contact = () => {
       const clearText3=()=>{
         document.getElementById("copy3").innerHTML="";
       }
+      const clearText4=()=>{
+        document.getElementById("copy4").innerHTML="";
+      }
       const copyText2=()=>{
         var copyText = document.getElementById("copytext2");
         copyText.select();
@@ -42,27 +47,37 @@ const Contact = () => {
         document.getElementById("copy3").innerHTML="copied";
         setTimeout(clearText3, 5000);
       }
+      const copyText4=()=>{
+        var copyText = document.getElementById("copytext4");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        navigator.clipboard.writeText(copyText.value);
+        document.getElementById("copy4").innerHTML="copied";
+        setTimeout(clearText4, 5000);
+      }
     return (
 
         <>
             <div className="container">
                 <h2 className="py-3 text-center">Contact</h2>
+               
                 <h3>
-                    Start working with us today. For getting registered as a doctor please email your details to any of the given admin below :
+                     For any Queries contact us :
                 </h3>
                 <ul style={{color : "blue"}}>
                     <li>
                         <h4>
-                       <input value="connecttoyourdoctor@gmail.com" readOnly id='copytext1' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText1}>Copy Email</button><p id='copy1'></p>                   
+                       <input value="meetyourdoctor007@gmail.com" disabled id='copytext1' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText1} className="button-42">Copy Email</button><p id='copy1'></p>                   
                         </h4>
                     </li>
                     <li>
                         <h4>
-                        <input value="omkarmohite505@gmail.com" readOnly id='copytext2' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText2}>Copy Email</button><p id='copy2'></p>         
+                        <input value="omkarmohite505@gmail.com" disabled id='copytext2' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText2} className="button-42">Copy Email</button><p id='copy2'></p>         
                         </h4>
                     </li>
                 </ul>
-                <p><h3>Call Us :</h3><input value="+917620608558" readOnly id='copytext3' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText3}>Copy Mobile No</button> </p><p id='copy3'></p> 
+                <p><h3>Call Us :</h3><input value="+917620608558" disabled id='copytext3' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText3} className="button-42">Copy Mobile No</button> </p><p id='copy3'></p> 
+                <p><input value="+918149141899" disabled id='copytext4' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText4} className="button-42">Copy Mobile No</button> </p><p id='copy4'></p> 
                 <p><h3>Our Office Address:</h3> 43
                     Sector No. 26, Pradhikaran, Nigdi
                     Pimpri-Chinchwad, Maharashtra 411044</p>
@@ -71,5 +86,7 @@ const Contact = () => {
         </>
     )
 }
+
+
 
 export default Contact

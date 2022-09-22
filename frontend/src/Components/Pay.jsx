@@ -23,6 +23,7 @@ function Pay() {
         console.log(doctor.profilePicture.substring(15));
     },[])
     useEffect(()=>{
+        let doctor = JSON.parse(sessionStorage.getItem("doctor"));
         axios.get(`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture.substring(15)}`)
         .then(res=>{
             setDoctorPic(res.data.image);

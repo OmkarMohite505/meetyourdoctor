@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TimeTableDTO {
-	private Set<DoctorTimeTable> timetable;
+	private Set<DoctorTimeTable> timetables;
 	private long doctorId;
 
 }

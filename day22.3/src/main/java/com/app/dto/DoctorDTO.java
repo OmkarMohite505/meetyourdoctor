@@ -78,7 +78,7 @@ public class DoctorDTO {
 	
 	private BankAccount bankAccount;
 	
-	private DoctorTimeTable doctorTimeTable;
+//	private DoctorTimeTable doctorTimeTable;
 
 	@Override
 	public int hashCode() {

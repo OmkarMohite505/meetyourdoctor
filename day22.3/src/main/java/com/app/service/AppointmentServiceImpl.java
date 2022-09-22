@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.app.repository.AppointmentRepository;
 import com.app.repository.DoctorRepository;
 import com.app.repository.PatientRepository;
+import com.app.subdto.AppointmentDoctorPatient;
 import com.app.dto.AppointmentDTO;
 import com.app.entities.Appointment;
 import com.app.entities.Doctor;
@@ -53,7 +54,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	private static String MY_NUMBER;
 
 	@Autowired
-	private static JavaMailSender sender;
+	private JavaMailSender sender;
 	@Autowired
 	private AppointmentRepository appointmentRepository;
 	@Autowired
@@ -80,6 +81,25 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		Appointment persistentAppointment = appointmentRepository.save(appointment);
 //		sendAppointmentBookMailAndSMS(patient, doctor, appointment);
 		mapper.map(persistentAppointment, appointmentDTO);
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(patient.getEmail());
+		mesg.setSubject("Your Appointment Booked Successfully");
+		mesg.setText("Dear " + patient.getFirstName() + ",\nYour Appointment Booked Successfully with ");
+		sender.send(mesg);
+		SimpleMailMessage mesg1 = new SimpleMailMessage();
+		mesg1.setTo(doctor.getEmail());
+		mesg1.setSubject("Your Appointment Booked Successfully");
+		mesg1.setText("Dear " + doctor.getFirstName() + ",\n"+patient.getFirstName()+" has Booked Appointment  with you \n\nRegrds,\nMeey Your Doctor team");
+		sender.send(mesg1);
+
+//		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//
+//		Message message = Message
+//				.creator(new PhoneNumber(MY_NUMBER), new PhoneNumber("+917620608558"), "Hello " + patient.getFirstName()
+//						+ ", Your Appointment Booked Successfully \nAppointment Id: " + appointment.getAppointmentId())
+//				.create();
+//
+//		System.out.println(message.getSid());
 		return appointmentDTO;
 	}
 
@@ -156,7 +176,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		mesg.setSubject("Your Appointment Booked Successfully");
 		mesg.setText("Dear " + patient.getFirstName() + ",\nYour Appointment Booked Successfully with "
 				+ doctor.getFirstName());
-		sender.send(mesg);
+//		sender.send(mesg);
 
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -176,7 +196,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		mesg.setSubject("Your Appointment Bookking Details Updated Successfully");
 		mesg.setText("Dear " + patient.getFirstName()
 				+ ",\nYour Appointment Bookking Details Updated Successfully with " + doctor.getFirstName());
-		sender.send(mesg);
+//		sender.send(mesg);
 
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -199,7 +219,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				+ doctorName + "\nFor more information log on to www.meetyourdoctor.co.in"
 				+ "\nRegards,\nMeet You Doctor Services");
 
-		sender.send(mesg);
+//		sender.send(mesg);
 
 		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
@@ -260,28 +280,30 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	}
 
 	@Override
-	public List<Appointment> getAllOpenOppointmentListForPatient(long patientId) throws Exception {
+	public List<AppointmentDoctorPatient> getAllOpenOppointmentListForPatient(long patientId) throws Exception {
 		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new Exception("Patient Not Found"));
 		List<Appointment> list = appointmentRepository.findByPatient(patient);
 		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("OPEN"))
+				.map(a -> mapper.map(a, AppointmentDoctorPatient.class))
 				.collect(Collectors.toList());
 
 	}
 
 	@Override
-	public List<Appointment> getAllOpenOppointmentListForDoctor(long doctorId) throws Exception {
+	public List<AppointmentDoctorPatient> getAllOpenOppointmentListForDoctor(long doctorId) throws Exception {
 		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("Doctor Not Found"));
 		List<Appointment> list = appointmentRepository.findByDoctor(doctor);
 		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("OPEN"))
+				.map(a -> mapper.map(a, AppointmentDoctorPatient.class))
 				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<AppointmentDTO> getAllClosedOppointmentListForPatient(long patientId) throws Exception {
+	public List<AppointmentDoctorPatient> getAllClosedOppointmentListForPatient(long patientId) throws Exception {
 		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new Exception("Patient Not Found"));
 		List<Appointment> list = appointmentRepository.findByPatient(patient);
 		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("CLOSED"))
-				.map(a -> mapper.map(a, AppointmentDTO.class))
+				.map(a -> mapper.map(a, AppointmentDoctorPatient.class))
 				.collect(Collectors.toList());
 //		List<Appointment> list = appointmentRepository.getAllAppointmentListByStatusForPatient("CLOSED", patientId);
 //		return list.stream().map(a -> mapper.map(list, AppointmentDTO.class))
@@ -289,10 +311,11 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	}
 
 	@Override
-	public List<Appointment> getAllClosedOppointmentListForDoctor(long doctorId) throws Exception {
+	public List<AppointmentDoctorPatient> getAllClosedOppointmentListForDoctor(long doctorId) throws Exception {
 		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new Exception("Doctor Not Found"));
 		List<Appointment> list = appointmentRepository.findByDoctor(doctor);
 		return list.stream().filter(a -> a.getStatus() == AppointmentStatusEnum.valueOf("CLOSED"))
+				.map(a -> mapper.map(a, AppointmentDoctorPatient.class))
 				.collect(Collectors.toList());
 	}
 

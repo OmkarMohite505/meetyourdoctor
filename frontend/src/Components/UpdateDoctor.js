@@ -16,6 +16,7 @@ function UpdateDoctor(){
     const [state,setState]=useState("");
     const [city,setCity]=useState("");
     const [area,setArea]=useState("");
+    const [pic, setPic] = useState([]);
 
     
     const [imgFlag, setImgflag] = useState(false);
@@ -83,8 +84,8 @@ function UpdateDoctor(){
     useEffect(() => {
         let doc= JSON.parse(sessionStorage.getItem("doctor"));
         setData({doctorId:doc.doctorId,firstName:doc.firstName,lastName:doc.lastName,
-            gender:doc.gender,dob:doc.dob,graduation:doc.qualification[0].educationType,postGraduation:doc.postGraduation,
-            speciality:doc.speciality[0].specialityType,fees:doc.fees,mobileNumber:doc.mobileNumber,profilePicture:doc.profilePicture,
+            gender:doc.gender,dob:doc.dob,graduation:doc.qualification[0].educationType,postGraduation:doc.qualification[1].educationType,
+            speciality:doc.speciality[0].specialityType,fees:doc.fees,mobileNumber:doc.mobileNumber,profilePicture:doc.profilePicture.substring(15),
             jwt:doc.jwt})
              setState(doc.address[0].state);
              setCity(doc.address[0].city);
@@ -92,29 +93,10 @@ function UpdateDoctor(){
             //getState();
 
     },[]);
+    useEffect(()=>{
+        fetchImage();
+    },[data])
 
-    // const getState=()=>{
-    //     fetch("http://localhost:8080/allstates")
-    //     .then(r => r.json())
-    //     .then(d => setState(d))
-    //     //getCity();
-    // }
-
-//     const getCity=()=>{
-//         console.log(data.areaId.city_id.state_id.stateId)
-//       fetch("http://localhost:8080/allcities")
-//       .then(r => r.json())
-//       .then(d => setCity(d));
-//       getArea();
-//     }
-
-
-//     const getArea=()=>{
-//         console.log(data.areaId.city_id.cityId)
-//     fetch("http://localhost:8080/allareas")
-//     .then(r => r.json())
-//     .then(d => setArea(d))
-//   }
 
 const validateFirstName=(e)=>{
     let name = e.target.value;
@@ -192,21 +174,6 @@ const validateFees=(e)=>{
     
       const submitData=(e)=>{
         e.preventDefault();
-
-
-
-        
-        // var c = window.confirm("Are you Confirm ?");
-        // if(!c)
-        // return;
-        // const formData = new FormData();
-        // formData.append('imageFile',imageFile)  //1st argumet 'imageFile' name must be matches with spring-boot requeat param name MultipartFile imageFile
-        // console.log(imageFile);
-        // console.log(formData);
-        // ImageService.uploadDoctorProfilePicture(data.doctorId, formData, data.jwt)
-        // .then(res=>{alert("Success")})
-
-
         swal({
             title: "Are you Confirm to Upload Picture?",
             text: "Image Will be upload !",
@@ -232,13 +199,29 @@ const validateFees=(e)=>{
                 };
         
                 axios.request(options).then(response => {
-                    swal(`${response.data}`, "success");
+                    swal(`${response.data}`,"You can see updated picture after Re-Login", "success");
+                    navigate(`/doctor`)
                 }).catch(error => {
                     swal("Something went Wrong", "error");
                 });
             }
         })
 
+    }
+
+    const fetchImage=()=>{
+        const options = {
+            method: 'GET',
+            url: `${IP_ADDRS}/api/doctor/profile_picture/${data.profilePicture}`,
+            headers: {Authorization: `Bearer ${data.jwt}`}
+          };
+          console.log(options.url)
+          
+          axios.request(options).then(response=>{
+            setPic(response.data.image);
+          }).catch(error=>{
+            console.error(error);
+          });
     }
     
     return(
@@ -256,19 +239,19 @@ const validateFees=(e)=>{
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  First Name: </b></label>
                 <input type="text"  name="firstName" className="form-control" 
-                    value={data.firstName} onChange={changeHandler} onBlur={validateFirstName}/>
+                    value={data.firstName} onChange={changeHandler} onBlur={validateFirstName} readOnly/>
                     <span className="text text-danger">{Error.first_name_error}</span>
             </div>
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Last Name: </b></label>
                 <input type="text" placeholder={data.lastName} name="lastName" className="form-control" 
-                    value={data.lastName} onChange={changeHandler} onBlur={validateLastName}/>
+                    value={data.lastName} onChange={changeHandler} onBlur={validateLastName} readOnly/>
                     <span className="text text-danger">{Error.last_name_error}</span>
             </div >
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Mobile Number: </b></label>
                 <input type="text" placeholder={data.mobileNumber} name="mobileNumber" className="form-control" 
-                    value={data.mobileNumber} onChange={changeHandler}  onBlur={validateMobileNumber}/>
+                    value={data.mobileNumber} onChange={changeHandler}  onBlur={validateMobileNumber} readOnly/>
                     <span className="text text-danger">{Error.mobile_number_error}</span>
             </div>
              <div style={{ marginTop: '10px' }} className = "form-group" >
@@ -293,20 +276,20 @@ const validateFees=(e)=>{
           <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Post Graduation: </b></label>
                 <input type="text" placeholder={data.postGraduation} name="postGraduation" className="form-control" 
-                    value={data.postGraduation} onChange={changeHandler}/>
+                    value={data.postGraduation} onChange={changeHandler} disabled/>
             </div >
 
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Speciality: </b></label>
                 <input type="text" placeholder={data.speciality} name="speciality"  className="form-control" 
-                    value={data.speciality} onChange={changeHandler} onBlur={validateSpeciality}/>
+                    value={data.speciality} onChange={changeHandler} onBlur={validateSpeciality} disabled/>
                     <span className="text text-danger">{Error.speciality_error}</span> 
             </div >
             
             <div style={{ marginTop: '10px' }} className = "form-group">
                 <label><b>  Fees: </b></label>
                 <input type="text" placeholder={data.fees} name="fees" className="form-control" 
-                    value={data.fees} onChange={changeHandler} onBlur={validateFees}/>
+                    value={data.fees} onChange={changeHandler} onBlur={validateFees} disabled/>
                     <span className="text text-danger">{Error.fees_error}</span>
             </div >
              <div style={{ marginTop: '10px' }} className = "form-group">
@@ -329,8 +312,9 @@ const validateFees=(e)=>{
               
             </div>
 
-            <div style={{ marginTop: '10px' }} className = "form-group">
-            <input  type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} name="file"></input>
+            <div style={{ "marginTop": '10px' }} className = "form-group">
+            <label><b>  Choose Profile Photo </b></label>
+            <input  type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} name="file" className="form-control" ></input>
             </div >
 
            
@@ -351,7 +335,11 @@ const validateFees=(e)=>{
 
                     
 {imgFlag ?  <img src={URL.createObjectURL(imageFile)} style={{'height':'200px','width':'200px'}}></img>
-            : <img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${data.doctorId}`} style={{'height':'400px','width':'400px'}}></img>}
+            :
+            //  <img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${data.doctorId}`} style={{'height':'400px','width':'400px'}}></img>
+             <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{'height':'100px','width':'100px'}}></img></div>
+             
+             }
 
 
         </div>

@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.dto.AppointmentDTO;
 import com.app.entities.Appointment;
+import com.app.subdto.AppointmentDoctorPatient;
 
 public interface IAppointmentService {
 	AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) throws Exception;
@@ -21,11 +22,11 @@ public interface IAppointmentService {
 	
 	void updateAndCloseAppointmentByDoctor(AppointmentDTO appointmentDTO)throws Exception;
 	
-	List<Appointment> getAllOpenOppointmentListForPatient(long patientId)throws Exception;
+	List<AppointmentDoctorPatient> getAllOpenOppointmentListForPatient(long patientId)throws Exception;
 	
-	List<Appointment> getAllOpenOppointmentListForDoctor(long doctorId)throws Exception;
+	List<AppointmentDoctorPatient> getAllOpenOppointmentListForDoctor(long doctorId)throws Exception;
 	
-	List<AppointmentDTO> getAllClosedOppointmentListForPatient(long patientId)throws Exception;
+	List<AppointmentDoctorPatient> getAllClosedOppointmentListForPatient(long patientId)throws Exception;
 	
-	List<Appointment> getAllClosedOppointmentListForDoctor(long doctorId)throws Exception;
+	List<AppointmentDoctorPatient> getAllClosedOppointmentListForDoctor(long doctorId)throws Exception;
 }

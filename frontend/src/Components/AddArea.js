@@ -25,61 +25,19 @@ function AddArea(){
     const refreshPage = (e) => {
         window.location.reload();
     };
-      const submitData=(e)=>{
-          console.log(city);
-        e.preventDefault();
-        const reqOptions ={
-            method : 'POST',
-            headers: {
-                'Content-Type':'application/json'
-            },
-            body : JSON.stringify({
-                // cityId:city.cityId,
-                // cityName:city.cityName,
-                // state_id:city.state_id,
-                // areas:[{areaName:data.areaName}]
-                areaName:data.areaName,
-                city_id:city
-            })
-        }
-        // fetch("http://localhost:8080/savecity",reqOptions)
-         fetch("http://localhost:8080/savearea",reqOptions)
-        .then(resp=>resp.text())
-        .then(data=> {if(data.length != 0)
-            {
-                alert("New Area added successfully!!!");
-                navigate('/admin');
-            }
-            else{
-                alert("Failed!!!");
-                window.location.reload();
-
-            }
-        })
-
-    }
 
     useEffect(() => {   
-        fetch("http://localhost:8080/allstates")
-        .then(r => r.json())
-        .then(d => setState(d))
     },[]);
+
+    const submitData=()=>{
+
+    }
 
     
     const cityFetch=(e)=>{
-        const val=e.target.value;
-        console.log(val);
-      fetch("http://localhost:8080/getcitybystate/"+val)
-      .then(r => r.json())
-      .then(d => setCities(d));
     }
 
     const oneCity=(e)=>{
-        const val=e.target.value;
-        console.log(val);
-      fetch("http://localhost:8080/getcitybyid/"+val)
-      .then(r => r.json())
-      .then(d => {console.log(d); setCity(d)})
     }
 
     const logout=()=>{

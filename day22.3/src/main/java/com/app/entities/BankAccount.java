@@ -10,6 +10,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,6 +38,7 @@ public class BankAccount {
 	private String bankAccountNo;
 	
 	@Column(length = 20)
+	@JsonProperty("IFSC_Code") 
 	private String IFSCcode;
 	
 //	@OneToOne(mappedBy = "bankAccount")

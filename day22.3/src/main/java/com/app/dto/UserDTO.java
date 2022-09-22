@@ -34,5 +34,6 @@ public class UserDTO {
 	// many-to-many , User *--->* Role
 	@NotEmpty(message = "at least 1 role should be chosen")
 	private Set<RoleEnum> roles = new HashSet<>();
+	private String adminSecretKey;
 
 }
