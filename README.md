@@ -15,3 +15,37 @@ Swagger Url
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
+
+## Prerequisites to start Application on your machine
+1. Gmail App Password
+2. Razorpay Api key
+3. OpenWeather Api key
+
+
+## API Reference
+
+#### Get Weather details
+
+```http
+  GET https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
+
+#### Get My Address details(Reverse Geocoding)
+
+```http
+  GET `http://apis.mapmyindia.com/advancedmaps/v1/${api_key}/rev_geocode?lng=${latitude}&lat=${longitude}`
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `lat & lon`      | `string` | **Required**. Your Api Key |
+
+#### add(num1, num2)
+
+Takes two numbers and returns the sum.
+
+
