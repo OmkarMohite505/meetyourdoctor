@@ -44,8 +44,5 @@ http://localhost:8080/swagger-ui/index.html
 | :-------- | :------- | :-------------------------------- |
 | `lat & lon`      | `string` | **Required**. Your Api Key |
 
-#### add(num1, num2)
-
-Takes two numbers and returns the sum.
 
 
