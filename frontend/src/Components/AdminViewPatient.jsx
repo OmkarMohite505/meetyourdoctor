@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table'
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { IP_ADDRS } from "../service/Constant";
+import swal from "sweetalert";
 
 function AdminViewPatient() {
 
@@ -25,6 +26,8 @@ function AdminViewPatient() {
     const getAllPatientList = () => {
         axios.get(`${IP_ADDRS}/api/admin/get_all_patients_list`, { headers: { "Authorization": `Bearer ${token}`} })
         .then(res => {
+            if(res.data.length===0)
+            swal("No any Patient Registered yet!!","","info");
             setPatient(res.data);
         })
     }

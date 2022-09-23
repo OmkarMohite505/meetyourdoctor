@@ -19,9 +19,9 @@ function DoctorCurrentAppointments() {
         axios.get(`${IP_ADDRS}/api/doctor/get_all_open_appointment/${doctorId}`, { headers: { "Authorization": `Bearer ${jwt}` } })
             .then(res => {
                 setAppointments(res.data);
-                console.log(res.data)
-                if(res.data.length===0)
-                swal("No Active Appointments Right Now","","info");
+                // console.log(res.data)
+                if (res.data.length === 0)
+                    swal("No Active Appointments Right Now", "", "info");
             })
             .catch(err => console.log(err));
     }
@@ -71,47 +71,7 @@ function DoctorCurrentAppointments() {
     }
     return (
         <>
-            {/* <div className="container-fluid">
-            <button className="btn btn-primary" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
-            <button className='btn btn-primary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/doctor")}>Back to Dashboard</button>
-            <button className='btn btn-primary' onClick={currentappointments}>Show Current Appointments</button>
-
-            <div>
-                <h1 className="font-weight-bold offset-4">Doctor Appointment List</h1>
-
-                <Table striped bordered hover variant="dark">
-                    <thead>
-                        <tr>
-                            <th>Appointment Date</th>
-                            <th>Appointment Time</th>
-                            <th>Appointment Type</th>
-                            <th>Appointment Status</th>
-                            <th>Patient Id</th>
-                            <th>Patient Name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {appointments.map((v) => {
-                            return (
-                                <tr>
-                                    <td>{v.appointmentDate}</td>
-                                    <td>{v.appointmentTime}</td>
-                                    <td>{v.appointmentType}</td>
-                                    <td>{v.status}</td>
-                                    <td>{v.patientId.patient_id}</td>
-                                    <td>{v.patientId.firstName} {v.patientId.lastName}</td>
-
-                                    <td>
-                                        <button className="btn btn-primary" onClick={() => cancel(v)}>Cancel Appointment</button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </Table>
-            </div>
-        </div> */}
+           
             <div className="container my-4" style={{ marginBottom: "50px" }}>
                 <button className="btn btn-danger" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
                 <button className='btn btn-secondary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/doctor")}>Go Back</button>

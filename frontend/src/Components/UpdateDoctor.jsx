@@ -215,12 +215,12 @@ const validateFees=(e)=>{
             url: `${IP_ADDRS}/api/doctor/profile_picture/${data.profilePicture}`,
             headers: {Authorization: `Bearer ${data.jwt}`}
           };
-          console.log(options.url)
+        //   console.log(options.url)
           
           axios.request(options).then(response=>{
             setPic(response.data.image);
           }).catch(error=>{
-            console.error(error);
+            // console.error(error);
           });
     }
     

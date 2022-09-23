@@ -11,16 +11,16 @@ import {BrowserRouter, Routes } from 'react-router-dom';
 import{Route} from 'react-router';
 import Admin from './Components/Admin';
 import Doctor from './Components/Doctor';
-import AddDoctor from './Components/AddDoctor';
+// import AddDoctor from './Components/AddDoctor';
 import Patient from './Components/Patient';
-import AddArea from './Components/AddArea';
+// import AddArea from './Components/AddArea';
 import ViewDoctor from './Components/AdminViewDoctor';
 import AdminViewPatient from './Components/AdminViewPatient';
 import UpdateDoctor from './Components/UpdateDoctor';
 import UpdatePatient from './Components/UpdatePatient';
 import SearchDoctor from './Components/SearchDoctor';
-import AddState from './Components/AddState';
-import AddCity from './Components/AddCity';
+// import AddState from './Components/AddState';
+// import AddCity from './Components/AddCity';
 import UpdateTimeTable from './Components/UpdateTimeTable';
 import UpdateTimeTableByDay from './Components/UpdateTimeTableByDay';
 import DoctorAppointmentSlot from './Components/DoctorAppointmentSlot';
@@ -139,10 +139,10 @@ function App() {
             <Route path="/admin" element={<Admin/>}></Route>
             <Route path="/doctor" element={<Doctor/>}></Route>
             <Route path="/patient" element={<Patient/>}></Route>
-            <Route path="/adddoctor" element={<AddDoctor/>}></Route>
-            <Route path="/addarea" element={<AddArea/>}></Route>
-            <Route path="/addcity" element={<AddCity/>}></Route>
-            <Route path="/addstate" element={<AddState/>}></Route>
+            {/* <Route path="/adddoctor" element={<AddDoctor/>}></Route> */}
+            {/* <Route path="/addarea" element={<AddArea/>}></Route> */}
+            {/* <Route path="/addcity" element={<AddCity/>}></Route> */}
+            {/* <Route path="/addstate" element={<AddState/>}></Route> */}
             <Route path="/viewdoctor" element={<ViewDoctor/>}></Route>
             <Route path="/viewpatient" element={<AdminViewPatient/>}></Route>
             <Route path="/updatedoctor" element={<UpdateDoctor/>}></Route>

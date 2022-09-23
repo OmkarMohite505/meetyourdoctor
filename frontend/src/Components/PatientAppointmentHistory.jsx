@@ -20,7 +20,7 @@ function PatientAppointmentHistory(){
         axios.get(`${IP_ADDRS}/api/patient/get_all_closed_appointment/${patientId}`,{ headers: {"Authorization" : `Bearer ${jwt}`}})
         .then(res=>{
             setAppointments(res.data);
-            console.log(res.data);
+            // console.log(res.data);
             if(res.data.length === 0)
             swal("No Past Appointments","","info")
         })
@@ -49,11 +49,11 @@ function PatientAppointmentHistory(){
                         <tr>
                             <th>Appointment Date</th>
                             <th>Appointment Time</th>
-                            <th>Appointment Type</th>
+                            {/* <th>Appointment Type</th> */}
                             <th>Appointment Status</th>
                             <th>Doctor Name</th>
                             <th>Doctor Speciality</th>
-                            <th>Action</th>
+                            {/* <th>Action</th> */}
                         </tr>
                         </thead>
                         <tbody>
@@ -62,7 +62,7 @@ function PatientAppointmentHistory(){
                                 <tr>
                                     <td><input type="date" value={v.appointmentDate} readOnly style={{"border":"none"}}></input></td>
                                     <td><input type="time" value={v.appointmentTime} readOnly style={{"border":"none"}}></input></td>
-                                    <td>{v.appointmentType}</td>
+                                    {/* <td>{v.appointmentType}</td> */}
                                     <td>{v.status}</td>
                                     <td>Dr. {v.doctor.firstName} {v.doctor.lastName}</td>
                                     <td>{v.doctor.speciality[0].specialityType}</td>

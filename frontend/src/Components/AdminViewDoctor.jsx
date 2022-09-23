@@ -12,21 +12,23 @@ const VerifyDoctor = () => {
     const navigate = useNavigate();
     useEffect(() => {
         let doctorList = JSON.parse(sessionStorage.getItem("verifiedDoctorList"));
-        if(doctorList)
-        setDoctorList(doctorList);
+        if (doctorList)
+            setDoctorList(doctorList);
 
     }, []);
 
-    const getVerifiedDoctorList=()=>{
+    const getVerifiedDoctorList = () => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         axios.get(`${IP_ADDRS}/api/admin/verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
+                if (res.data.length === 0)
+                    swal("No Any Verified Doctor ", "", "info");
                 setDoctorList(res.data);
                 sessionStorage.setItem("verifiedDoctorList", JSON.stringify(res.data));
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 swal("Something went Wrong", "", "error")
             })
     }
@@ -50,8 +52,8 @@ const VerifyDoctor = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
-                                <th>Graduation</th>
-                                <th>Post Graduation</th>
+                                {/* <th>Graduation</th> */}
+                                {/* <th>Post Graduation</th> */}
                                 <th>Fees</th>
                                 <th>Area Name</th>
                                 <th>City Name</th>
@@ -60,15 +62,15 @@ const VerifyDoctor = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {doctorList.map((v,i) => {
+                            {doctorList.map((v, i) => {
                                 return (
                                     <tr key={`dr_list${i}`}>
                                         <td>{v.speciality[0].specialityType}</td>
                                         <td>{v.firstName}</td>
                                         <td>{v.lastName}</td>
                                         <td>{v.gender}</td>
-                                        <td>{v.qualification[0].educationType}</td>
-                                        <td>{v.qualification[0].educationType}</td>
+                                        {/* <td>{v.qualification[0].educationType}</td> */}
+                                        {/* <td>{v.qualification[0].educationType}</td> */}
                                         <td>{v.fees}</td>
                                         <td>{v.address[0].town}</td>
                                         <td>{v.address[0].city}</td>

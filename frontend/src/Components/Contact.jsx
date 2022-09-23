@@ -1,6 +1,7 @@
 import React from 'react'
 import './Loader.css'
 import '../Components/CSS/Button.css'
+import ReactTooltip from 'react-tooltip';
 
 const Contact = () => {
 
@@ -19,6 +20,14 @@ const Contact = () => {
         document.getElementById("copy1").innerHTML="copied";
         setTimeout(clearText1, 5000);
       }
+      const copyText5=()=>{
+        var copyText = document.getElementById("copytext5");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        navigator.clipboard.writeText(copyText.value);
+        document.getElementById("copy5").innerHTML="copied";
+        setTimeout(clearText5, 5000);
+      }
       const clearText1=()=>{
         document.getElementById("copy1").innerHTML="";
       }
@@ -30,6 +39,9 @@ const Contact = () => {
       }
       const clearText4=()=>{
         document.getElementById("copy4").innerHTML="";
+      }
+      const clearText5=()=>{
+        document.getElementById("copy5").innerHTML="";
       }
       const copyText2=()=>{
         var copyText = document.getElementById("copytext2");
@@ -67,7 +79,7 @@ const Contact = () => {
                 <ul style={{color : "blue"}}>
                     <li>
                         <h4>
-                       <input value="meetyourdoctor007@gmail.com" disabled id='copytext1' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText1} className="button-42">Copy Email</button><p id='copy1'></p>                   
+                       <input value="meetyourdoctor007@gmail.com" disabled id='copytext1' style={{"border":"none", "width":"400px"}}></input> <a href='mailto:meetyourdoctor007@gmail.com'> <button  className="button-42">Send Email</button></a><p id='copy1'></p>                   
                         </h4>
                     </li>
                     <li>
@@ -75,12 +87,21 @@ const Contact = () => {
                         <input value="omkarmohite505@gmail.com" disabled id='copytext2' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText2} className="button-42">Copy Email</button><p id='copy2'></p>         
                         </h4>
                     </li>
+                    <li>
+                        <h4>
+                        <input value="kunallohande23@gmail.com" disabled id='copytext5' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText5} className="button-42">Copy Email</button><p id='copy5'></p>         
+                        </h4>
+                    </li>
                 </ul>
                 <p><h3>Call Us :</h3><input value="+917620608558" disabled id='copytext3' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText3} className="button-42">Copy Mobile No</button> </p><p id='copy3'></p> 
                 <p><input value="+918149141899" disabled id='copytext4' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText4} className="button-42">Copy Mobile No</button> </p><p id='copy4'></p> 
-                <p><h3>Our Office Address:</h3> 43
+                <ReactTooltip id='address_tooltip' delayShow={1000}>Click to see Address</ReactTooltip>
+                <details>
+                  <summary data-tip data-for="address_tooltip">Our Office Address:</summary>
+                  <p>43
                     Sector No. 26, Pradhikaran, Nigdi
                     Pimpri-Chinchwad, Maharashtra 411044</p>
+                  </details> 
                 <Iframe iframe={iframe}></Iframe>
                 </div>
         </>

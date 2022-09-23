@@ -11,33 +11,23 @@ const SuspendedDoctorList = () => {
     const [doctorList, setDoctorList] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        // let admin = JSON.parse(sessionStorage.getItem("admin"));
-        // axios.get(`${IP_ADDRS}/api/admin/un_verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
-        //     .then(res => {
-        //         console.log(res.data);
-        //         setDoctorList(res.data);
-        //         sessionStorage.setItem("verifyDoctorList", JSON.stringify(res.data));
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         swal("Something went Wrong", "", "error")
-        //     })
         let doctorList = JSON.parse(sessionStorage.getItem("suspendedDoctorList"));
-        if(doctorList)
-        setDoctorList(doctorList);
+        if (doctorList)
+            setDoctorList(doctorList);
 
     }, []);
 
-    const getActiveDoctorList=()=>{
+    const getActiveDoctorList = () => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         axios.get(`${IP_ADDRS}/api/admin/suspended_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
             .then(res => {
-                console.log(res.data);
-                setDoctorList(res.data);
+                if (res.data.length === 0)
+                    swal("No any Suspended Doctor Currently","","info");
+                    setDoctorList(res.data);
                 sessionStorage.setItem("suspendedDoctorList", JSON.stringify(res.data));
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 swal("Something went Wrong", "", "error")
             })
     }
@@ -61,8 +51,8 @@ const SuspendedDoctorList = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
-                                <th>Graduation</th>
-                                <th>Post Graduation</th>
+                                {/* <th>Graduation</th> */}
+                                {/* <th>Post Graduation</th> */}
                                 <th>Fees</th>
                                 <th>Area Name</th>
                                 <th>City Name</th>
@@ -71,15 +61,15 @@ const SuspendedDoctorList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {doctorList.map((v,i) => {
+                            {doctorList.map((v, i) => {
                                 return (
                                     <tr key={`sus_list${i}`}>
                                         <td>{v.speciality[0].specialityType}</td>
                                         <td>{v.firstName}</td>
                                         <td>{v.lastName}</td>
                                         <td>{v.gender}</td>
-                                        <td>{v.qualification[0].educationType}</td>
-                                        <td>{v.qualification[0].educationType}</td>
+                                        {/* <td>{v.qualification[0].educationType}</td> */}
+                                        {/* <td>{v.qualification[0].educationType}</td> */}
                                         <td>{v.fees}</td>
                                         <td>{v.address[0].town}</td>
                                         <td>{v.address[0].city}</td>

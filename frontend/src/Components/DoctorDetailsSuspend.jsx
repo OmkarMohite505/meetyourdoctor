@@ -19,12 +19,6 @@ const DoctorDetailsSuspend = () => {
     const [timetables, setTimetables] = useState([]);
     const navigate = useNavigate();
 
-    // const [data,setData]=useState({
-    //     appointmentDate:"",
-    //     appointmentTime:"",
-    //     doctor_id:"",
-    //     patient_id:""
-    // })
     const [doctor, setDoctor] = useState({});
 
     const [admin, setAdmin] = useState({});
@@ -54,11 +48,6 @@ const DoctorDetailsSuspend = () => {
         })
             .then((willCreate) => {
                 if (willCreate) {
-                    // const obj = {"appointmentDate":date,"appointmentTime":time,
-                    //              "patientId":patient.patientId,
-                    //              "doctorId":doctor.doctorId}
-                    //              console.log(obj);
-                    // PatientService.bookAppointment(obj, patient.jwt)
                     axios.get(`${IP_ADDRS}/api/admin/suspend_doctor/${doctor.doctorId}`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
                         .then(res => {
                             console.log(res.data);
@@ -95,37 +84,8 @@ const DoctorDetailsSuspend = () => {
             <button className="btn btn-danger" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
             <button className='btn btn-secondary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/patient")}>Go Back</button>
             <br /><br />
-            <h2 className="font-weight-bold offset-4">Select Day</h2>
-            <label><b>Select a Date :</b></label>
 
-
-            <h1 className="font-weight-bold offset-4">Available Appointments</h1>
-
-            <p className="text text-danger offset-4"><b>{empty}</b></p>
-
-            <Table className="table table-bordered" >
-                <thead className="bg-dark text-light">
-                    <tr>
-                        <th>Slot</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        slot.map((v) => {
-                            return (
-                                <tr>
-                                    <td>{v}</td>
-                                    <td>
-                                        {/* <button className="btn btn-primary" onClick={()=>book(v)}  >Book Appointment</button> */}
-                                    </td>
-                                </tr>
-                            )
-                        })
-
-                    }
-                </tbody>
-            </Table>
+           
             <div>
                 <h1>Dr. {doctor.firstName} {doctor.lastName}</h1>
                 <h3>Mobile No : {doctor.mobileNumber}</h3>
@@ -143,8 +103,8 @@ const DoctorDetailsSuspend = () => {
                         {
 
 
-                            speciality.map((s) => (
-                                <tr>
+                            speciality.map((s,i) => (
+                                <tr key={`ss_li${i}`}>
                                     <td>{s.specialityType}</td>
                                     <td>{s.servicesProvided}</td>
                                     <td><details>
@@ -165,22 +125,22 @@ const DoctorDetailsSuspend = () => {
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Break Time</th>
-                            <th>Slots Available</th>
+                            {/* <th>Slots Available</th> */}
                             <th>Weekday/OFF</th>
-                            <th>Status</th>
+                            {/* <th>Status</th> */}
                         </tr>
                     </thead>
                     <tbody>
                         {
 
-                            timetables.map((t) => (
-                                <tr>
+                            timetables.map((t,i) => (
+                                <tr key={`tt_li${i}`}>
                                     <td><input type="time" value={t.startTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.endTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.breakTime} readOnly style={{ "border": "none" }}></input></td>
-                                    <td>{t.slotDuration}</td>
+                                    {/* <td>{t.slotDuration}</td> */}
                                     <td>{t.weekday}</td>
-                                    <td>{t.status}</td>
+                                    {/* <td>{t.status}</td> */}
                                 </tr>
                             ))
                         }

@@ -29,10 +29,16 @@ function DoctorAppointmentSlot() {
         setSpeciality(doctor.speciality);
         setTimetables(doctor.timetables);
         // setUserData(doctor, patient);
+        // console.log(date);
+        // console.log(time);
     }, []);
 
 
     const bookAppointment = () => {
+        if(date.length===0 && time.length===0){
+            swal("Select Date and Time","","warning");
+            return;
+        }
         swal({
             title: "Are you Confirm to Book Appointment?",
             text: "Your Appontment Will book with selected doctor!",
@@ -82,48 +88,10 @@ function DoctorAppointmentSlot() {
 
     const getTimeSlots = () => {
 
-        if (timeslot.length == 0) {
-            setEmpty("Doctor Appointments not available for current selection!");
-            setSlot([]);
-        } else {
-            setEmpty("");
-            setSlot(timeslot);
-            // setEmpty(time);
-        }
-
 
     }
     const book = (e) => {
 
-        // console.log(doctor);
-        // console.log(patient);
-
-        const reqOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                appointmentDate: date,
-                appointmentTime: e,
-                appointmentType: "walk-in",
-                doctorId: doctor,
-                patientId: patient,
-                status: "scheduled"
-            })
-        }
-        fetch("http://localhost:8080/saveappointment", reqOptions)
-            .then(resp => resp.text())
-            .then(data => {
-                if (data.length != 0) {
-                    alert("Appointment Booked!");
-                    navigate('/patient');
-                }
-                else {
-                    alert("Appointment Failed!!!");
-                    window.location.reload();
-                }
-            })
 
     }
     const logout = () => {
@@ -137,39 +105,9 @@ function DoctorAppointmentSlot() {
             <button className="btn btn-danger" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
             <button className='btn btn-secondary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/patient")}>Go Back</button>
             <br /><br />
-            <h2 className="font-weight-bold offset-4">Select Day</h2>
-            <label><b>Select a Date :</b></label>
 
-            <input type="date" onChange={appointments} min={minDate()} max={maxDate()} name="date" />
 
-            <button className='btn btn-primary' style={{ marginLeft: "10px" }} onClick={getTimeSlots}>View Time Slots</button>
-            <h1 className="font-weight-bold offset-4">Available Appointments</h1>
-
-            <p className="text text-danger offset-4"><b>{empty}</b></p>
-
-            <Table className="table table-bordered" >
-                <thead className="bg-dark text-light">
-                    <tr>
-                        <th>Slot</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        slot.map((v) => {
-                            return (
-                                <tr>
-                                    <td>{v}</td>
-                                    <td>
-                                        <button className="btn btn-primary" onClick={() => book(v)}  >Book Appointment</button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-
-                    }
-                </tbody>
-            </Table>
+           
             <div>
                 <h1>Dr. {doctor.firstName} {doctor.lastName}</h1>
                 <h3>Mobile No : {doctor.mobileNumber}</h3>
@@ -209,9 +147,7 @@ function DoctorAppointmentSlot() {
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Break Time</th>
-                            <th>Slots Available</th>
                             <th>Weekday/OFF</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -222,9 +158,7 @@ function DoctorAppointmentSlot() {
                                     <td><input type="time" value={t.startTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.endTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.breakTime} readOnly style={{ "border": "none" }}></input></td>
-                                    <td>{t.slotDuration}</td>
                                     <td>{t.weekday}</td>
-                                    <td>{t.status}</td>
                                 </tr>
                             ))
                         }
@@ -233,7 +167,7 @@ function DoctorAppointmentSlot() {
             </div>
 
             <div>
-                <label htmlFor="">Select date</label><input type="date" name="date" id="" onChange={e => setDate(e.target.value)} required /><br />
+                <label htmlFor="">Select date</label><input type="date" name="date" id="" onChange={e => setDate(e.target.value)} min="2022-08-30" required /><br />
                 <label htmlFor="">Select Time</label><input type="time" name="time" id="" onChange={e => setTime(e.target.value)} required/><br />
                 <button className="btn btn-success" onClick={bookAppointment}>Book Appointment</button>
             </div>

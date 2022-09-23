@@ -19,12 +19,6 @@ const DoctorDetails = () => {
     const [timetables, setTimetables] = useState([]);
     const navigate = useNavigate();
 
-    // const [data,setData]=useState({
-    //     appointmentDate:"",
-    //     appointmentTime:"",
-    //     doctor_id:"",
-    //     patient_id:""
-    // })
     const [doctor, setDoctor] = useState({});
 
     const [admin, setAdmin] = useState({});
@@ -57,11 +51,6 @@ const DoctorDetails = () => {
         })
             .then((willCreate) => {
                 if (willCreate) {
-                    // const obj = {"appointmentDate":date,"appointmentTime":time,
-                    //              "patientId":patient.patientId,
-                    //              "doctorId":doctor.doctorId}
-                    //              console.log(obj);
-                    // PatientService.bookAppointment(obj, patient.jwt)
                     axios.get(`${IP_ADDRS}/api/admin/verify_doctor/${doctor.doctorId}`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
                         .then(res => {
                             console.log(res.data);
@@ -71,7 +60,7 @@ const DoctorDetails = () => {
                             console.log(newList);
                             if (newList)
                                 sessionStorage.setItem("verifyDoctorList", JSON.stringify(newList));
-                            swal("Doctor Verified", "success");
+                            swal("Doctor Verified","", "success");
                             navigate(`/verify_doctor`)
                         })
                         .catch(err => { swal("Something Went Wrong", "error") });
@@ -146,8 +135,8 @@ const DoctorDetails = () => {
                         {
 
 
-                            speciality.map((s) => (
-                                <tr>
+                            speciality.map((s,i) => (
+                                <tr key={`spec_li${i}`}>
                                     <td>{s.specialityType}</td>
                                     <td>{s.servicesProvided}</td>
                                     <td><details>
@@ -176,8 +165,8 @@ const DoctorDetails = () => {
                     <tbody>
                         {
 
-                            timetables.map((t) => (
-                                <tr>
+                            timetables.map((t,i) => (
+                                <tr key={`tt_li${i}`}>
                                     <td><input type="time" value={t.startTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.endTime} readOnly style={{ "border": "none" }}></input></td>
                                     <td><input type="time" value={t.breakTime} readOnly style={{ "border": "none" }}></input></td>

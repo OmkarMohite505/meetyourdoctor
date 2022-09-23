@@ -27,19 +27,19 @@ function UpdateTimeTable() {
     }
     useEffect(() => {
         let doc = JSON.parse(sessionStorage.getItem("doctor"));
-       
+
         setDoctorId(doc.doctorId);
-        setData({email:doc.email});
+        setData({ email: doc.email });
         setTimeTable(doc.timetables);
         axios.get(`${IP_ADDRS}/api/doctor/get_doctor_timetable/${doc.doctorId}`,
-        { headers: { "Authorization": `Bearer ${doc.jwt}` } })
-        .then(res => {
-            setTimeTable(res.data);
-            console.log(res.data);
-        })
-        .catch(err=>{
-            swal("Something Went Wrong","","warning");
-        })
+            { headers: { "Authorization": `Bearer ${doc.jwt}` } })
+            .then(res => {
+                setTimeTable(res.data);
+                // console.log(res.data);
+            })
+            .catch(err => {
+                swal("Something Went Wrong", "", "warning");
+            })
 
     }, []);
 
@@ -89,9 +89,9 @@ function UpdateTimeTable() {
                                 return (
                                     <tr key={`tt${v}${i}`}>
                                         <td>{v.weekday}</td>
-                                        <td><input type="time" value={v.startTime} disabled style={{"border":"none"}}></input></td>
-                                        <td><input type="time" value={v.endTime} disabled style={{"border":"none"}}></input></td>
-                                        <td><input type="time" value={v.breakTime} disabled style={{"border":"none"}}></input></td>
+                                        <td><input type="time" value={v.startTime} disabled style={{ "border": "none" }}></input></td>
+                                        <td><input type="time" value={v.endTime} disabled style={{ "border": "none" }}></input></td>
+                                        <td><input type="time" value={v.breakTime} disabled style={{ "border": "none" }}></input></td>
                                         <td><button className="btn btn-primary" style={{ marginRight: "10px" }} onClick={() => update(v)}>Update</button></td>
                                     </tr>
                                 );

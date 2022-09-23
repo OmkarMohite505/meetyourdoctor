@@ -74,7 +74,7 @@ public class PatientController {
 		return ResponseEntity.status(HttpStatus.OK).body(appointmentService.getAllAppointmentListForPatient(patientId));
 	}
 
-	@GetMapping("/get_all_doctors_list/{speciality}")
+	@GetMapping("/get_all_doctors_list_by_speciality/{speciality}")
 	public ResponseEntity<?> getAllDoctorsListBySpeciality(@PathVariable SpecialityType speciality) {
 		return ResponseEntity.status(HttpStatus.OK).body(doctorService.getDoctorsListBySpeciality(speciality));
 	}

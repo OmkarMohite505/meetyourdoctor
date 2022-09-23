@@ -21,12 +21,12 @@ const VerifyDoctor = () => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         axios.get(`${IP_ADDRS}/api/admin/un_verified_doctors_list`, { headers: { "Authorization": `Bearer ${admin.jwt}` } })
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setDoctorList(res.data);
                 sessionStorage.setItem("verifyDoctorList", JSON.stringify(res.data));
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 swal("Something went Wrong", "", "error")
             })
     }
@@ -50,8 +50,8 @@ const VerifyDoctor = () => {
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Gender</th>
-                                <th>Graduation</th>
-                                <th>Post Graduation</th>
+                                {/* <th>Graduation</th> */}
+                                {/* <th>Post Graduation</th> */}
                                 <th>Fees</th>
                                 <th>Area Name</th>
                                 <th>City Name</th>
@@ -67,8 +67,8 @@ const VerifyDoctor = () => {
                                         <td>{v.firstName}</td>
                                         <td>{v.lastName}</td>
                                         <td>{v.gender}</td>
-                                        <td>{v.qualification[0].educationType}</td>
-                                        <td>{v.qualification[1].educationType}</td>
+                                        {/* <td>{v.qualification[0].educationType}</td> */}
+                                        {/* <td>{v.qualification[1].educationType}</td> */}
                                         <td>{v.fees}</td>
                                         <td>{v.address[0].town}</td>
                                         <td>{v.address[0].city}</td>

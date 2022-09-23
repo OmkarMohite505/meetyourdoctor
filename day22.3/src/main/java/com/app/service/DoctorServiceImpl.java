@@ -245,26 +245,26 @@ public class DoctorServiceImpl implements IDoctorService {
 	@Override
 	public List<Doctor> findAllDoctorsByTown(String Town) {
 		
-//		return doctorRepository.findAllDoctorsByTown(Town);
-		return null;
+		return doctorRepository.findAllDoctorsByTown(Town);
+//		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByCity(String city) {
-//		return doctorRepository.findAllDoctorsByCity(city);
-		return null;
+		return doctorRepository.findAllDoctorsByCity(city);
+//		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByState(String state) {
-//		return doctorRepository.findAllDoctorsByState(state);
-		return null;
+		return doctorRepository.findAllDoctorsByState(state);
+//		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByPincode(int pincode) {
-//		return doctorRepository.findAllDoctorsByPinCode(pincode);
-		return null;
+		return doctorRepository.findAllDoctorsByPinCode(pincode);
+//		return null;
 	}
 	
 	@Override

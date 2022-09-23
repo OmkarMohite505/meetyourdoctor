@@ -9,12 +9,12 @@ function Admin() {
     useEffect(() => {
         let admin = JSON.parse(sessionStorage.getItem("admin"));
         setAdmin(admin);
-        if(cnt === 0){
+        if (cnt === 0) {
             setCnt(1);
             // window.location.reload();
 
         }
-       
+
     }, []);
 
     const logout = () => {
@@ -25,7 +25,7 @@ function Admin() {
     const navigate = useNavigate();
     return (
         <>
-          
+
             <div className="container" style={{ marginBottom: "50px" }}>
                 <div className="row my-3">
                     <div className="col-sm-6"><h2 className="">Hello {admin.email}</h2>
@@ -78,12 +78,21 @@ function Admin() {
                 </div>
 
                 <div className="row my-3">
-                    <div className="col-sm-6">
+                    {/* <div className="col-sm-6">
                         <div className="card">
                             <div className="card-body">
                                 <h5 className="card-title">Enable/Disable</h5>
                                 <p className="card-text">Enable or disable a patient.</p>
                                 <button onClick={() => navigate("/viewpatient")} className="btn btn-success">ENABLE/DISBLE</button>
+                            </div>
+                        </div>
+                    </div> */}
+                     <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Remove Doctor Suspension</h5>
+                                <p className="card-text">Remove.</p>
+                                <button onClick={() => navigate("/suspended_doctor_list")} className="btn btn-primary">Remove</button>
                             </div>
                         </div>
                     </div>
@@ -106,16 +115,6 @@ function Admin() {
                                 <h5 className="card-title">Suspend Dcotor</h5>
                                 <p className="card-text">click to go</p>
                                 <button onClick={() => navigate("/doctor_list_for_suspend")} className="btn btn-warning">Suspend Doctor</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-sm-6">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">Remove Doctor Suspension</h5>
-                                <p className="card-text">Remove.</p>
-                                <button onClick={() => navigate("/suspended_doctor_list")} className="btn btn-primary">Remove</button>
                             </div>
                         </div>
                     </div>

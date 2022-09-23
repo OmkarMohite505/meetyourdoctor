@@ -4,63 +4,74 @@ import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { IP_ADDRS } from "../service/Constant";
 
-function Patient(){
-    const [state,setState]=useState({
-        firstName:"",
-        lastName:"",
-        patientId:"",
-        profilePicture:"",
-        token:""
-        
+function Patient() {
+    const [state, setState] = useState({
+        firstName: "",
+        lastName: "",
+        patientId: "",
+        profilePicture: "",
+        token: ""
+
     });
     const [pic, setPic] = useState([]);
     const [contentType, setContentType] = useState('');
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
-      // Similar to componentDidMount and componentDidUpdate:  
-      useEffect(() => {    
-            let patient= JSON.parse(sessionStorage.getItem("patient"));
-            setState({firstName:patient.firstName,lastName:patient.lastName, patientId:patient.patientId, 
-                profilePicture:patient.profilePicture.substring(15),
-                token:patient.jwt
-                });
-            console.log(patient.profilePicture.substring(15));
-        },[]);
+    // Similar to componentDidMount and componentDidUpdate:  
+    useEffect(() => {
+        let patient = JSON.parse(sessionStorage.getItem("patient"));
+        if (patient.profilePicture === null) {
+            setState({
+                firstName: patient.firstName, lastName: patient.lastName, patientId: patient.patientId,
+                token: patient.jwt
+            });
+        }
+        else {
+            setState({
+                firstName: patient.firstName, lastName: patient.lastName, patientId: patient.patientId,
+                profilePicture: patient.profilePicture.substring(15),
+                token: patient.jwt
+            });
+        }
 
-        useEffect(()=>{
-            fetchImage();
-        },[state])
-        
-    const logout=()=>{
+
+        // console.log(patient.profilePicture.substring(15));
+    }, []);
+
+    useEffect(() => {
+        fetchImage();
+    }, [state])
+
+    const logout = () => {
         sessionStorage.removeItem("patient");
         navigate("/");
     }
 
-    const fetchImage=()=>{
+    const fetchImage = () => {
         const options = {
             method: 'GET',
             url: `${IP_ADDRS}/api/patient/profile_picture/${state.profilePicture}`,
-            headers: {Authorization: `Bearer ${state.token}`}
-          };
-          
-          axios.request(options).then(response=>{
+            headers: { Authorization: `Bearer ${state.token}` }
+        };
+
+        axios.request(options).then(response => {
             setPic(response.data.image);
-          }).catch(error=>{
+        }).catch(error => {
             console.error(error);
-          });
+        });
     }
-        
-    return(
+
+    return (
         <>
-     
-        <div className="container" style={{marginBottom : "50px"}}>
+
+            <div className="container" style={{ marginBottom: "50px" }}>
                 <div className="row my-3">
                     <div className="col-sm-3"><h2 className="">Hello, {state.firstName} {state.lastName}</h2></div>
 
                     {/* <div className="col-sm-3"> <img src={`${IP_ADDRS}/api/image/path/ROLE_PATIENT/${state.profilePicture}`} style={{'height':'100px','width':'100px'}}></img></div> */}
-                    <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{'height':'100px','width':'100px'}}></img></div>
+                    <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{ 'height': '100px', 'width': '100px' }}></img></div>
                     <div className="col-sm-6">
-                        <button onClick={logout} style={{"float":"right"}} className="btn btn-danger">Logout </button>
+                        <button onClick={logout} style={{ "float": "right" }} className="btn btn-danger">Logout </button>
                     </div>
                 </div>
 
@@ -105,41 +116,41 @@ function Patient(){
                         </div>
                     </div>
                 </div>
-                    <div className="row my-3">
-                        <div className="col-sm-6">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Cancel Appointments</h5>
-                                    <p className="card-text">Cancel your appointments.</p>
-                                    <button onClick={() => navigate("/patientcurrentappointments")} className="btn btn-danger">CANCEL</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="col-sm-6">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Book Appointment</h5>
-                                    <p className="card-text">Book your appointment.</p>
-                                    <button onClick={() => navigate("/searchdoctor")} className="btn btn-info">BOOK</button>
-                                </div>
+                <div className="row my-3">
+                    <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Change Password</h5>
+                                <p className="card-text">Change your password.</p>
+                                <button onClick={() => navigate("/changepasswordpatient")} className="btn btn-success">CHANGE</button>
                             </div>
                         </div>
                     </div>
 
-                    <div className="row my-3">
-                            <div className="col-sm-6">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <h5 className="card-title">Change Password</h5>
-                                        <p className="card-text">Change your password.</p>
-                                        <button onClick={() => navigate("/changepasswordpatient")} className="btn btn-success">CHANGE</button>
-                                    </div>
-                                </div>
+                    <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Book Appointment</h5>
+                                <p className="card-text">Book your appointment.</p>
+                                <button onClick={() => navigate("/searchdoctor")} className="btn btn-info">BOOK</button>
                             </div>
                         </div>
+                    </div>
                 </div>
-            </>
+
+                {/* <div className="row my-3">
+                    <div className="col-sm-6">
+                        <div className="card">
+                            <div className="card-body">
+                                <h5 className="card-title">Change Password</h5>
+                                <p className="card-text">Change your password.</p>
+                                <button onClick={() => navigate("/changepasswordpatient")} className="btn btn-success">CHANGE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> */}
+            </div>
+        </>
     );
 }
 
