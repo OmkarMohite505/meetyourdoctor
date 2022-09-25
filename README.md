@@ -67,6 +67,62 @@ https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 | `state id`      | `string` | **Required**. State Id |
 
 #### Razorpay API
+Create Payment Order
+```bash
+    var client = new RazorpayClient(key_id, key_secret);
+		JSONObject ob = new JSONObject();
+		double amount = paymentDTO.getAmount() * 100;
+		ob.put("amount", amount);
+		ob.put("currency", "INR");
+		ob.put("receipt", "txn_123");
+		Order order = client.Orders.create(ob);
+```
+Display Payment UI & Checkout
+```bash
+   const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+   const options = {
+            key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
+            amount: amount.toString(),
+            currency: "INR",
+            name: `Dr. ${doctor.firstName} ${doctor.lastName}`,
+            description: "Appointment Fees of Doctor",
+            order_id: order_id,
+            image: `data:image/jpg;base64,${doctorPic}`,
+            handler: async function (response) {
+                const data = {
+                    orderCreationId: order_id,
+                    razorpayPaymentId: response.razorpay_payment_id,
+                    razorpayOrderId: response.razorpay_order_id,
+                    patientId: patient.patientId,
+                    appointmentId: appointmentId
+                };
+                console.log(data);
+
+                axios.post(`${IP_ADDRS}/api/patient/appointment/pay/update_order`, data, { headers: { "Authorization": `Bearer ${patient.jwt}` } })
+                    .then(res => {
+                        swal("Payment Success", "You Appointment Booked, Details Sent, Redirecting to Profile Page", "success");
+                        navigate(`/patient`);
+                    })
+                    .catch(err => { alert("error") });
+
+                // alert("Payment Success");
+            },
+            prefill: {
+                name: `${patient.firstName} ${patient.lastName}`,
+                email: `${patient.email}`,
+                contact: `${patient.mobileNumber}`,
+            },
+            notes: {
+                address: "",
+            },
+            theme: {
+                color: "#61dafb",
+            },
+        };
+
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+```
 
 
 
