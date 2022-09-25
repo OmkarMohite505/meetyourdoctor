@@ -62,7 +62,7 @@ http://localhost:8080/swagger-ui/index.html
 #### Get Weather details
 
 ```http
-  GET https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}
+  GET `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${api_key}`
 ```
 
 | Parameter | Type     | Description                |
@@ -73,7 +73,7 @@ http://localhost:8080/swagger-ui/index.html
 
 ```http
   GET `http://apis.mapmyindia.com/advancedmaps/v1/${api_key}/rev_geocode?lng=${latitude}&lat=${longitude}`
-  https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}
+  GET `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}`
 ```
 
 | Parameter | Type     | Description                       |
@@ -82,11 +82,11 @@ http://localhost:8080/swagger-ui/index.html
 
 #### Get all State list of India
 ```http
-https://cdn-api.co-vin.in/api/v2/admin/location/states
+GET `https://cdn-api.co-vin.in/api/v2/admin/location/states`
 ```
 #### Get all districts list
 ```http
-https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
+GET `https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`
 ```
 
 | Parameter | Type     | Description                       |
