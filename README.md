@@ -67,6 +67,14 @@ https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 | `state id`      | `string` | **Required**. State Id |
 
 #### Razorpay API
+Dependancy
+```bash
+		<dependency>
+			<groupId>com.razorpay</groupId>
+			<artifactId>razorpay-java</artifactId>
+			<version>1.3.9</version>
+		</dependency>
+```
 Create Payment Order
 ```bash
     var client = new RazorpayClient(key_id, key_secret);
@@ -111,12 +119,27 @@ Display Payment UI & Checkout
         paymentObject.open();
 ```
 #### Twilio SMS API
+Dependancy
+```bash
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>9.0.0-rc.2</version>
+		</dependency>
+```
 ```bash
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 		Message message = Message.creator(new PhoneNumber(MY_NUMBER), new PhoneNumber("+917620608558"),
 				 "Hello User, Your Appointment Booked Successfully\nRegards,\nMeet Your Doctor").create();
 ```
 #### Mail Gmail API
+Dependacy
+```bash
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+```
 ```bash
                 SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo("user@gmail.com");
