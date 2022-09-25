@@ -81,11 +81,11 @@ http://localhost:8080/swagger-ui/index.html
 | `latitude & longitude`      | `string` | **Required**. Your Api Key |
 
 #### Get all State list of India
-```https
+```http
 https://cdn-api.co-vin.in/api/v2/admin/location/states
 ```
 #### Get all districts list
-```https
+```http
 https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 ```
 
