@@ -103,7 +103,7 @@ GET `https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}`
 ```
 Create Payment Order
 ```bash
-    var client = new RazorpayClient(key_id, key_secret);
+                var client = new RazorpayClient(key_id, key_secret);
 		JSONObject ob = new JSONObject();
 		double amount = paymentDTO.getAmount() * 100;
 		ob.put("amount", amount);
@@ -113,8 +113,8 @@ Create Payment Order
 ```
 Display Payment UI & Checkout
 ```bash
-   const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-   const options = {
+            const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+            const options = {
             key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: "INR",
@@ -180,5 +180,9 @@ Display Payment UI & Checkout
 3. All Pages of UI in Marthi Language
 4. WhatsApp Business API Integration
 5. Virtual Consultation for Patients and Doctors 
+
+## Support
+
+For support, email omkarmohite505@gmail.com
 
 
