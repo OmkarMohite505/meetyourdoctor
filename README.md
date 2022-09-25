@@ -40,7 +40,7 @@ http://localhost:8080/swagger-ui/index.html
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Required**. Your API key |
+| `latitude & longitude` | `string` | **Required**. Your API key |
 
 #### Get My Address details(Reverse Geocoding)
 
@@ -66,6 +66,7 @@ https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 | :-------- | :------- | :-------------------------------- |
 | `state id`      | `string` | **Required**. State Id |
 
+#### Razorpay API
 
 
 
