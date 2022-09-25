@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -39,11 +40,13 @@ import com.app.entities.BankAccount;
 import com.app.entities.Doctor;
 import com.app.entities.DoctorTimeTable;
 import com.app.entities.Login;
+import com.app.entities.OTP;
 import com.app.entities.Patient;
 import com.app.entities.PatientAddress;
 import com.app.entities.RoleEntity;
 import com.app.enums.RoleEnum;
 import com.app.repository.LoginRepository;
+import com.app.repository.OtpRepository;
 import com.app.repository.RoleRepository;
 
 @Service
@@ -61,7 +64,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private RoleRepository roleRepo;
-	
 
 	// mapper
 	@Autowired
@@ -88,6 +90,8 @@ public class UserServiceImpl implements UserService {
 	private BankRepository bankRepository;
 	@Autowired
 	private DoctorTimetableRepo doctorTimetableRepo;
+	@Autowired
+	private OtpRepository otpRepository;
 
 	@Override
 	public UserRegResponse registerUser(UserDTO user) {
@@ -134,7 +138,8 @@ public class UserServiceImpl implements UserService {
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(persistentPatient.getEmail());
 		mesg.setSubject("Congratulations you are registered successfully ");
-		mesg.setText("Hello "+persistentPatient.getFirstName()+",\nYou are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		mesg.setText("Hello " + persistentPatient.getFirstName()
+				+ ",\nYou are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
 		sender.send(mesg);
 		return dto;
 	}
@@ -150,40 +155,41 @@ public class UserServiceImpl implements UserService {
 
 		Login persistentUser = loginRepo.save(userEntity);// persisted user details in db : parent rec
 
-	//map dto --> doc entity
-		Doctor doctor=mapper.map(doctorDTO, Doctor.class);
-		//establish uni dir asso doc --> login
+		// map dto --> doc entity
+		Doctor doctor = mapper.map(doctorDTO, Doctor.class);
+		// establish uni dir asso doc --> login
 		doctor.setLogin(persistentUser);
-		//create profile url n assign it to a doc
+		// create profile url n assign it to a doc
 		String defaultProfile = baseFolder + File.separator + "default.jpg";
 		doctor.setProfilePicture(defaultProfile);
-		//since all rpimary details of doc is set , save the entity (parent rec saved)
-		Doctor persistentDoctor = doctorRepository.save(doctor);//ins in doc tbl
-		//establish uni from adr --> doc
+		// since all rpimary details of doc is set , save the entity (parent rec saved)
+		Doctor persistentDoctor = doctorRepository.save(doctor);// ins in doc tbl
+		// establish uni from adr --> doc
 //		doctorDTO.getAddress().forEach(a -> a.setDoctor(persistentDoctor));
-		//save all adr entities
-		List<Address> persistentAddress = addressRepository.saveAll(doctorDTO.getAddress());//ins in adr tbl with FK
-		//get acct details from dto
-		BankAccount account= doctorDTO.getBankAccount();	
-		//establish uni dir asso acct --> doc
+		// save all adr entities
+		List<Address> persistentAddress = addressRepository.saveAll(doctorDTO.getAddress());// ins in adr tbl with FK
+		// get acct details from dto
+		BankAccount account = doctorDTO.getBankAccount();
+		// establish uni dir asso acct --> doc
 		account.setDoctor(persistentDoctor);
-		//save child rec of acc with fk set
-		bankRepository.save(account);//ins in acct tbl with FK
-		//Your payload n dto had a problem : I have corrected it : should be Set<..>
-		//establish uni dir asso timetable --> doc
+		// save child rec of acc with fk set
+		bankRepository.save(account);// ins in acct tbl with FK
+		// Your payload n dto had a problem : I have corrected it : should be Set<..>
+		// establish uni dir asso timetable --> doc
 //		doctorDTO.getTimetables().forEach(t ->{
 //			t.setDoctor(persistentDoctor);
-			
+
 //		});
-		//save tm tbls with FK : doc id
-		doctorTimetableRepo.saveAll(doctorDTO.getTimetables());//ins in doc tm tbl with FK
-		
+		// save tm tbls with FK : doc id
+		doctorTimetableRepo.saveAll(doctorDTO.getTimetables());// ins in doc tm tbl with FK
+
 		UserResponseDTO dto = new UserResponseDTO();
 		dto.setId(persistentDoctor.getDoctorId());
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(persistentDoctor.getEmail());
 		mesg.setSubject("Congratulations you are registered successfully ");
-		mesg.setText("Hello "+persistentDoctor.getFirstName()+",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		mesg.setText("Hello " + persistentDoctor.getFirstName()
+				+ ",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
 		sender.send(mesg);
 		return dto;
 	}
@@ -218,10 +224,10 @@ public class UserServiceImpl implements UserService {
 			dto.setRoles(loginRole);
 			return (T) dto;
 		}
-		if(roles.contains(admin)) {
-			return(T) mapper.map(validatedUser, AdminDTO.class);
+		if (roles.contains(admin)) {
+			return (T) mapper.map(validatedUser, AdminDTO.class);
 		}
-		
+
 		return null;
 
 	}
@@ -230,41 +236,53 @@ public class UserServiceImpl implements UserService {
 	public void sendOTPForForgotPassword(String email) throws Exception {
 		Login login = loginRepo.findByEmail(email).orElseThrow(() -> new Exception("Wrong Email Id you Provided"));
 
-		SimpleMailMessage mesg = new SimpleMailMessage();
-		mesg.setTo(login.getEmail());
-		mesg.setSubject("OTP for verification");
 		Random ramdom = new Random();
 		Integer otp = ramdom.nextInt(999999);
+
+		OTP otpTran = new OTP();
+		otpTran.setEmail(login.getEmail());
+		otpTran.setOtp(otp);
+		otpTran.setDateCreated(LocalDateTime.now());
+		otpRepository.save(otpTran);
 //		StringBuilder otpString = new StringBuilder(otp);
 //		if(otpString.length()!=6)
 //			otpString.append(1);
+		SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo(login.getEmail());
+		mesg.setSubject("OTP for verification");
 		mesg.setText("Enter this OTP for verification : " + otp + "            Do not share it with anyone !!!!!");
 		sender.send(mesg);
-		login.setOtp(otp);
+
+//		login.setOtp(otp);
 	}
 
 	@Override
 	public void updateUserPassword(String email, String newPassword, int otp) throws Exception {
-		Login login = loginRepo.findByEmailAndOtp(email, otp).orElseThrow(() -> new Exception("User Not Found"));
+//		Login login = loginRepo.findByEmailAndOtp(email, otp).orElseThrow(() -> new Exception("User Not Found"));
+
+		LocalDateTime now = LocalDateTime.now();
+		OTP persistOTP = otpRepository.findByEmailAndOtp(email, otp);
+		if (!now.isBefore(persistOTP.getDateCreated().plusMinutes(10)))
+			throw new Exception("OTP expired, genrate new OTP");
+		Login login = loginRepo.findByEmail(email).orElseThrow();
 		login.setPassword(encoder.encode(newPassword));
+		otpRepository.delete(persistOTP);
+		
 	}
 
 	@Override
 	public AdminDTO getAdminDetails(String email) {
 		Login login = loginRepo.findByEmail(email).orElseThrow();
 		return mapper.map(login, AdminDTO.class);
-		
+
 	}
-	
-	
+
 	public static void sendRegistrationEmailToPatient(String email, String name) {
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(email);
 		mesg.setSubject("Congratulations you are registered successfully ");
-		mesg.setText("Hello "+name+",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
+		mesg.setText("Hello " + name + ",\n You are successfully registered !!!!!\n\nRegards,\nMeet Your Doctor Team");
 		mailSender.send(mesg);
 	}
-	
-	
 
 }

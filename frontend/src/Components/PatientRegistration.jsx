@@ -54,7 +54,7 @@ function PatientRegistration() {
     });
 
     const [flag, setFlag] = useState({
-        userName: false,
+        email: false,
         password: false,
         firstName: false,
         lastName: false,
@@ -263,12 +263,12 @@ function PatientRegistration() {
         let emailRegex = new RegExp(/^[A-Za-z0-9._-]+@[A-Za-z0-9._-]+\.[A-Za-z]{2,4}$/);
         if (emailRegex.test(email) === true) {
             setError({ ...Error, user_name_error: "" });
-            setFlag({ ...flag, userName: true });
+            setFlag({ ...flag, email: true });
 
         }
         else {
             setError({ ...Error, user_name_error: "Email format should be 'abc@gmail.com' and it can include (A-Z a-z 0-9 . _ -)" });
-            setFlag({ ...flag, userName: false });
+            setFlag({ ...flag, email: false });
 
         }
     }
@@ -277,11 +277,13 @@ function PatientRegistration() {
         let pass = e.target.value;
         let passRegex = new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z]).{8,16}$/);
         if (passRegex.test(pass) === true) {
+            alert("true");
             setError({ ...Error, password_error: "" });
             setFlag({ ...flag, password: true });
 
         }
         else {
+            alert("false");
             setError({ ...Error, password_error: "Password must be alphanumeric and should contains at least a special character with min length 8 and max length 16" });
             setFlag({ ...flag, password: false });
 
@@ -317,13 +319,15 @@ function PatientRegistration() {
     const validateMobileNumber = (e) => {
         let mobileNumber = e.target.value;
         let mnRegex = new RegExp(/^[0-9]{10}$/);
-        if (mnRegex.test(mobileNumber) === true) {
+        // if (mnRegex.test(mobileNumber) === true)
+        if(mobileNumber.length > 15)
+         {
             setError({ ...Error, mobile_number_error: "" });
             setFlag({ ...flag, mobileNumber: true });
 
         }
         else {
-            setError({ ...Error, mobile_number_error: "Mobile Number should be 10 digits without +91 or 0" });
+            setError({ ...Error, mobile_number_error: "Enter Correct Mobile No" });
             setFlag({ ...flag, mobileNumber: false });
 
         }
@@ -398,6 +402,13 @@ function PatientRegistration() {
 
     }
     const submitData = () => {
+        alert(flag.password);
+        // validateMobileNumber();
+        if(! flag.email || ! flag.password)
+        {
+            swal("Enter Correct Email and Password","","warning");
+            return;
+        }
 
 
         swal({

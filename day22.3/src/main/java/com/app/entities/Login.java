@@ -27,7 +27,7 @@ public class Login extends BaseEntity{
 	@Column(length = 350)
 	private String password;
 	
-	private int otp;
+//	private int otp;
 	// many-to-many , User *--->* Role
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_roles", 

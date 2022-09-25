@@ -319,4 +319,12 @@ public class AppointmentServiceImpl implements IAppointmentService {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public void cancelAppointmentByPatient(long appointmentId, long patientId) throws Exception {
+		Appointment appointmemnt = appointmentRepository.findById(appointmentId).orElseThrow(()->new Exception("Appoinntmment details not found"));
+		if(appointmemnt.getPatient().getPatientId() != patientId)
+			throw new Exception("Wrong details you provided");
+		appointmentRepository.deleteById(appointmentId);
+	}
+
 }

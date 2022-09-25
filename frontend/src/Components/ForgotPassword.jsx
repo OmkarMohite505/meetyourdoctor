@@ -64,10 +64,13 @@ function ForgotPassword() {
                 swal("Enter Correct Details", "", "error");
             })
     }
-
+    const setTempFlag=()=>{
+        setWaitOTP(false);
+    }
 
     const submitData = (e) => {
         e.preventDefault();
+        setTempFlag();
         // let user_captcha = document.getElementById('user_captcha_input').value;
 
         if (validateCaptcha(data.userCaptcha) === true) {

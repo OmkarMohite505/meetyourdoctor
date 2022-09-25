@@ -125,7 +125,8 @@ public class PatientController {
 	}
 	@DeleteMapping("/{patientId}")
 	public ResponseEntity<?> deleteDoctor(@PathVariable long patientId){
-		patientService.deletePatient(patientId);
-		return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
+//		patientService.deletePatient(patientId);
+//		return ResponseEntity.status(HttpStatus.OK).body("Deleted Successfully");
+		return ResponseEntity.status(HttpStatus.OK).body("Currently You cannot delete account");
 	}
 }

@@ -29,4 +29,6 @@ public interface IAppointmentService {
 	List<AppointmentDoctorPatient> getAllClosedOppointmentListForPatient(long patientId)throws Exception;
 	
 	List<AppointmentDoctorPatient> getAllClosedOppointmentListForDoctor(long doctorId)throws Exception;
+	
+	void cancelAppointmentByPatient(long appointmentId, long patientId)throws Exception;
 }
