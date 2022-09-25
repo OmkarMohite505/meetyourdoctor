@@ -11,7 +11,7 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
 </div>
 
-#Features
+# Features
 1. Localization based on Geography
 2. JWT based Authentication
 3. Role based user Authorization
