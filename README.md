@@ -46,14 +46,12 @@ http://localhost:8080/swagger-ui/index.html
 
 ```http
   GET `http://apis.mapmyindia.com/advancedmaps/v1/${api_key}/rev_geocode?lng=${latitude}&lat=${longitude}`
-```
-```https
-https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}
+  https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `lat & lon`      | `string` | **Required**. Your Api Key |
+| `latitude & longitude`      | `string` | **Required**. Your Api Key |
 
 #### Get all State list of India
 ```https
@@ -63,6 +61,10 @@ https://cdn-api.co-vin.in/api/v2/admin/location/states
 ```https
 https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 ```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `state id`      | `string` | **Required**. State Id |
 
 
 
