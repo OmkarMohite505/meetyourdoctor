@@ -110,6 +110,23 @@ Display Payment UI & Checkout
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
 ```
+#### Twilio SMS API
+```bash
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+		Message message = Message.creator(new PhoneNumber(MY_NUMBER), new PhoneNumber("+917620608558"),
+				 "Hello User, Your Appointment Booked Successfully\nRegards,\nMeet Your Doctor").create();
+```
+#### Mail Gmail API
+```bash
+                SimpleMailMessage mesg = new SimpleMailMessage();
+		mesg.setTo("user@gmail.com");
+		mesg.setSubject("Your Appointment Bookking Details Updated Successfully");
+		var doctorName = appointment.getDoctor().getFirstName();
+		mesg.setText("Dear " + appointment.getPatient().getFirstName() + ",\nYour Appointment Closed By Doctor. "
+				+ doctorName + "\nFor more information log on to www.meetyourdoctor.co.in"
+				+ "\nRegards,\nMeet You Doctor Services");
+		sender.send(mesg);
+```
 
 
 
