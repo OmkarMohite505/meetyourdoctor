@@ -24,7 +24,7 @@
 2. Razorpay Api key
 3. OpenWeather Api key
 
-Swagger Url
+## Swagger Url
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
@@ -67,7 +67,6 @@ https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
 | `state id`      | `string` | **Required**. State Id |
 
 #### Razorpay API
-Dependancy
 ```bash
 		<dependency>
 			<groupId>com.razorpay</groupId>
@@ -119,7 +118,6 @@ Display Payment UI & Checkout
         paymentObject.open();
 ```
 #### Twilio SMS API
-Dependancy
 ```bash
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
@@ -133,7 +131,6 @@ Dependancy
 				 "Hello User, Your Appointment Booked Successfully\nRegards,\nMeet Your Doctor").create();
 ```
 #### Mail Gmail API
-Dependacy
 ```bash
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
