@@ -1,4 +1,4 @@
-# MeetYourDoctor
+# Meet Your Doctor- Web Portal
 <div>
   <img src="https://github.com/devicons/devicon/blob/master/icons/java/java-original-wordmark.svg" title="Java" alt="Java" width="40" height="40"/>&emsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&emsp;
@@ -147,6 +147,11 @@ Display Payment UI & Checkout
 				+ "\nRegards,\nMeet You Doctor Services");
 		sender.send(mesg);
 ```
-
+## Future Scope
+1. Client & Server Side Validation
+2. Exception handling
+3. All Pages of UI in Marthi Language
+4. WhatsApp Business API Integration
+5. Virtual Consultation for Patients and Doctors 
 
 
