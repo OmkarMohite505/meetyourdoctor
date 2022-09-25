@@ -27,7 +27,7 @@
 
 #### Monolithic Architecture
 
-##Platform used
+## Platform used
 1. JDK-11
 2. Maven 4.0.0
 3. springframework 2.7.3
