@@ -11,6 +11,13 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
 </div>
 
+#Features
+1. Localization based on Geography
+2. JWT based Authentication
+3. Role based user Authorization
+4. Restful Web Service
+5. Single Page Application
+
 Swagger Url
 ```bash
 http://localhost:8080/swagger-ui/index.html
