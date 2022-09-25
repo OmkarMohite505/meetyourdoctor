@@ -84,7 +84,7 @@ Display Payment UI & Checkout
             key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: "INR",
-            name: `Dr. ${doctor.firstName} ${doctor.lastName}`,
+            name: ``,
             description: "Appointment Fees of Doctor",
             order_id: order_id,
             image: `data:image/jpg;base64,${doctorPic}`,
@@ -93,19 +93,7 @@ Display Payment UI & Checkout
                     orderCreationId: order_id,
                     razorpayPaymentId: response.razorpay_payment_id,
                     razorpayOrderId: response.razorpay_order_id,
-                    patientId: patient.patientId,
-                    appointmentId: appointmentId
                 };
-                console.log(data);
-
-                axios.post(`${IP_ADDRS}/api/patient/appointment/pay/update_order`, data, { headers: { "Authorization": `Bearer ${patient.jwt}` } })
-                    .then(res => {
-                        swal("Payment Success", "You Appointment Booked, Details Sent, Redirecting to Profile Page", "success");
-                        navigate(`/patient`);
-                    })
-                    .catch(err => { alert("error") });
-
-                // alert("Payment Success");
             },
             prefill: {
                 name: `${patient.firstName} ${patient.lastName}`,
@@ -119,7 +107,6 @@ Display Payment UI & Checkout
                 color: "#61dafb",
             },
         };
-
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
 ```
