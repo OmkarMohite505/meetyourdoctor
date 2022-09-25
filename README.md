@@ -18,18 +18,19 @@
 4. Restful Web Service
 5. Single Page Application
 
-Swagger Url
-```bash
-http://localhost:8080/swagger-ui/index.html
-```
 
 ## Prerequisites to start Application on your machine
 1. Gmail App Password
 2. Razorpay Api key
 3. OpenWeather Api key
 
+Swagger Url
+```bash
+http://localhost:8080/swagger-ui/index.html
+```
 
-## API Reference
+
+## 3rd Party API Used 
 
 #### Get Weather details
 
@@ -46,10 +47,23 @@ http://localhost:8080/swagger-ui/index.html
 ```http
   GET `http://apis.mapmyindia.com/advancedmaps/v1/${api_key}/rev_geocode?lng=${latitude}&lat=${longitude}`
 ```
+```https
+https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}
+```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `lat & lon`      | `string` | **Required**. Your Api Key |
+
+#### Get all State list of India
+```https
+https://cdn-api.co-vin.in/api/v2/admin/location/states
+```
+#### Get all districts list
+```https
+https://cdn-api.co-vin.in/api/v2/admin/location/districts/${state_id}
+```
+
 
 
 
