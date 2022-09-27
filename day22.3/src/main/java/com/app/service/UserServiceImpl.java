@@ -123,12 +123,6 @@ public class UserServiceImpl implements UserService {
 		mapper.map(patientDTO, patient);
 		patient.setLogin(persistentUser);
 
-		Set<PatientAddress> address = new HashSet<>();
-		List<PatientAddress> persistentAddress = patientAddressRepo.saveAll(patientDTO.getAddress());
-		for (PatientAddress patientAddress : persistentAddress) {
-			address.add(patientAddress);
-		}
-		patient.setAddress(address);
 		String defaultProfile = baseFolder + File.separator + "default.jpg";
 		patient.setProfilePicture(defaultProfile);
 		Patient persistentPatient = patientRepository.save(patient);
@@ -164,24 +158,12 @@ public class UserServiceImpl implements UserService {
 		doctor.setProfilePicture(defaultProfile);
 		// since all rpimary details of doc is set , save the entity (parent rec saved)
 		Doctor persistentDoctor = doctorRepository.save(doctor);// ins in doc tbl
-		// establish uni from adr --> doc
-//		doctorDTO.getAddress().forEach(a -> a.setDoctor(persistentDoctor));
-		// save all adr entities
-		List<Address> persistentAddress = addressRepository.saveAll(doctorDTO.getAddress());// ins in adr tbl with FK
 		// get acct details from dto
 		BankAccount account = doctorDTO.getBankAccount();
 		// establish uni dir asso acct --> doc
 		account.setDoctor(persistentDoctor);
 		// save child rec of acc with fk set
 		bankRepository.save(account);// ins in acct tbl with FK
-		// Your payload n dto had a problem : I have corrected it : should be Set<..>
-		// establish uni dir asso timetable --> doc
-//		doctorDTO.getTimetables().forEach(t ->{
-//			t.setDoctor(persistentDoctor);
-
-//		});
-		// save tm tbls with FK : doc id
-		doctorTimetableRepo.saveAll(doctorDTO.getTimetables());// ins in doc tm tbl with FK
 
 		UserResponseDTO dto = new UserResponseDTO();
 		dto.setId(persistentDoctor.getDoctorId());

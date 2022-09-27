@@ -93,7 +93,7 @@ function SetTimeTable() {
             <button className="btn btn-danger" onClick={logout} style={{ float: "right", marginTop: "10px", marginRight: "10px" }}>Logout</button>
             <button className='btn btn-secondary' style={{ float: "right", marginTop: "10px", marginRight: "10px" }} onClick={() => navigate("/doctor")}>Go Back</button>
             <br /><br />
-            <h2>Update Time Table</h2>
+            <h2>Set Time Table</h2>
             <form method="POST">
 
                 <div style={{ marginTop: '10px' }} className="form-group">

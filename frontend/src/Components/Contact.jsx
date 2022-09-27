@@ -7,7 +7,7 @@ const Contact = () => {
 
     
 
-    const iframe = '<iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.238729709174!2d73.75950412391427!3d18.653280246812585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e413287e41%3A0x29d8bfdf427740f2!2s43%2C%20Sector%20No.%2026%2C%20Pradhikaran%2C%20Nigdi%2C%20Pimpri-Chinchwad%2C%20Maharashtra%20411044!5e0!3m2!1sen!2sin!4v1662206951194!5m2!1sen!2sin" width="700" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+    const iframe = '<iframe  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.238729709174!2d73.75950412391427!3d18.653280246812585!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2b9e413287e41%3A0x29d8bfdf427740f2!2s43%2C%20Sector%20No.%2026%2C%20Pradhikaran%2C%20Nigdi%2C%20Pimpri-Chinchwad%2C%20Maharashtra%20411044!5e0!3m2!1sen!2sin!4v1662206951194!5m2!1sen!2sin" width="1000" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
     function Iframe(props) {
         return (<div dangerouslySetInnerHTML={ {__html:  props.iframe?props.iframe:""}} />);
       }
@@ -79,22 +79,22 @@ const Contact = () => {
                 <ul style={{color : "blue"}}>
                     <li>
                         <h4>
-                       <input value="meetyourdoctor007@gmail.com" disabled id='copytext1' style={{"border":"none", "width":"400px"}}></input> <a href='mailto:meetyourdoctor007@gmail.com'> <button  className="button-42">Send Email</button></a><p id='copy1'></p>                   
+                       <input value="meetyourdoctor007@gmail.com" disabled id='copytext1' style={{"border":"none", "width":"400px"}}></input> <a href='mailto:meetyourdoctor007@gmail.com'> <button style={{ "marginLeft": "0px", "borderRadius": "5px", "fontSize": "12px" }}>Send Email</button></a><p id='copy1'></p>                   
                         </h4>
                     </li>
                     <li>
                         <h4>
-                        <input value="omkarmohite505@gmail.com" disabled id='copytext2' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText2} className="button-42">Copy Email</button><p id='copy2'></p>         
+                        <input value="omkarmohite505@gmail.com" disabled id='copytext2' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText2} style={{ "marginLeft": "0px", "borderRadius": "5px", "fontSize": "12px" }}>Copy</button><p id='copy2'></p>         
                         </h4>
                     </li>
                     <li>
                         <h4>
-                        <input value="kunallohande23@gmail.com" disabled id='copytext5' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText5} className="button-42">Copy Email</button><p id='copy5'></p>         
+                        <input value="kunallohande23@gmail.com" disabled id='copytext5' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText5} style={{ "marginLeft": "0px", "borderRadius": "5px", "fontSize": "12px" }}>Copy</button><p id='copy5'></p>         
                         </h4>
                     </li>
                 </ul>
-                <p><h3>Call Us :</h3><input value="+917620608558" disabled id='copytext3' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText3} className="button-42">Copy Mobile No</button> </p><p id='copy3'></p> 
-                <p><input value="+918149141899" disabled id='copytext4' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText4} className="button-42">Copy Mobile No</button> </p><p id='copy4'></p> 
+                <p><h3>Call Us :</h3><input value="+917620608558" disabled id='copytext3' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText3} style={{ "marginLeft": "0px", "borderRadius": "5px", "fontSize": "12px" }}>Copy</button> </p><p id='copy3'></p> 
+                <p><input value="+918149141899" disabled id='copytext4' style={{"border":"none", "width":"400px"}}></input>  <button onClick={copyText4} style={{ "marginLeft": "0px", "borderRadius": "5px", "fontSize": "12px" }}>Copy</button> </p><p id='copy4'></p> 
                 <ReactTooltip id='address_tooltip' delayShow={1000}>Click to see Address</ReactTooltip>
                 <details>
                   <summary data-tip data-for="address_tooltip">Our Office Address:</summary>
@@ -102,7 +102,8 @@ const Contact = () => {
                     Sector No. 26, Pradhikaran, Nigdi
                     Pimpri-Chinchwad, Maharashtra 411044</p>
                   </details> 
-                <Iframe iframe={iframe}></Iframe>
+                <Iframe iframe={iframe}></Iframe><br/><br/><br/><br/><br/>
+                <p style={{"marginLeft":"40px"}}></p>
                 </div>
         </>
     )

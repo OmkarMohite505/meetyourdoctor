@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>day22.3</artifactId>
+	<artifactId>MeetYourDoctor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>day22.3</name>
+	<name>MeetYourDoctor</name>
 	<description>Spring Boot Project With JWT Security Upgraded to latest version n User Registration
 	</description>
 	<properties>

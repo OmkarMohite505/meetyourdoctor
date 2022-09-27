@@ -57,8 +57,20 @@ import ReactTooltip from 'react-tooltip';
 
 
 function App() {
-
+  const [id, setId] = useState("");
+  
  
+  const setItem=()=>sessionStorage.setItem("lngCnt","1");
+  setTimeout(setItem,3000);
+ 
+
+  useEffect(()=>{
+   let cnt = sessionStorage.getItem("lngCnt")
+   if(cnt === null)
+    setId("mydiv")
+    else
+    setId("");
+  },[])
   
 
   const currentLanguageCode = cookies.get('i18next') || 'en'
@@ -127,7 +139,7 @@ function App() {
     
 <ReactTooltip id="select_language_tooltip">Click to Select Language</ReactTooltip>
     <Header title="MeetYourDoctor" />
-   <div id='' data-tip data-for="select_language_tooltip" style={{"float":"right","width":"80px"}}> <Icon></Icon></div>
+   <div id={id} data-tip data-for="select_language_tooltip" style={{"float":"right"}}> <Icon></Icon></div>
    
 
           <Routes>

@@ -158,10 +158,12 @@ public class DoctorServiceImpl implements IDoctorService {
 		spec.setSpecialityType(speciality);
 
 		List<Doctor> filteredList = list.stream().filter(d -> d.getSpeciality().contains(spec))
+				.filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
 				.collect(Collectors.toList());
 
 		return filteredList;
 	}
+
 	@Override
 	public void updateSpecialityPhoto(long doctorId, String specialityType, MultipartFile specialityPic)
 			throws IOException {
@@ -177,10 +179,11 @@ public class DoctorServiceImpl implements IDoctorService {
 			doctor.getSpeciality().forEach(s -> s.setSpecialityPhoto(completePath));
 		}
 	}
+
 	@Override
 	public void updateEducatiionPhoto(long doctorId, MultipartFile[] educationPic) {
 		Doctor doctor = doctorRepository.findById(doctorId).orElseThrow();
-		
+
 		List<String> eduPicPath = new ArrayList<>();
 		List<String> fileNames = new ArrayList<>();
 		try {
@@ -193,8 +196,7 @@ public class DoctorServiceImpl implements IDoctorService {
 						+ file.getOriginalFilename();
 				System.out.println("complete path " + completePath);
 				try {
-					 Files.copy(file.getInputStream(),
-							Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING);
+					Files.copy(file.getInputStream(), Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -217,9 +219,9 @@ public class DoctorServiceImpl implements IDoctorService {
 			educationalQualification.setCertificatePhoto(arr[index++]);
 		}
 	}
-	
+
 	public void uploadSpecialityPhoto(long doctorId, MultipartFile specialityPhoto) {
-		
+
 	}
 
 	@Override
@@ -244,29 +246,37 @@ public class DoctorServiceImpl implements IDoctorService {
 
 	@Override
 	public List<Doctor> findAllDoctorsByTown(String Town) {
-		
-		return doctorRepository.findAllDoctorsByTown(Town);
+
+		List<Doctor> list = doctorRepository.findAllDoctorsByTown(Town);
+		return list.stream().filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
+				.collect(Collectors.toList());
 //		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByCity(String city) {
-		return doctorRepository.findAllDoctorsByCity(city);
+		List<Doctor> list = doctorRepository.findAllDoctorsByCity(city);
+		return list.stream().filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
+				.collect(Collectors.toList());
 //		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByState(String state) {
-		return doctorRepository.findAllDoctorsByState(state);
+		List<Doctor> list = doctorRepository.findAllDoctorsByState(state);
+		return list.stream().filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
+				.collect(Collectors.toList());
 //		return null;
 	}
 
 	@Override
 	public List<Doctor> findAllDoctorsByPincode(int pincode) {
-		return doctorRepository.findAllDoctorsByPinCode(pincode);
+		List<Doctor> list = doctorRepository.findAllDoctorsByPinCode(pincode);
+		return list.stream().filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
+				.collect(Collectors.toList());
 //		return null;
 	}
-	
+
 	@Override
 	public void updatePassword(UpdatePasswordDTO dto) {
 		Doctor doctor = doctorRepository.getReferenceById(dto.getId());
@@ -276,8 +286,8 @@ public class DoctorServiceImpl implements IDoctorService {
 	@Override
 	public void updateTimeTable(DoctorTimeTableDTO dto) {
 		Doctor doctor = doctorRepository.getReferenceById(dto.getDoctorId());
-		doctor.getTimetables().forEach(t ->{
-			if(t.getTimeTableId() == dto.getTimeTableId()) {
+		doctor.getTimetables().forEach(t -> {
+			if (t.getTimeTableId() == dto.getTimeTableId()) {
 				t.setBreakTime(dto.getBreakTime());
 				t.setEndTime(dto.getEndTime());
 				/* t.setSlotDuration(dto.getSlotDuration()); */
@@ -296,7 +306,7 @@ public class DoctorServiceImpl implements IDoctorService {
 	@Override
 	public void deleteDoctor(long doctorId) {
 		doctorRepository.deleteById(doctorId);
-		
+
 	}
 
 }

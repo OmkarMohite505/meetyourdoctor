@@ -219,8 +219,14 @@ function PatientRegistration() {
         console.log(latitude, longitude);
         var lat = 18;
         var lng = 73;
-        var url = "http://apis.mapmyindia.com/advancedmaps/v1/430d486da44c960e763fbcec9c38d701/rev_geocode?lng=" + latitude + "&lat=" + longitude;
+        const mapMyIndiaApiKey = "430d486da44c960e763fbcec9c38d701";
+        var url = `http://apis.mapmyindia.com/advancedmaps/v1/${mapMyIndiaApiKey}/rev_geocode?lng=${latitude}&lat=${longitude}`;
         axios.get(url).then(res => console.log(res.data)).catch(err => console.log(err));
+        const googleAPIKey = "AIzaSyCMrXWM5-K3AF3TK3gcq6AdZPwMAkbHSRE";
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}`)
+            .then(res => { console.log(res.data) })
+            .catch(err => { console.log(err) })
+            swal("Currently this option not available","Please Enter Address manually","info");
     }
     const onError = () => {
 
@@ -277,13 +283,13 @@ function PatientRegistration() {
         let pass = e.target.value;
         let passRegex = new RegExp(/^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z]).{8,16}$/);
         if (passRegex.test(pass) === true) {
-            alert("true");
+            // alert("true");
             setError({ ...Error, password_error: "" });
             setFlag({ ...flag, password: true });
 
         }
         else {
-            alert("false");
+            // alert("false");
             setError({ ...Error, password_error: "Password must be alphanumeric and should contains at least a special character with min length 8 and max length 16" });
             setFlag({ ...flag, password: false });
 
@@ -320,8 +326,7 @@ function PatientRegistration() {
         let mobileNumber = e.target.value;
         let mnRegex = new RegExp(/^[0-9]{10}$/);
         // if (mnRegex.test(mobileNumber) === true)
-        if(mobileNumber.length > 15)
-         {
+        if (mobileNumber.length > 15) {
             setError({ ...Error, mobile_number_error: "" });
             setFlag({ ...flag, mobileNumber: true });
 
@@ -402,11 +407,10 @@ function PatientRegistration() {
 
     }
     const submitData = () => {
-        alert(flag.password);
+        // alert(flag.password);
         // validateMobileNumber();
-        if(! flag.email || ! flag.password)
-        {
-            swal("Enter Correct Email and Password","","warning");
+        if (!flag.email || !flag.password) {
+            swal("Enter Correct Email and Password", "", "warning");
             return;
         }
 
