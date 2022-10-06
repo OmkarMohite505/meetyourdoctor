@@ -11,7 +11,7 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
 </div><br>
 <a href="www.meetyourdoctor.co.in" target="_blank">Visit Website</a><br>
-<a href="www.meetyourdoctor.co.in:8080/swagger-ui/index.html" target="_blank">Check Rest API</a><br>
+<a href="http://meetyourdoctor.co.in/swagger-ui/index.html" target="_blank">Check Rest API</a><br>
 
 # Features
 1. Localization based on Geography
