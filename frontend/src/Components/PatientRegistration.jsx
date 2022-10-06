@@ -219,10 +219,10 @@ function PatientRegistration() {
         console.log(latitude, longitude);
         var lat = 18;
         var lng = 73;
-        const mapMyIndiaApiKey = "430d486da44c960e763fbcec9c38d701";
+        const mapMyIndiaApiKey = "your_api_key";
         var url = `http://apis.mapmyindia.com/advancedmaps/v1/${mapMyIndiaApiKey}/rev_geocode?lng=${latitude}&lat=${longitude}`;
         axios.get(url).then(res => console.log(res.data)).catch(err => console.log(err));
-        const googleAPIKey = "AIzaSyCMrXWM5-K3AF3TK3gcq6AdZPwMAkbHSRE";
+        const googleAPIKey = "your_api_key";
         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${googleAPIKey}`)
             .then(res => { console.log(res.data) })
             .catch(err => { console.log(err) })

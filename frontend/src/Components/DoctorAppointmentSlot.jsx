@@ -166,9 +166,9 @@ function DoctorAppointmentSlot() {
                 </Table>
             </div>
 
-            <div>
-                <label htmlFor="">Select date</label><input type="date" name="date" id="" onChange={e => setDate(e.target.value)} min="2022-08-30" required /><br />
-                <label htmlFor="">Select Time</label><input type="time" name="time" id="" onChange={e => setTime(e.target.value)} required/><br />
+            <div style={{"marginLeft":"100px"}}>
+                <label htmlFor="">Select date &emsp;</label><input type="date" name="date" id="" onChange={e => setDate(e.target.value)} min="2022-08-30" required /><br /><br />
+                <label htmlFor="">Select Time &emsp;</label><input type="time" name="time" id="" onChange={e => setTime(e.target.value)} required /><br /><br /><br />
                 <button className="btn btn-success" onClick={bookAppointment}>Book Appointment</button>
             </div>
         </div>

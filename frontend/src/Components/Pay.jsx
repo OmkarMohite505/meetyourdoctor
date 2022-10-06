@@ -23,11 +23,12 @@ function Pay() {
         console.log(doctor.profilePicture.substring(15));
     }, [])
     useEffect(() => {
-        let doctor = JSON.parse(sessionStorage.getItem("doctor"));
-        axios.get(`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture.substring(15)}`)
-            .then(res => {
-                setDoctorPic(res.data.image);
-            })
+        
+        // let doctor = JSON.parse(sessionStorage.getItem("doctor"));
+        // axios.get(`${IP_ADDRS}/api/image/path/ROLE_DOCTOR/${doctor.profilePicture.substring(15)}`)
+        //     .then(res => {
+        //         setDoctorPic(res.data.image);
+        //     })
     }, [doctor])
 
     function loadScript(src) {
@@ -69,13 +70,14 @@ function Pay() {
         amount = amount * 100;
 
         const options = {
-            key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
+            key: "your_razorpay_key_id", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: "INR",
             name: `Dr. ${doctor.firstName} ${doctor.lastName}`,
             description: "Appointment Fees of Doctor",
             order_id: order_id,
-            image: `data:image/jpg;base64,${doctorPic}`,
+            // image: `data:image/jpg;base64,${doctorPic}`,
+            image:`${IP_ADDRS}/api/image/ROLE_DOCTOR/${doctor.doctorId}`,
             handler: async function (response) {
                 const data = {
                     orderCreationId: order_id,
@@ -120,8 +122,9 @@ function Pay() {
             <label>Fees to Pay to Book Appoinment </label>
             <h3>Amount : {doctor.fees}</h3>
             <h2>Dr. {doctor.firstName} &nbsp;{doctor.lastName}</h2>
-            <img src={`data:image/jpg;base64,${doctorPic}`} alt="" height="200px" width="200px" />
-            &emsp;  <button className="btn btn-success btn-lg" onClick={displayRazorpay}>
+            {/* <img src={`data:image/jpg;base64,${doctorPic}`} alt="" height="200px" width="200px" /> */}
+            <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${doctor.doctorId}`} style={{'height':'200px','width':'200px'}}></img></div>
+            &emsp;<br />  <button className="btn btn-success btn-lg" onClick={displayRazorpay}>
 
                 Confirm
             </button>

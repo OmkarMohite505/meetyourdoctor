@@ -107,6 +107,18 @@ function SearchDoctor() {
 
         setPincode(e.target.value);
     }
+
+    const getAllDoctorList=()=>{
+        axios.get(`${IP_ADDRS}/api/patient/get_all_doctors_list`,
+        { headers: { "Authorization": `Bearer ${token}` } })
+        .then(res => {
+            // console.log(res.data);
+            setDoctorList(res.data);
+            // setTempDoctorList(res.data);
+            if (res.data.length === 0)
+                swal("No Doctor Found for Entered Pincode", "", "info");
+        })
+    }
     const fetchDoctorListByPincode=()=>{
         if(pincode.length !== 6){
             swal("Enter Correct Pincode","","warning");
@@ -212,16 +224,11 @@ function SearchDoctor() {
                                     <option key={v} value={v}>{v}</option>
                                 );
                             })}
-                        </select>
+                        </select><br /> <br />
+                        <button onClick={getAllDoctorList}>Show All Doctors List</button>
                     </div>
 
 
-                    {/* <button className='btn btn-primary' style={{ marginLeft: "10px", marginTop: "10px" }} onClick={search}>Search</button> */}
-                    {/* <button type="button" className="btn btn-danger" style={{ marginLeft: "10px", marginTop: "10px" }} onClick={refreshPage}>Reset</button> */}
-                    {/* <button className="btn btn-danger" onClick={() => navigate("/patient")} style={{ marginLeft: "10px", marginTop: "10px" }}>Cancel</button> */}
-                </div>
-                <div>
-                    <p className="text text-danger"><b>{error}</b></p>
                 </div>
 
 

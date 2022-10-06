@@ -1,4 +1,0 @@
-FROM openjdk:11
-EXPOSE 8080
-ADD target/meet.jar
-ENTRYPOINT ["java","-jar","meet.jar"]

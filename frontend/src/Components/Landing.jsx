@@ -35,7 +35,7 @@ const Landing = () => {
     const interval = () => setInterval(tick, 1000);
 
     const getWeatherDetails = () => {
-        const apikey = "0fb34da859a6bf583940533efba926a5";   // replace this by with api
+        const apikey = "your_api_key";   // replace this by with api
         const wdata = { longitude, latitude };
 
         function ascii(a) { return String.fromCharCode(a); }
