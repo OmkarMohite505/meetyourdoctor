@@ -22,42 +22,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "patients")
-public class Patient {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long patientId;
-
-	@Column(length = 35, unique = true)
-	private String email;
-
-	@Column(length = 20)
-	String firstName;
-
-	@Column(length = 25)
-	String lastName;
-
-//	@Column(length = 15, unique = true)
-	@Column(length = 18)
-	String mobileNumber;
-
-//	@Column(length = 15, unique = true)
-	@Column(length = 18)
-	String alternateMobileNumber;
-
-	@Enumerated(EnumType.STRING)
-	GenderType gender;
-
-	@Column(length = 250)
-	private String profilePicture;
-
-	@Column(length = 5, name = "blood_group")
-	String bloodGroup;
-
-	private LocalDate dob;
-
+public class Patient extends Person{
 	// Patient has hobbies
 	@ElementCollection // (fetch = FetchType.EAGER) // mandatory to specify that foll is collection of
 						// basic type
@@ -76,8 +43,5 @@ public class Patient {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "patient_id")
 	private Set<PatientAddress> address;
-
-	@Lob
-	private byte[] profileImgDB;
 
 }

@@ -29,42 +29,10 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "doctors")
-public class Doctor {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long doctorId;
-
-	@Column(length = 35, unique = true)
-	private String email;
-
-	@Column(name = "first_name", length = 20)
-	private String firstName;
-
-	@Column(name = "last_name", length = 25)
-	private String lastName;
-
-//	@Column(name = "mobile_number", length = 18, unique = true)
-	@Column(name = "mobile_number", length = 18)
-	private String mobileNumber;
-
+public class Doctor extends Person{
 //	@JsonIgnore
 	@Column(length = 12, unique = true)
 	private String aadharNo;
-
-	@Column(length = 250)
-	private String profilePicture;
-
-//	@Pattern(regexp="({13})")
-//	@Column(length = 18, unique = true)
-	@Column(length = 18)
-	private String alternateMobileNumber;
-
-	@Column(length = 30)
-	@Enumerated(EnumType.STRING)
-	private GenderType gender;
-
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate dob;
 
 	private double fees;
 
@@ -72,7 +40,6 @@ public class Doctor {
 
 	private boolean isDoctorSuspended;
 
-	// Doctor has hobbies
 //	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER) // mandatory to specify that foll is collection of basic type
 	@CollectionTable(name = "doctor_hobbies", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
@@ -90,15 +57,6 @@ public class Doctor {
 			"doctor_id", "speciality_type" }))
 	private Set<Speciality> speciality = new HashSet<>();
 
-//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "doctor")
-//	@JoinColumn(name = "address_id")
-
-//	@OneToMany(
-//	        cascade = CascadeType.ALL,
-//	        orphanRemoval = true
-//	    )
-//	@JoinColumn(name="doctor_id")
-//	private Set<Address> address;
 
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
@@ -106,45 +64,13 @@ public class Doctor {
 //	@PrimaryKeyJoinColumn
 	private Login login;
 
-	@Lob
-	private byte[] profileImgDB;
-
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "doctor_id")
 	private Set<DoctorTimeTable> timetables;
+
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "doctor_id")
 	private Set<Address> address;
 
-//	@JsonIgnore
-//	@OneToOne(mappedBy = "doctor",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JoinColumn(name = "bank_acct_id")
-//	@PrimaryKeyJoinColumn
-//	private BankAccount bankAccount;
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Doctor other = (Doctor) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		return true;
-	}
 
 }
