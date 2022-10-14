@@ -9,7 +9,9 @@
   <img src="https://github.com/devicons/devicon/blob/master/icons/mysql/mysql-original-wordmark.svg" title="MySQL"  alt="MySQL" width="40" height="40"/>&emsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" title="AWS" alt="AWS" width="40" height="40"/>&emsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original-wordmark.svg" title="Git" **alt="Git" width="40" height="40"/>
-</div>
+</div><br>
+<a href="http://www.meetyourdoctor.co.in" target="_blank">Visit Website</a><br>
+<a href="http://meetyourdoctor.co.in:8080/swagger-ui/index.html" target="_blank">Check Rest API</a><br>
 
 # Features
 1. Localization based on Geography
@@ -115,7 +117,7 @@ Display Payment UI & Checkout
 ```bash
             const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
             const options = {
-            key: "rzp_test_avqPqvBNedSxPH", // Enter the Key ID generated from the Dashboard
+            key: "your_key", // Enter the Key ID generated from the Dashboard
             amount: amount.toString(),
             currency: "INR",
             name: ``,
