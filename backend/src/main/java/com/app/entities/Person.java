@@ -33,7 +33,7 @@ import javax.persistence.MappedSuperclass;
 public class Person {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long doctorId;
+	private Long id;
 
 	@Column(length = 35, unique = true)
 	private String email;
@@ -50,7 +50,6 @@ public class Person {
     @Column(length = 250)
 	private String profilePicture;
 
-//	@Pattern(regexp="({13})")
 //	@Column(length = 18, unique = true)
 	@Column(length = 18)
 	private String alternateMobileNumber;

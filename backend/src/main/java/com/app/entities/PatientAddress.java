@@ -47,11 +47,4 @@ public class PatientAddress  {
 	
 	private int pincode;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "patient_id")
-//	private Patient patient;
-	
-	
-
-
 }

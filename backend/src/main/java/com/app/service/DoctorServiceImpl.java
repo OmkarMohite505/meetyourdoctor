@@ -100,27 +100,14 @@ public class DoctorServiceImpl implements IDoctorService {
 
 		List<Doctor> filteredList = persistList.stream()
 				.filter(d -> d.isDoctorVerified() == true && d.isDoctorSuspended() == false)
-//		.forEach(d-> System.out.println());
 				.collect(Collectors.toList());
-//		persistList.stream().filter(d->{
-//			(d.isDoctorVerified() ==true && d.isDoctorSuspended == false);
-//		});
-//		persistList.forEach(d->{
-//			DoctorFilter doctorFilter = new DoctorFilter();
-//			mapper.map(persistList, doctorFilter);
-//			list.add(doctorFilter);
-//		});
 		return filteredList;
 
 	}
 
 	@Override
 	public List<Doctor> getAllDoctorsListForAdmin() {
-//		List<DoctorDTO> list = new ArrayList<>();
 		List<Doctor> persistList = doctorRepository.findAll();
-//		persistList.forEach(d->{
-//			list.add(mapper.map(persistList, DoctorDTO.class));
-//		});
 		return persistList;
 	}
 

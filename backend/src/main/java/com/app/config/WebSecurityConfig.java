@@ -45,8 +45,6 @@ public class WebSecurityConfig {
 		.antMatchers("/api/admin/**").hasRole("ADMIN")
 		.antMatchers("/api/patient/**").hasAnyRole("PATIENT","ADMIN")
 		.antMatchers("/api/doctor/**").hasAnyRole("DOCTOR","ADMIN")
-		.antMatchers("/products/purchase").hasRole("CUSTOMER")
-//		.antMatchers("/api/doctor/appointment").hasRole("DOCTOR")
 		.antMatchers("/api/image/**").permitAll()
 		.antMatchers("/products/view", "/auth/**", "/swagger*/**", "/v*/api-docs/**").permitAll() // enabling global
 																										// access to all

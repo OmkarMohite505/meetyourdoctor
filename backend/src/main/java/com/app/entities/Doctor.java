@@ -30,7 +30,6 @@ import lombok.ToString;
 @Entity
 @Table(name = "doctors")
 public class Doctor extends Person{
-//	@JsonIgnore
 	@Column(length = 12, unique = true)
 	private String aadharNo;
 
@@ -40,7 +39,6 @@ public class Doctor extends Person{
 
 	private boolean isDoctorSuspended;
 
-//	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER) // mandatory to specify that foll is collection of basic type
 	@CollectionTable(name = "doctor_hobbies", joinColumns = @JoinColumn(name = "doctor_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"doctor_id", "hobby" }))
@@ -57,11 +55,9 @@ public class Doctor extends Person{
 			"doctor_id", "speciality_type" }))
 	private Set<Speciality> speciality = new HashSet<>();
 
-
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "login_id")
-//	@PrimaryKeyJoinColumn
 	private Login login;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

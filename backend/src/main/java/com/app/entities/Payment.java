@@ -24,21 +24,9 @@ public class Payment {
 
 	private Double amount;
 
-	/* private Double amount_paid; */
-
 	private String razorpayPaymentId;
 
-	/*
-	 * private String razorpayOrderId;
-	 * 
-	 * private String razorpaySignature;
-	 */
 	@Column(length = 20)
 	private String status;
-
-//	@MapsId
-//	@OneToOne
-//	@JoinColumn(name = "appointment_id")
-//	private Appointment appointmentId;
 
 }

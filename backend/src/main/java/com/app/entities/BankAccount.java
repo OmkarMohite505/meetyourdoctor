@@ -21,7 +21,6 @@ import lombok.Setter;
 @Table(name = "bank_accounts")
 public class BankAccount {
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "bank_acct_id")
 	private Long bankId;
 	
@@ -41,7 +40,6 @@ public class BankAccount {
 	@JsonProperty("IFSC_Code") 
 	private String IFSCcode;
 	
-//	@OneToOne(mappedBy = "bankAccount")
 	@OneToOne
 	@MapsId
 	@JoinColumn(name = "bank_acct_id")

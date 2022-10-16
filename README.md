@@ -1,4 +1,4 @@
-# Meet Your Doctor- Web Portal
+# Meet Your Doctor - Web Portal
 <div>
   <img src="https://github.com/devicons/devicon/blob/master/icons/java/java-original-wordmark.svg" title="Java" alt="Java" width="40" height="40"/>&emsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&emsp;
@@ -27,12 +27,14 @@
 
 #### HTTP Communication Protocol
 
-#### Monolithic Architecture
+#### 3 - Tier Architecture
+
+#### Monolithic Backend Application Architecture
 
 ## Platform used
 1. JDK-11
 2. Maven 4.0.0
-3. springframework 2.7.3
+3. Springframework 2.7.3
 4. Spring Boot Web
 5. Spring Security 
 6. Spring Data JPA
@@ -179,7 +181,7 @@ Display Payment UI & Checkout
 ## Future Scope
 1. Client & Server Side Validation
 2. Exception handling
-3. All Pages of UI in Marthi Language
+3. All Pages of UI in Marathi & other Language
 4. WhatsApp Business API Integration
 5. Virtual Consultation for Patients and Doctors 
 

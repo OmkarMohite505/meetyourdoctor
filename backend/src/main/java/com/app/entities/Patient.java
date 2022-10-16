@@ -26,20 +26,16 @@ import lombok.Setter;
 @Table(name = "patients")
 public class Patient extends Person{
 	// Patient has hobbies
-	@ElementCollection // (fetch = FetchType.EAGER) // mandatory to specify that foll is collection of
-						// basic type
+	@ElementCollection // mandatory to specify that foll is collection of
 	@CollectionTable(name = "patient_hobbies", joinColumns = @JoinColumn(name = "patient_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"patient_id", "hobby" }))
 	@Column(name = "hobby", length = 40)
 	private List<String> hobbies = new ArrayList<>();
 
-	@OneToOne // (fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(name = "login_id")
-//	  @MapsId 
 	private Login login;
 
-//	@OneToMany//(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "address_id")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "patient_id")
 	private Set<PatientAddress> address;

@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 		patient.setProfilePicture(defaultProfile);
 		Patient persistentPatient = patientRepository.save(patient);
 		UserResponseDTO dto = new UserResponseDTO();
-		dto.setId(persistentPatient.getPatientId());
+		dto.setId(persistentPatient.getId());
 //		sendRegistrationEmailToPatient(persistentPatient.getEmail(), persistentPatient.getFirstName());
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(persistentPatient.getEmail());
@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
 		bankRepository.save(account);// ins in acct tbl with FK
 
 		UserResponseDTO dto = new UserResponseDTO();
-		dto.setId(persistentDoctor.getDoctorId());
+		dto.setId(persistentDoctor.getId());
 		SimpleMailMessage mesg = new SimpleMailMessage();
 		mesg.setTo(persistentDoctor.getEmail());
 		mesg.setSubject("Congratulations you are registered successfully ");
