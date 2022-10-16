@@ -24,6 +24,7 @@
 1. Code First
 2. Reactive(Declarative) Programming
 3. KISS
+4. DRY
 
 #### HTTP Communication Protocol
 
