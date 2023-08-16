@@ -25,7 +25,7 @@ function Doctor() {
     }, []);
 
     useEffect(() => {
-        // fetchImage();
+        fetchImage();
     }, [doctor])
 
     const logout = () => {
@@ -54,9 +54,9 @@ function Doctor() {
             <div className="container" style={{ marginBottom: "50px" }}>
                 <div className="row my-3">
                     <div className="col-sm-3"><h2 className="">Hello, Dr.{doctor.firstName} {doctor.lastName}</h2></div>
-                    <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${doctor.doctorId}`} style={{'height':'100px','width':'100px'}}></img></div>
-                    {/* <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{ 'height': '100px', 'width': '100px' }}></img></div> */}
-                    <div className="col-sm-6">
+                    {/* <div className="col-sm-3"><img src={`${IP_ADDRS}/api/image/ROLE_DOCTOR/${doctor.doctorId}`} style={{'height':'100px','width':'100px'}}></img></div> */}
+                    <div className="col-sm-8"><img src={`data:image/jpg;base64,${pic}`} style={{ 'height': '200px', 'width': '200px',"float": "right" }}></img></div>
+                    <div className="col-sm-6" style={{"width":"fit-content"}}>
                         <button onClick={logout} style={{ "float": "right" }} className="btn btn-danger">Logout</button>
                     </div>
                 </div>

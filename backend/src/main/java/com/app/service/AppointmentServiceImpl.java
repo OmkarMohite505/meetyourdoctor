@@ -116,8 +116,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		Patient patient = patientRepository.findById(appointmentDTO.getPatientId())
 				.orElseThrow(() -> new Exception("Patient not found"));
 
-		if (appointmentPersist.getDoctor().getId() == doctor.getId()
-				&& appointmentPersist.getPatient().getId() == patient.getId()) {
+		if (appointmentPersist.getDoctor().getDoctorId() == doctor.getDoctorId()
+				&& appointmentPersist.getPatient().getPatientId() == patient.getPatientId()) {
 
 			Appointment appt = appointmentRepository.getReferenceById(appointmentPersist.getAppointmentId());
 			appt.setAppointmentDescription(appointmentDTO.getAppointmentDescription());
@@ -137,7 +137,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		Appointment appointment = appointmentRepository.getReferenceById(appointmentId);
 		Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new Exception("Patient Not Found"));
 
-		if (appointment.getPatient().getId() != patientId)
+		if (appointment.getPatient().getPatientId() != patientId)
 			throw new Exception("Please Provide correct details");
 		List<String> appointmentImages = new ArrayList<>();
 		List<String> fileNames = new ArrayList<>();
@@ -240,7 +240,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		for (Appointment appt : list) {
 			AppointmentDTO dto = new AppointmentDTO();
 			mapper.map(appt, dto);
-			dto.setDoctorId(appt.getDoctor().getId());
+			dto.setDoctorId(appt.getDoctor().getDoctorId());
 			dto.setPatientId(patientId);
 //			dto.setPaymentStatus(appt.getPayment().getStatus());
 			dto.setDoctorName(appt.getDoctor().getFirstName());
@@ -258,7 +258,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 		for (Appointment appt : list) {
 			AppointmentDTO dto = new AppointmentDTO();
 			mapper.map(appt, dto);
-			dto.setPatientId(appt.getPatient().getId());
+			dto.setPatientId(appt.getPatient().getPatientId());
 			dto.setPatientName(appt.getPatient().getFirstName());
 //			dto.setPaymentStatus(appt.getPayment().getStatus());
 			dto.setDoctorName(appt.getDoctor().getFirstName());
@@ -271,7 +271,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	public void updateAndCloseAppointmentByDoctor(AppointmentDTO appointmentDTO) throws Exception {
 		Appointment persistAppointment = appointmentRepository.getReferenceById(appointmentDTO.getAppointmentId());
 		if (appointmentDTO.getAppointmentId() != persistAppointment.getAppointmentId()
-				&& appointmentDTO.getPatientId() != persistAppointment.getPatient().getId())
+				&& appointmentDTO.getPatientId() != persistAppointment.getPatient().getPatientId())
 			throw new Exception("Please Provide correct details");
 		persistAppointment.setStatus(appointmentDTO.getStatus());
 		persistAppointment.setAppointmentDescription(appointmentDTO.getAppointmentDescription());
@@ -322,7 +322,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 	@Override
 	public void cancelAppointmentByPatient(long appointmentId, long patientId) throws Exception {
 		Appointment appointmemnt = appointmentRepository.findById(appointmentId).orElseThrow(()->new Exception("Appoinntmment details not found"));
-		if(appointmemnt.getPatient().getId() != patientId)
+		if(appointmemnt.getPatient().getPatientId() != patientId)
 			throw new Exception("Wrong details you provided");
 		appointmentRepository.deleteById(appointmentId);
 	}

@@ -39,7 +39,7 @@ function Patient() {
     }, []);
 
     useEffect(() => {
-        // fetchImage();
+        fetchImage();
     }, [state])
 
     const logout = () => {
@@ -68,9 +68,9 @@ function Patient() {
                 <div className="row my-3">
                     <div className="col-sm-3"><h2 className="">Hello, {state.firstName} {state.lastName}</h2></div>
 
-                    <div className="col-sm-3"> <img src={`${IP_ADDRS}/api/image/ROLE_PATIENT/${state.patientId}`} style={{'height':'100px','width':'100px'}}></img></div>
-                    {/* <div className="col-sm-3"><img src={`data:image/jpg;base64,${pic}`} style={{ 'height': '100px', 'width': '100px' }}></img></div> */}
-                    <div className="col-sm-6">
+                    {/* <div className="col-sm-3"> <img src={`${IP_ADDRS}/api/image/ROLE_PATIENT/${state.patientId}`} style={{'height':'100px','width':'100px'}}></img></div> */}
+                    <div className="col-sm-8"><img src={`data:image/jpg;base64,${pic}`} style={{ 'height': '200px', 'width': '200px', "float": "right" }}></img></div>
+                    <div className="col-sm-6" style={{"width":"fit-content"}}>
                         <button onClick={logout} style={{ "float": "right" }} className="btn btn-danger">Logout </button>
                     </div>
                 </div>

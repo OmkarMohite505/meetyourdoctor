@@ -55,27 +55,27 @@ public class DoctorServiceImpl implements IDoctorService {
 	@Override
 	public String uploadProfilePicture(long doctorId, MultipartFile imageFile) throws IOException {
 		Doctor doctor = doctorRepository.getReferenceById(doctorId);
-//		Clock clock = Clock.systemDefaultZone();
-//		long milliSeconds = clock.millis();
-//		String completePath = baseFolder + File.separator + doctorId + milliSeconds + imageFile.getOriginalFilename();
-//		System.out.println("complete path " + completePath);
-//		System.out.println("Copied no of bytes "
-//				+ Files.copy(imageFile.getInputStream(), Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING));
-//		// save complete path to the image in db
-//		doctor.setProfilePicture(completePath);
-		doctor.setProfileImgDB(imageFile.getBytes());
+		Clock clock = Clock.systemDefaultZone();
+		long milliSeconds = clock.millis();
+		String completePath = baseFolder + File.separator + doctorId + milliSeconds + imageFile.getOriginalFilename();
+		System.out.println("complete path " + completePath);
+		System.out.println("Copied no of bytes "
+				+ Files.copy(imageFile.getInputStream(), Paths.get(completePath), StandardCopyOption.REPLACE_EXISTING));
+		// save complete path to the image in db
+		doctor.setProfilePicture(completePath);
+//		doctor.setProfileImgDB(imageFile.getBytes());
 		return "Profile Picture uploaded";
 	}
 
 	@Override
 	public byte[] restoreImage(long id) throws Exception {
 		Doctor persistentDoctor = doctorRepository.findById(id).orElseThrow(() -> new Exception("Patient Not Found"));
-//		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
+		return Files.readAllBytes(Paths.get(persistentDoctor.getProfilePicture()));
 		
 //		return Files.readAllBytes(Paths.get(imagePath));
 		
 		// new line added for to fetch from db
-		return persistentDoctor.getProfileImgDB();
+//		return persistentDoctor.getProfileImgDB();
 	}
 
 	@Override
